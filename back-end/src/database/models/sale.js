@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       foreingKey: true,
     },
-    total_price: DataTypes.INTEGER,
+    total_price: DataTypes.FLOAT,
     delivery_address: DataTypes.STRING(100),
     delivery_number: DataTypes.STRING(50),
     sale_date: DataTypes.DATE,

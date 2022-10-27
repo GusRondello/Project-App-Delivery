@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface) => {
+  up: async (queryInterface, _Sequelize) => {
     await queryInterface.bulkInsert(
       'products',
       [
@@ -36,7 +36,7 @@ module.exports = {
           url_image: 'http://localhost:3001/images/skol_269ml.jpg'
         },
         {
-          id: 5,
+          id: 6,
           name: 'Skol Beats Senses 313ml',
           price: 4.49,
           url_image: 'http://localhost:3001/images/skol_beats_senses_313ml.jpg'
@@ -71,8 +71,9 @@ module.exports = {
           price: 3.49,
           url_image: 'http://localhost:3001/images/stella_artois_275ml.jpg'
         },
-      ],
-      {},
-    );
+      ]);
   },
+  down: async  (queryInterface, _Sequelize) => {
+    await queryInterface.bulkDelete('products', null, {});
+  }
 };

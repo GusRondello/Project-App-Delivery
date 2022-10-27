@@ -8,7 +8,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'Sales',
+          model: 'sales',
           key: 'id',
         },
         primaryKey: true,
@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'Products',
+          model: 'products',
           key: 'id',
         },
         primaryKey: true,
