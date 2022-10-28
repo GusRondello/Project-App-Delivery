@@ -44,8 +44,14 @@ function LoginForm() {
       return navigate('/login');
     }
 
-    const { token } = response;
+    const { token, role } = response;
     saveToken(token);
+    if (role === 'seller') {
+      return navigate('/seller/orders/');
+    }
+    if (role === 'administrator') {
+      return navigate('/admin/manage');
+    }
     return navigate('/customer/products');
   };
 

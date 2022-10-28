@@ -12,6 +12,7 @@ function RegisterForm() {
     email: '',
     password: '',
   });
+  // const [role, setRole] = useState('');
 
   const navigate = useNavigate();
 
@@ -20,9 +21,11 @@ function RegisterForm() {
     const response = await registerService(name, email, password);
     if (response.error === true) {
       setErrorMessage(response.message);
+      return navigate('/register');
     }
 
-    const { token } = response;
+    const { token, roleX } = response;
+    setRole(roleX);
     saveToken(token);
     return navigate('/customer/products');
   };
@@ -43,22 +46,12 @@ function RegisterForm() {
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
     const emailValidation = emailFormat.test(formSignUp.email);
 
-    // const errorCases = [
-    //   formSignUp?.name.length > NAME_LENGH,
-    //   !emailFormat.test(formSignUp?.email),
-    //   formSignUp?.password.length < PASSWORD_LENGH,
-    // ];
-    // // caso alguma verificação for verdadeira, desabilita o botão de salvar
-    // const isBtnDisabled = errorCases.some((err) => err === true);
-    // setIsDisabled(isBtnDisabled);
-
     if (emailValidation && formSignUp.password.length >= PASSWORD_LENGH
-      && formSignUp.name.length <= NAME_LENGH) {
+      && formSignUp.name.length >= NAME_LENGH) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-    // return isBtnDisabled;
   };
 
   useEffect(() => {
