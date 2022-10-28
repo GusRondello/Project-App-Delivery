@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const saleProduct = sequelize.define('saleProduct', {
+  const SaleProduct = sequelize.define('SaleProduct', {
     sale_id: {
       type: DataTypes.INTEGER,
       foreingKey: true,
@@ -10,22 +10,25 @@ module.exports = (sequelize, DataTypes) => {
       foreingKey: true,
     },
     quantity: DataTypes.INTEGER,
-  },{ timestamps: false});
+  },{
+    tableName: 'saleProducts',
+    timestamps: false
+  });
   
-  saleProduct.associate = (models) => {
-    models.Sale.belongsToMany(models.Products, {
+  SaleProduct.associate = (models) => {
+    models.Sale.belongsToMany(models.Product, {
       as: 'products',
-      through: saleProduct,
+      through: SaleProduct,
       foreingKey: 'sale_id',
       otherKey: 'product_id'
     });
-    models.Product.belongsToMany(models.Sales, {
+    models.Product.belongsToMany(models.Sale, {
       as: 'sales',
-      through: saleProduct,
+      through: SaleProduct,
       foreingKey: 'product_id',
       otherKey: 'sale_id'
     });
   }
 
-  return saleProduct;
+  return SaleProduct;
 };
