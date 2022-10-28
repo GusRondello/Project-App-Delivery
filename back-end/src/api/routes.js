@@ -1,11 +1,12 @@
 const { Router } = require('express');
 
-const { validation, userController } = require('../controllers');
+const { userController } = require('../controllers');
+const middlewares = require('../middlewares');
 const schemas = require('../schemas');
 
 const router = Router();
 
-router.post('/login', validation(schemas.login), userController.login);
-router.post('/register', validation(schemas.user), userController.create);
+router.post('/login', middlewares.validation(schemas.login), userController.login);
+router.post('/register', middlewares.validation(schemas.user), userController.create);
 
 module.exports = router;
