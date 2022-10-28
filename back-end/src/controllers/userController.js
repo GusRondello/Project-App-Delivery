@@ -11,7 +11,7 @@ const create = async (req, res, _next) => {
   const { name, email, password } = req.body;
   const token = await userService.create({ name, email, password });
 
-  return res.status(200).json({ token });
+  return res.status(201).json({ token });
 };
 
 module.exports = {

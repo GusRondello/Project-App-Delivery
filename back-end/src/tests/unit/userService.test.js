@@ -22,7 +22,6 @@ describe('User service', () => {
   });
 
   describe('login', () => {
-
     describe('Success', () => {
       before(() => findOneStub.resolves(userMock));
 
