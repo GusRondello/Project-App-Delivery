@@ -42,4 +42,5 @@ const create = async (userData) => {
 module.exports = {
   login,
   create,
+  checkUserExistsBy,
 };

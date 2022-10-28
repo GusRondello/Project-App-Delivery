@@ -22,6 +22,22 @@ const create = async (req, res, _next) => {
   res.sendStatus(201);
 };
 
+const getUserOrders = async (req, res, _next) => {
+  const { email } = req.body;
+  const userOrders = saleService.getUserOrders(email);
+
+  return res.status(200).json(userOrders);
+};
+
+const getOrderById = async (req, res, _next) => {
+  const { id } = req.params;
+  const order = saleService.getOrderById(id);
+  
+  return res.status(200).json(order);
+};
+
 module.exports = {
   create,
+  getUserOrders,
+  getOrderById,
 };
