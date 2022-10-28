@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt from 'jwt-decode';
 
 const api = axios.create({
   baseURL: 'http://localhost:3001',
@@ -6,9 +7,10 @@ const api = axios.create({
 
 async function singIn(email, password) {
   try {
-    const { data } = await api.post('/login', { email, password });
-    console.log(data);
-    return data;
+    const { data, status, statusText } = await api.post('/login', { email, password });
+    console.log(data, status, statusText);
+    const { role } = jwt(data.token);
+    return { token: data.token, role };
   } catch (err) {
     console.log(err.response.status);
     console.log(err.response.data.message);
@@ -23,9 +25,11 @@ async function singIn(email, password) {
 
 async function register(name, email, password) {
   try {
-    const { data } = await api.post('/register', { name, email, password });
-    console.log(data);
-    return data;
+    const { data, status, statusText } = await api
+      .post('/register', { name, email, password });
+    console.log(data, status, statusText);
+    const { role } = jwt(data.token);
+    return { token: data.token, role };
   } catch (err) {
     console.log(err.response.status);
     console.log(err.response.data.message);

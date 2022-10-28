@@ -1,7 +1,7 @@
 import React from 'react';
 import RegisterForm from '../components/RegisterForm';
 
-function Cadastro() {
+function Register() {
   return (
     <div>
       <RegisterForm />
@@ -9,4 +9,4 @@ function Cadastro() {
   );
 }
 
-export default Cadastro;
+export default Register;
