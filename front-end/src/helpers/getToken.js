@@ -1,3 +1,3 @@
 export default function getToken() {
-  return JSON.parse(localStorage.getItem('token'));
+  return JSON.parse(localStorage.getItem('tokenDelivery'));
 }

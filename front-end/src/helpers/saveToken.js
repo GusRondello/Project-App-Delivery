@@ -1,3 +1,3 @@
 export default function saveToken(token) {
-  localStorage.setItem('token', JSON.stringify(token));
+  localStorage.setItem('tokenDelivery', JSON.stringify(token));
 }
