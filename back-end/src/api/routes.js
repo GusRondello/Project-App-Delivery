@@ -10,3 +10,4 @@ router.post('/login', middlewares.validation(schemas.login), userController.logi
 router.post('/register', middlewares.validation(schemas.user), userController.create);
 
 module.exports = router;
+// client route
