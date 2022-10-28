@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import StatisticsContext from './DeliveryContext ';
 
 function DeliveryProvider({ children }) {
-  const [xablau, setXablau] = useState([]);
+  const [customerName, setCustomerName] = useState([]);
 
   const contextValue = useMemo(() => ({
-    xablau,
-    setXablau,
-  }), [xablau]);
+    customerName,
+    setCustomerName,
+  }), [customerName]);
 
   DeliveryProvider.propTypes = {
     children: PropTypes.node.isRequired,

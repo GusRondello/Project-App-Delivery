@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import DeliveryContext from '../context/DeliveryContext ';
+import DeliveryContext from '../context/DeliveryContext ';
 import saveToken from '../helpers/saveToken';
 import { register as registerService } from '../services';
 
@@ -12,7 +12,7 @@ function RegisterForm() {
     email: '',
     password: '',
   });
-  // const [role, setRole] = useState('');
+  const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
 
@@ -21,11 +21,11 @@ function RegisterForm() {
     const response = await registerService(name, email, password);
     if (response.error === true) {
       setErrorMessage(response.message);
-      // return navigate('/customer/products');
       return;
     }
 
     const { token } = response;
+    setCustomerName(name);
     saveToken(token);
     return navigate('/customer/products');
   };

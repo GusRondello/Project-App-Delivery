@@ -1,10 +1,12 @@
 import React from 'react';
-// import LoginForm from '../components/LoginForm';
+import HeaderCustomer from '../components/HeaderCustomer';
+import Products from '../components/Products';
 
 function Produtos() {
   return (
     <div>
-      <p>Produtos</p>
+      <HeaderCustomer />
+      <Products />
     </div>
   );
 }
