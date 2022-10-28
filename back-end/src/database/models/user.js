@@ -12,12 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.STRING,
   }, {
     tableName: 'users',
-    timestamps: false
+    timestamps: false,
+    underscored: true
   });
 
   User.assosciate = (models) => {
-    User.hasMany(models.Sale, { foreignkey: 'user_id', as: 'user_sale' });
-    User.hasMany(models.Sale, { foreignkey: 'seller_id', as: 'seller_sale' });
+    User.hasMany(models.Sale, { foreignkey: 'userId', as: 'userSale' });
+    User.hasMany(models.Sale, { foreignkey: 'sellerId', as: 'sellerSale' });
   }
 
   return User;

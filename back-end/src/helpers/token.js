@@ -17,7 +17,6 @@ const validateToken = (token) => {
   }
   
   const decoded = jwt.verify(token, JWT_SECRET, (err, decode) => {
-    console.log(token);
     if (err) {
       throw boom.unauthorized('Expired or invalid token');
     }
