@@ -18,7 +18,7 @@ const login = async (userData) => {
   const { name, role } = userExist;
   const token = tokenHelper.createToken({ name, email, role });
   
-  return { token, role };
+  return token;
 };
 
 const create = async (userData) => {
@@ -36,7 +36,7 @@ const create = async (userData) => {
   });
   const token = tokenHelper.createToken({ name, email, role });
   
-  return { token, role };
+  return token;
 };
 
 module.exports = {
