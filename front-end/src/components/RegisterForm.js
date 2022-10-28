@@ -21,11 +21,11 @@ function RegisterForm() {
     const response = await registerService(name, email, password);
     if (response.error === true) {
       setErrorMessage(response.message);
-      return navigate('/register');
+      // return navigate('/customer/products');
+      return;
     }
 
-    const { token, roleX } = response;
-    setRole(roleX);
+    const { token } = response;
     saveToken(token);
     return navigate('/customer/products');
   };
