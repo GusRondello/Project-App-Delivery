@@ -1,14 +1,19 @@
 import React from 'react';
-import './App.css';
-import rockGlass from './images/rockGlass.svg';
+// import './App.css';
+// import rockGlass from './images/rockGlass.svg';
+import Content from './routers/Content';
+import DeliveryProvider from './context/DeliveryProvider';
 
 function App() {
   return (
     <div className="App">
-      <span className="logo">TRYBE</span>
+      <DeliveryProvider>
+        <Content />
+        {/* <span className="logo">TRYBE</span>
       <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>
         Glass
-      </object>
+      </object> */}
+      </DeliveryProvider>
     </div>
   );
 }
