@@ -15,10 +15,10 @@ const login = async (userData) => {
   
   if (!userExist) throw boom.notFound('User not found');
   
-  const { id, role } = userExist;
-  const token = tokenHelper.createToken({ id, email, role });
+  const { name, role } = userExist;
+  const token = tokenHelper.createToken({ name, email, role });
   
-  return token;
+  return { token, role };
 };
 
 const create = async (userData) => {
@@ -28,15 +28,15 @@ const create = async (userData) => {
   if (userExist) throw boom.conflict('Email address is already registered!');
   
   const encryptPassword = md5(password);
-  const { id, role } = await User.create({
+  const { role } = await User.create({
     email,
     name,
     password: encryptPassword,
     role: 'customer',
   });
-  const token = tokenHelper.createToken({ id, email, role });
+  const token = tokenHelper.createToken({ name, email, role });
   
-  return token;
+  return { token, role };
 };
 
 module.exports = {
