@@ -16,7 +16,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  // handle generico utilizados nos forms gerais do front
+  // handle generico
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormLogin((prevState) => ({
