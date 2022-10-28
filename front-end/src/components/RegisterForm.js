@@ -1,41 +1,33 @@
-import React, { useState, useEffect/* , useContext */ } from 'react';
-import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import DeliveryContext from '../context/DeliveryContext ';
 import saveToken from '../helpers/saveToken';
+import { register as registerService } from '../services';
 
-const URL = 'http://localhost:3001/register';
-
-function Cadastro() {
+function RegisterForm() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-  const [tokenReq, setTokenReq] = useState();
   const [formSignUp, setFormSignUp] = useState({
     name: '',
     email: '',
     password: '',
   });
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event, nameReq, emailReq, passwordReq) => {
+  const register = async (event, name, email, password) => {
     event.preventDefault();
-    axios.post(URL, {
-      fullName: nameReq,
-      email: emailReq,
-      password: passwordReq,
-    }).then((response) => {
-      setTokenReq(response.data);
-      setIsDisabled(false);
-      alert('Usuário cadastrado com sucesso');
-    }).catch((err) => {
-      setIsDisabled(true);
-      setErrorMessage(err.response.data.message);
-      alert(err.response.data.message);
-    });
+    const response = await registerService(name, email, password);
+    if (response.error === true) {
+      setErrorMessage(response.message);
+    }
+
+    const { token } = response;
+    saveToken(token);
+    return navigate('/customer/products');
   };
 
-  // handle generico utilizados nos forms gerais do front
+  // handle generico
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormSignUp((prevState) => ({
@@ -44,20 +36,41 @@ function Cadastro() {
     }));
   };
 
-  useEffect(() => {
-    if (tokenReq) {
-      const { token } = tokenReq;
-      saveToken(token);
-      // navigate('/principal', { replace: true });
+  const validateRegister = () => {
+    console.log('password', formSignUp.password);
+    const PASSWORD_LENGH = 6;
+    const NAME_LENGH = 12;
+    const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
+    const emailValidation = emailFormat.test(formSignUp.email);
+
+    // const errorCases = [
+    //   formSignUp?.name.length > NAME_LENGH,
+    //   !emailFormat.test(formSignUp?.email),
+    //   formSignUp?.password.length < PASSWORD_LENGH,
+    // ];
+    // // caso alguma verificação for verdadeira, desabilita o botão de salvar
+    // const isBtnDisabled = errorCases.some((err) => err === true);
+    // setIsDisabled(isBtnDisabled);
+
+    if (emailValidation && formSignUp.password.length >= PASSWORD_LENGH
+      && formSignUp.name.length <= NAME_LENGH) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
     }
-  }, [tokenReq]);
+    // return isBtnDisabled;
+  };
+
+  useEffect(() => {
+    validateRegister();
+  }, [formSignUp]);
 
   return (
     <div>
       <div>
-        <h1>
+        <h3>
           Cadastro
-        </h1>
+        </h3>
       </div>
       <div>
         <form>
@@ -103,7 +116,7 @@ function Cadastro() {
             data-testid="common_register__button-register"
             type="submit"
             disabled={ isDisabled }
-            onClick={ (event) => handleSubmit(
+            onClick={ (event) => register(
               event,
               formSignUp.name,
               formSignUp.email,
@@ -117,8 +130,7 @@ function Cadastro() {
           errorMessage
           && (
             <p
-              data-testid="common_register__element-invalid_register
-              [Elemento oculto (Mensagens de erro)]"
+              data-testid="common_register__element-invalid_register"
             >
               { errorMessage }
             </p>
@@ -129,4 +141,4 @@ function Cadastro() {
   );
 }
 
-export default Cadastro;
+export default RegisterForm;

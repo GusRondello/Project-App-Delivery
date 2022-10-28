@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import saveToken from '../helpers/saveToken';
 import { singIn as singInService } from '../services';
 
 function LoginForm() {
-  // const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [formLogin, setFormLogin] = useState({
     email: '',
@@ -12,6 +12,21 @@ function LoginForm() {
   });
 
   const navigate = useNavigate();
+
+  const validateLogin = () => {
+    const re = /\S+@\S+\.\S+/;
+    const emailValidation = re.test(formLogin.email);
+    const PASSWORD_LENGH = 6;
+    if (emailValidation && formLogin.password.length >= PASSWORD_LENGH) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
+
+  useEffect(() => {
+    validateLogin();
+  }, [formLogin]);
 
   // handle generico
   const handleChange = ({ target }) => {
@@ -22,46 +37,17 @@ function LoginForm() {
     }));
   };
 
-  // handle responsável pela integração da pagina login com o BackEnd
-  // caso sucesso, o token eh gerado, do contrário, apresenta um alerta
-  // para o usuário.
-  // function handleLogin(emailRequest, passwordRequest) {
-  //   axios.post(URL, {
-  //     email: emailRequest,
-  //     password: passwordRequest,
-  //   }).then((response) => {
-  //     setTokenReq(response.data);
-  //     setIsDisabled(false);
-  //   }).catch((err) => {
-  //     setIsDisabled(true);
-  //     setErrorMessage(err.response.data.message);
-  //     alert(err.response.data.message);
-  //   });
-  // }
-
   const singIn = async (email, password) => {
-    // const { email, password } = dataLogin;
     const response = await singInService(email, password);
     if (response.error === true) {
-      // setIsDisabled(true);
       setErrorMessage(response.message);
-      return alert(response.message);
+      return navigate('/login');
     }
 
-    // setIsDisabled(false);
     const { token } = response;
     saveToken(token);
-    // trocar pela rota correta aqui
-    return navigate('/');
+    return navigate('/customer/products');
   };
-
-  // useEffect(() => {
-  //   if (tokenReq) {
-  //     const { token } = tokenReq;
-  //     saveToken(token);
-  //     // navigate('/principal', { replace: true });
-  //   }
-  // }, [tokenReq]);
 
   return (
     <div>
@@ -91,7 +77,7 @@ function LoginForm() {
             <button
               data-testid="common_login__button-login"
               type="button"
-              // disabled={ isDisabled }
+              disabled={ isDisabled }
               onClick={ () => singIn(formLogin.email, formLogin.password) }
             >
               Login
@@ -111,8 +97,7 @@ function LoginForm() {
           errorMessage
           && (
             <p
-              data-testid="common_login__element-invalid-email
-              [Elemento oculto (Mensagens de erro)]"
+              data-testid="common_login__element-invalid-email"
             >
               { errorMessage }
             </p>

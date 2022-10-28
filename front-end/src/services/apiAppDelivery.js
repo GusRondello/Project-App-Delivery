@@ -21,7 +21,7 @@ async function singIn(email, password) {
   }
 }
 
-async function register({ name, email, password }) {
+async function register(name, email, password) {
   try {
     const { data } = await api.post('/register', { name, email, password });
     console.log(data);
