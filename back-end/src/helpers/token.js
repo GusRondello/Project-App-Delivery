@@ -2,10 +2,12 @@ const jwt = require('jsonwebtoken');
 const boom = require('@hapi/boom');
 require('dotenv/config');
 
-const { JWT_SECRET } = process.env;
+const utils = require('../utils');
 
-const createToken = (data) => {
-  const token = jwt.sign({ data }, JWT_SECRET);
+const JWT_SECRET = utils.getSecretKey();
+
+const createToken = (payload) => {
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
   return token;
 };
 
