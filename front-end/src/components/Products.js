@@ -1,5 +1,5 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
-import React/* , { useEffect } */ from 'react';
+import React, { useEffect, useState } from 'react';
 // import { getProducts } from '../services/apiAppDelivery';
 
 const mockProducts = [
@@ -72,7 +72,8 @@ const mockProducts = [
 ];
 
 function Products() {
-  // const [products, setProducts] = React.useState([]);
+  const [productsArray, setProductsArray] = useState([]);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
   // useEffect(() => {
   //   // getProducts().then((data) => setProducts(data));
@@ -80,7 +81,8 @@ function Products() {
   //     const data = await getProducts(token);
   //     if (data.error === true) {
   //       setErrorMessage(data.message);
-  //       return;
+  //       saveUserInfo({});
+  //       return navigate('/login');
   //     }
 
   //     setProducts(data);
@@ -92,12 +94,25 @@ function Products() {
   const addQuantity = (products) => products
     .map((product) => ({ ...product, quantity: 0 }));
 
-  const newProducts = addQuantity(mockProducts);
+  useEffect(() => {
+    setProductsArray(addQuantity(mockProducts));
+  }, []);
+
+  // função que recebe o produto e adicionar ou subtratir e, modifica no estado a nova quantidade
+  const handleQuantity = (product, operation) => {
+    const newProducts = productsArray.map((item) => {
+      if (item.id === product.id) {
+        const newQuantity = operation === 'add' ? item.quantity + 1 : item.quantity - 1;
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+    setProductsArray(newProducts);
+  };
 
   return (
     <div>
-      Exibe uma imagem a partir de uma URL
-      {newProducts.map((product) => (
+      {productsArray.map((product) => (
         <div key={ product.id }>
           <p data-testid={ `customer_products__element-card-title-<${product.id}>` }>
             {product.name}
@@ -113,6 +128,7 @@ function Products() {
             <button
               type="button"
               data-testid={ `customer_products__button-card-rm-item-<${product.id}>` }
+              onClick={ () => handleQuantity(product, 'remove') }
             >
               -
             </button>
@@ -124,6 +140,7 @@ function Products() {
             <button
               type="button"
               data-testid={ `customer_products__button-card-add-item-<${product.id}>` }
+              onClick={ () => handleQuantity(product, 'add') }
             >
               +
             </button>
