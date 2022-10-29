@@ -91,33 +91,33 @@ function Products() {
   return (
     <div>
       Exibe uma imagem a partir de uma URL
-      {mockProducts.map((product, { id }) => (
-        <div key={ id }>
-          <p data-testid={ `customer_products__element-card-title-<${id}>` }>
+      {mockProducts.map((product) => (
+        <div key={ product.id }>
+          <p data-testid={ `customer_products__element-card-title-<${product.id}>` }>
             {product.name}
           </p>
-          <p data-testid={ `customer_products__element-card-price-<${id}>` }>
+          <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
             {product.price}
           </p>
-          <p data-testid={ `customer_products__img-card-bg-image-<${id}>` }>
+          <p data-testid={ `customer_products__img-card-bg-image-<${product.id}>` }>
             <img src={ product.url_image } alt={ product.name } />
           </p>
           <div>
             {/* Botão para diminuir quantidade de itens; */}
             <button
               type="button"
-              data-testid={ `customer_products__button-card-rm-item-<${id}>` }
+              data-testid={ `customer_products__button-card-rm-item-<${product.id}>` }
             >
               -
             </button>
             {/* Elemento que exibe a quantidade de itens atual do produto */}
-            <p data-testid={ `customer_products__input-card-quantity-<${id}>` }>
+            <p data-testid={ `customer_products__input-card-quantity-<${product.id}>` }>
               {product.qtd || 0}
             </p>
             {/* Botão para adicionar quantidade de itens; */}
             <button
               type="button"
-              data-testid={ `customer_products__button-card-add-item-<${id}>` }
+              data-testid={ `customer_products__button-card-add-item-<${product.id}>` }
             >
               +
             </button>

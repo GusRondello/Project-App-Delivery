@@ -1,10 +1,11 @@
-// cria um header para a tela de produtos do cliente
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import DeliveryContext from '../context/DeliveryContext ';
+// import DeliveryContext from '../context/DeliveryContext ';
+import getUserInfo from '../helpers/getUserInfo';
 
 function HeaderCustomer() {
-  const { customerName } = React.useContext(DeliveryContext);
+  // const { customerName } = React.useContext(DeliveryContext);
+  const { name: customerName } = getUserInfo();
 
   const navigate = useNavigate();
 

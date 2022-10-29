@@ -10,7 +10,7 @@ async function singIn(email, password) {
     const { data, status, statusText } = await api.post('/login', { email, password });
     console.log(data, status, statusText);
     const { role, name } = jwt(data.token);
-    return { token: data.token, role, name };
+    return { token: data.token, role, name, email };
   } catch (err) {
     console.log(err.response.status);
     console.log(err.response.data.message);
@@ -29,7 +29,7 @@ async function register(name, email, password) {
       .post('/register', { name, email, password });
     console.log(data, status, statusText);
     const { role } = jwt(data.token);
-    return { token: data.token, role, name };
+    return { token: data.token, role, name, email };
   } catch (err) {
     console.log(err.response.status);
     console.log(err.response.data.message);
