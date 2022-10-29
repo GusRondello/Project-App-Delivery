@@ -22,16 +22,18 @@ const create = async (req, res, _next) => {
   res.sendStatus(201);
 };
 
-const getUserOrders = async (req, res, _next) => {
-  const { email } = req.body;
-  const userOrders = saleService.getUserOrders(email);
+const getUserOrders = async (_req, res, _next) => {
+  if (!res.locals.user) throw new Error('Response locals user variable was not defined');
+
+  const { user } = res.locals;
+  const userOrders = await saleService.getUserOrders(user.id);
 
   return res.status(200).json(userOrders);
 };
 
 const getOrderById = async (req, res, _next) => {
   const { id } = req.params;
-  const order = saleService.getOrderById(id);
+  const order = await saleService.getOrderById(id);
   
   return res.status(200).json(order);
 };
