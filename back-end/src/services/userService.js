@@ -15,8 +15,8 @@ const login = async (userData) => {
   
   if (!userExist) throw boom.notFound('User not found');
   
-  const { id, role } = userExist;
-  const token = tokenHelper.createToken({ id, email, role });
+  const { id, name, role } = userExist;
+  const token = tokenHelper.createToken({ id, name, email, role });
   
   return token;
 };
@@ -34,7 +34,7 @@ const create = async (userData) => {
     password: encryptPassword,
     role: 'customer',
   });
-  const token = tokenHelper.createToken({ id, email, role });
+  const token = tokenHelper.createToken({ id, name, email, role });
   
   return token;
 };
@@ -42,4 +42,5 @@ const create = async (userData) => {
 module.exports = {
   login,
   create,
+  checkUserExistsBy,
 };

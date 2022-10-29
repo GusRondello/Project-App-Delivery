@@ -6,30 +6,31 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       foreingKey: true,
     },
-    seller_id: {
+    sellerId: {
       type: DataTypes.INTEGER,
       foreingKey: true,
     },
-    total_price: DataTypes.FLOAT,
-    delivery_address: DataTypes.STRING(100),
-    delivery_number: DataTypes.STRING(50),
-    sale_date: DataTypes.DATE,
+    totalPrice: DataTypes.FLOAT,
+    deliveryAddress: DataTypes.STRING(100),
+    deliveryNumber: DataTypes.STRING(50),
+    saleDate: DataTypes.DATE,
     status: DataTypes.STRING(50)
   }, {
     tableName: 'sales',
-    timestamps: false
+    timestamps: false,
+    underscored: true
   });
 
   Sale.associate = (models) => { 
     Sale.belongsTo(models.User,
-      {foreingKey: 'user_id', as: 'user' });
+      {foreingKey: 'userId', as: 'user' });
 
     Sale.belongsTo(models.User,
-      {foreingKey: 'seller_id', as: 'seller' });
+      {foreingKey: 'sellerId', as: 'seller' });
   };
 
   return Sale;
