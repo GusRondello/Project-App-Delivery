@@ -1,6 +1,7 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { /* useEffect, useState,  */useContext } from 'react';
 import CustomerContext from '../context/CustomerContext';
+import saveCartItem from '../helpers/saveCartItem';
 // import { getProducts } from '../services/apiAppDelivery';
 
 function Products() {
@@ -8,31 +9,40 @@ function Products() {
   // const { productsArray, setProductsArray } = useContext(CustomerContext);
   // const [totalPrice, setTotalPrice] = useState(0);
 
-  // useEffect(() => {
-  //   // getProducts().then((data) => setProducts(data));
-  //   async function fetchProducts() {
-  //     const data = await getProducts(token);
-  //     if (data.error === true) {
-  //       setErrorMessage(data.message);
-  //       saveUserInfo({});
-  //       return navigate('/login');
-  //     }
-
-  //     setProducts(data);
-  //   }
-  //   fetchProducts();
-  // }, []);
+  const handleCartOnLocalStorage = (newProductsQtd) => {
+    const cart = newProductsQtd.map((product) => {
+      const { urlImage, ...rest } = product;
+      return rest;
+    }).filter((product) => product.quantity > 0);
+    // percorre o carrinho e adiciona o subtotal de cada produto
+    const cartWithSubtotal = cart.map((product) => {
+      const { price, quantity } = product;
+      return { ...product, subtotal: price * quantity };
+    });
+    // adiciona o totalPrice ao carrinho
+    const totalPriceCart = cartWithSubtotal.reduce((acc, product) => {
+      const { price, quantity } = product;
+      return acc + (price * quantity);
+    }, 0);
+    // constroi um objeto com duas chaves, uma produtos e outra totalPrice
+    const cartWithTotalPrice = { products: cartWithSubtotal, totalPrice: totalPriceCart };
+    // const cartWithTotalPrice = [...cartWithSubtotal, { totalPrice: totalPriceCart }];
+    // salva o carrinho no localStorage
+    console.log('cartWithTotalPrice', cartWithTotalPrice);
+    saveCartItem(cartWithTotalPrice);
+  };
 
   // função que recebe o produto e adicionar ou subtratir e, modifica no estado a nova quantidade
   const handleQuantity = (product, operation) => {
-    const newProducts = productsArray.map((item) => {
+    const newProductsQtd = productsArray.map((item) => {
       if (item.id === product.id) {
         const newQuantity = operation === 'add' ? item.quantity + 1 : item.quantity - 1;
         return { ...item, quantity: newQuantity };
       }
       return item;
     });
-    setProductsArray(newProducts);
+    handleCartOnLocalStorage(newProductsQtd);
+    setProductsArray(newProductsQtd);
   };
 
   return (
