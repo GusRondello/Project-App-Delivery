@@ -12,7 +12,7 @@ router.post('/register', middlewares.validation(schemas.user), userController.cr
 router.use(middlewares.auth);
 
 router.get('/customer/products', productController.getAll);
-router.post('/customer/checkout', saleController.create);
+router.post('/customer/checkout', middlewares.validation(schemas.sale), saleController.create);
 router.get('/customer/orders', saleController.getUserOrders);
 router.get('/customer/orders/:id', saleController.getOrderById);
 
