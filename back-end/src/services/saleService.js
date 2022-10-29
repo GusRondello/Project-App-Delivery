@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom');
-const { checkUserExistsBy } = require('./userService');
 const { Sale, User } = require('../database/models');
 const { SaleProduct } = require('../database/models');
 
@@ -18,17 +17,9 @@ const create = async ({ products, ...data }) => {
   await SaleProduct.bulkCreate(...insertData);
 };
 
-const getUserOrders = async (userEmail) => {
-  const user = checkUserExistsBy(userEmail);
-
-  if (!user) throw boom.notFound('User not found');
-
+const getUserOrders = async (userId) => {
   const findUserOrders = await Sale.findAll({
-    where: { userId: user.id },
-    include: [
-      { model: User, as: 'user', attributes: { exclude: ['password'] } },
-    ],
-    attributes: { exclude: ['userId'] },
+    where: { userId },
   });
   return findUserOrders;
 };
