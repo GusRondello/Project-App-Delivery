@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DeliveryContext from '../context/DeliveryContext ';
 import getUserInfo from '../helpers/getUserInfo';
+import saveUserInfo from '../helpers/saveUserInfo';
 
 function HeaderCustomer() {
   // const { customerName } = React.useContext(DeliveryContext);
@@ -38,7 +39,11 @@ function HeaderCustomer() {
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
-          onClick={ () => logout() }
+          onClick={ () => {
+            // localStorage.clear();
+            saveUserInfo({});
+            navigate('/login');
+          } }
         >
           Sair
         </button>

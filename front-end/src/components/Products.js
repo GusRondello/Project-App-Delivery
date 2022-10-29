@@ -77,7 +77,7 @@ function Products() {
   // useEffect(() => {
   //   // getProducts().then((data) => setProducts(data));
   //   async function fetchProducts() {
-  //     const data = await getProducts();
+  //     const data = await getProducts(token);
   //     if (data.error === true) {
   //       setErrorMessage(data.message);
   //       return;
@@ -88,10 +88,16 @@ function Products() {
   //   fetchProducts();
   // }, []);
 
+  // função addQuantity que faz um map no array de produtos e adiciona quantity
+  const addQuantity = (products) => products
+    .map((product) => ({ ...product, quantity: 0 }));
+
+  const newProducts = addQuantity(mockProducts);
+
   return (
     <div>
       Exibe uma imagem a partir de uma URL
-      {mockProducts.map((product) => (
+      {newProducts.map((product) => (
         <div key={ product.id }>
           <p data-testid={ `customer_products__element-card-title-<${product.id}>` }>
             {product.name}
@@ -112,7 +118,7 @@ function Products() {
             </button>
             {/* Elemento que exibe a quantidade de itens atual do produto */}
             <p data-testid={ `customer_products__input-card-quantity-<${product.id}>` }>
-              {product.qtd || 0}
+              {product.quantity}
             </p>
             {/* Botão para adicionar quantidade de itens; */}
             <button

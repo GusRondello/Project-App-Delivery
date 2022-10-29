@@ -5,6 +5,12 @@ const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
+// const axiosToken = {
+//   headers: {
+//     Authorization: `Token: ${token}`,
+//   },
+// };
+
 async function singIn(email, password) {
   try {
     const { data, status, statusText } = await api.post('/login', { email, password });
@@ -43,9 +49,14 @@ async function register(name, email, password) {
 }
 
 // função axios que retorna os produtos do banco de dados
-async function getProducts() {
+async function getProducts(token) {
   try {
-    const { data, status, statusText } = await api.get('/products');
+    const axiosToken = {
+      headers: {
+        Authorization: `Token: ${token}`,
+      },
+    };
+    const { data, status, statusText } = await api.get('/products', axiosToken);
     console.log(data, status, statusText);
     return data;
   } catch (err) {

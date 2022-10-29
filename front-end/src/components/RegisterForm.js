@@ -26,6 +26,7 @@ function RegisterForm() {
 
     const { token, role } = response;
     saveUserInfo({ name, email, role, token });
+    login();
     // setCustomerName(name);
     // saveToken(token);
     return navigate('/customer/products');
