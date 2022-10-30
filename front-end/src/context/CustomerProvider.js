@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 // import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from './CustomerContext';
-import saveCartItem from '../helpers/saveCartItem';
-import getCart from '../helpers/getCart';
 import { getProducts } from '../services/apiAppDelivery';
+import saveCartItems from '../helpers/saveCartItems';
+import getCartItems from '../helpers/getCartItems';
+import saveTotalPrice from '../helpers/saveTotalPrice';
+// import getTotalPrice from '../helpers/getTotalPrice';
 import getUserInfo from '../helpers/getUserInfo';
 import saveUserInfo from '../helpers/saveUserInfo';
 
@@ -79,7 +81,7 @@ import saveUserInfo from '../helpers/saveUserInfo';
 // ];
 
 function CustomerProvider({ children }) {
-  const [productsArray, setProductsArray] = useState(getCart());
+  const [productsArray, setProductsArray] = useState(getCartItems());
   const [isCartUpdated, setIsCartUpdated] = useState(false);
   // const [totalPrice, setTotalPrice] = useState(0);
 
@@ -96,12 +98,11 @@ function CustomerProvider({ children }) {
   // }, [productsArray]);
 
   const combineWithLocalStorageQtd = (productsWithQtd) => {
-    const products = getCart();
-    // console.log('productsWithQtd', productsWithQtd);
-    if (products && products[0].products.length > 0) {
+    const products = getCartItems();
+    if (products && products.length > 0) {
       const productsArrayUpdated = productsWithQtd.map((product) => {
         const { id } = product;
-        const productInCart = products[0].products.find((prod) => prod.id === id);
+        const productInCart = products.find((prod) => prod.id === id);
         // console.log('productInCart', productInCart);
         if (productInCart) {
           return { ...product, quantity: productInCart.quantity };
@@ -148,11 +149,11 @@ function CustomerProvider({ children }) {
         return acc + (price * quantity);
       }, 0);
       // constroi um objeto com duas chaves, uma produtos e outra totalPrice
-      const cartWithTotalPrice = { products: cartWithSubtotal,
-        totalPrice: totalPriceCart };
-      // salva o carrinho no localStorage
-      console.log('cartWithTotalPrice', cartWithTotalPrice);
-      saveCartItem(cartWithTotalPrice);
+      // const cartWithTotalPrice = { products: cartWithSubtotal,
+      //   totalPrice: totalPriceCart };
+      console.log('cartWithSubtotal', cartWithSubtotal, totalPriceCart);
+      saveCartItems(cartWithSubtotal);
+      saveTotalPrice(totalPriceCart);
     }
   }, [productsArray]);
 

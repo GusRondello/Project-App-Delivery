@@ -21,6 +21,7 @@ function ProductsCard({ product }) {
 
   return (
     <div>
+      {/* {console.log(product)} */}
       <p data-testid={ `customer_products__element-card-title-<${product.id}>` }>
         {product.name}
       </p>
@@ -28,7 +29,7 @@ function ProductsCard({ product }) {
         {product.price}
       </p>
       <p data-testid={ `customer_products__img-card-bg-image-<${product.id}>` }>
-        <img src={ product.url_image } alt={ product.name } />
+        <img src={ product.urlImage } alt={ product.name } />
       </p>
       <div>
         {/* Botão para diminuir quantidade de itens; */}
@@ -76,7 +77,7 @@ ProductsCard.propTypes = {
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
-    url_image: propTypes.string.isRequired,
+    urlImage: propTypes.string.isRequired,
     quantity: propTypes.number.isRequired,
   }).isRequired,
 };
