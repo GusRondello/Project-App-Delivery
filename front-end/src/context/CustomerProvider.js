@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from './CustomerContext';
-// import saveCartItem from '../helpers/saveCartItem';
+import saveCartItem from '../helpers/saveCartItem';
 import getCart from '../helpers/getCart';
 import { getProducts } from '../services/apiAppDelivery';
 import getUserInfo from '../helpers/getUserInfo';
@@ -80,6 +80,7 @@ import saveUserInfo from '../helpers/saveUserInfo';
 
 function CustomerProvider({ children }) {
   const [productsArray, setProductsArray] = useState(getCart());
+  const [isCartUpdated, setIsCartUpdated] = useState(false);
   // const [totalPrice, setTotalPrice] = useState(0);
 
   const navigate = useNavigate();
@@ -94,29 +95,22 @@ function CustomerProvider({ children }) {
   //   setTotalPrice(total);
   // }, [productsArray]);
 
-  const updateProductsArray = (productsWithQtd) => {
+  const combineWithLocalStorageQtd = (productsWithQtd) => {
     const products = getCart();
-    // console.log('productsLocalStorage', products[0].products);
-    console.log('productsWithQtd', productsWithQtd);
+    // console.log('productsWithQtd', productsWithQtd);
     if (products && products[0].products.length > 0) {
-      // console.log('productsLocalStorage2', products[0].products);
       const productsArrayUpdated = productsWithQtd.map((product) => {
         const { id } = product;
-        console.log('productsLocalStorage', products[0].products);
         const productInCart = products[0].products.find((prod) => prod.id === id);
-        console.log('productInCart', productInCart);
+        // console.log('productInCart', productInCart);
         if (productInCart) {
-          // caso productInCart exista, atualiza a quantidade no productsWithQtd
-          // com a quantidade do productInCart
           return { ...product, quantity: productInCart.quantity };
-          // return { ...productInCart, quantity };
         }
         return product;
       });
-      console.log('productsArrayUpdated', productsArrayUpdated);
+      // console.log('productsArrayUpdated', productsArrayUpdated);
       setProductsArray(productsArrayUpdated);
     } else {
-      console.log('xablau');
       setProductsArray(productsWithQtd);
     }
   };
@@ -130,54 +124,43 @@ function CustomerProvider({ children }) {
         return navigate('/login');
       }
       const productsWithQtd = products.map((product) => ({ ...product, quantity: 0 }));
-      console.log('productsAPI', productsWithQtd);
-      updateProductsArray(productsWithQtd);
+      // console.log('productsAPI', productsWithQtd);
+      combineWithLocalStorageQtd(productsWithQtd);
       // setProductsArray(productsWithQtd);
     }
     fetchProducts();
   }, []);
 
-  // const cart = getCart() || [];
-  // useEffect que monta o conteúdo do carrinho de compras. Cada produto deve estar com:
-  // id, name, price, quantity e subtotal. Também deve ter o totalPrice. Utiliza as funções
-  // useEffect(() => {
-  //   // remove a propriedade urlImage de cada produto e filtrar os com qtd>0
-  //   const cart = productsArray.map((product) => {
-  //     const { urlImage, ...rest } = product;
-  //     return rest;
-  //   }).filter((product) => product.quantity > 0);
-  //   // percorre o carrinho e adiciona o subtotal de cada produto
-  //   const cartWithSubtotal = cart.map((product) => {
-  //     const { price, quantity } = product;
-  //     return { ...product, subtotal: price * quantity };
-  //   });
-  //   // adiciona o totalPrice ao carrinho
-  //   const totalPriceCart = cartWithSubtotal.reduce((acc, product) => {
-  //     const { price, quantity } = product;
-  //     return acc + (price * quantity);
-  //   }, 0);
-  //   // constroi um objeto com duas chaves, uma produtos e outra totalPrice
-  //   const cartWithTotalPrice = { products: cartWithSubtotal, totalPrice: totalPriceCart };
-  //   // const cartWithTotalPrice = [...cartWithSubtotal, { totalPrice: totalPriceCart }];
-  //   // salva o carrinho no localStorage
-  //   console.log('cartWithTotalPrice', cartWithTotalPrice);
-  //   saveCartItem(cartWithTotalPrice);
-  // }, [productsArray]);
-
-  // função que recebe de parâmetro productsWithQtd. Dentro dela recebe o conteúdo do localStorage,
-  // desestruturando a chave products. Depois, percorre o array productsWithQtd e verifica se o id
-  // de cada produto é igual ao id de algum produto do localStorage. Se for, atualiza a quantidade
-  // do produto com o valor da quantidade do localStorage. Depois, atualiza o productsArray com
-  // o novo array productsWithQtd
-
-  // useEffect(() => {
-  //   setProductsArray(addQuantity(mockProducts));
-  // }, []);
+  useEffect(() => {
+    if (isCartUpdated) {
+      const cart = productsArray.map((product) => {
+        const { urlImage, ...rest } = product;
+        return rest;
+      }).filter((product) => product.quantity > 0);
+      // percorre o carrinho e adiciona o subtotal de cada produto
+      const cartWithSubtotal = cart.map((product) => {
+        const { price, quantity } = product;
+        return { ...product, subtotal: price * quantity };
+      });
+      // adiciona o totalPrice ao carrinho
+      const totalPriceCart = cartWithSubtotal.reduce((acc, product) => {
+        const { price, quantity } = product;
+        return acc + (price * quantity);
+      }, 0);
+      // constroi um objeto com duas chaves, uma produtos e outra totalPrice
+      const cartWithTotalPrice = { products: cartWithSubtotal,
+        totalPrice: totalPriceCart };
+      // salva o carrinho no localStorage
+      console.log('cartWithTotalPrice', cartWithTotalPrice);
+      saveCartItem(cartWithTotalPrice);
+    }
+  }, [productsArray]);
 
   const contextValue = useMemo(() => ({
     productsArray,
     setProductsArray,
-  }), [productsArray]);
+    setIsCartUpdated,
+  }), [productsArray, isCartUpdated]);
 
   CustomerProvider.propTypes = {
     children: PropTypes.node.isRequired,
