@@ -5,6 +5,7 @@ import CustomerContext from '../context/CustomerContext';
 import getTotalPrice from '../helpers/getTotalPrice';
 // import getCartItems from '../helpers/getCartItems';
 import CartItemCard from './CartItemCard';
+// import { sendOrder } from '../services';
 
 const sellers = [
   {
@@ -21,6 +22,7 @@ function CheckoutComponent() {
   const [items, setItems] = useState([]);
   // const [reload, setReload] = useState(false);
   const { cartItems } = useContext(CustomerContext);
+  // const { useId: id } = getUserInfo();
 
   // const navigate = useNavigate();
   const totalPrice = getTotalPrice();
@@ -32,13 +34,36 @@ function CheckoutComponent() {
 
   const handleCheckout = async () => {
     console.log('xablau');
-    // const response = await singInService(email, password);
+    // constroi um objeto no seguinte modelo para enviar ao backend
+    // {
+    //   "userId": "3",
+    //   "sellerId": "2",
+    //   "totalPrice": "190.56",
+    //   "deliveryAddress": "Rua da Pamonha",
+    //   "deliveryNumber": "27",
+    //   "products": [
+    //     { "id": 1, "quantity": 3},
+    //     { "id": 2, "quantity": 6}
+    //   ]
+    // }
+    // const order = {
+    //   userId,
+    //   sellerId: sellers[0].id,
+    //   totalPrice,
+    //   deliveryAddress: 'Rua da Pamonha',
+    //   deliveryNumber: '27',
+    //   products: cartItems.map((item) => {
+    //     const { itemId: id, quantity } = item;
+    //     return { itemId, quantity };
+    //   }),
+    // };
+    // const response = await sendOrder(email, password);
     // if (response.error === true) {
     //   setErrorMessage(response.message);
     //   return navigate('/login');
     // }
 
-    // const { id } = response;
+    // // const { id } = response;
     // // navega para a rota /customer/orders/:id
     // return navigate(`/customer/orders/${id}`);
   };

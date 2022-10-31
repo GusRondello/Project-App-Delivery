@@ -68,12 +68,14 @@ function Products() {
       para a tela /customer/checkout  */}
       <button
         type="button"
-        data-testid="customer_products__checkout-bottom-value"
+        data-testid="customer_products__button-cart"
         // desabilita caso não houver itens no carrinho
         disabled={ cartItems.length === 0 }
         onClick={ () => navigate('/customer/checkout') }
       >
-        {` R$ ${totalPrice}`}
+        <span data-testid="customer_products__checkout-bottom-value">
+          {` R$ ${totalPrice}`}
+        </span>
       </button>
     </div>
   );
