@@ -1,11 +1,12 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { useEffect, useState, useContext } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../context/CustomerContext';
 import getTotalPrice from '../helpers/getTotalPrice';
 // import getCartItems from '../helpers/getCartItems';
 import CartItemCard from './CartItemCard';
-// import { sendOrder } from '../services';
+import { sendOrder } from '../services';
+import GetUserInfo from '../helpers/getUserInfo';
 
 const sellers = [
   {
@@ -22,50 +23,41 @@ function CheckoutComponent() {
   const [items, setItems] = useState([]);
   // const [reload, setReload] = useState(false);
   const { cartItems } = useContext(CustomerContext);
-  // const { useId: id } = getUserInfo();
+  const [address, setAddress] = useState({
+    street: '',
+    number: '',
+  });
+  const [selectedSeller, setSelectedSeller] = useState(sellers[0].id);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const totalPrice = getTotalPrice();
   // console.log('totalPrice', totalPrice);
   useEffect(() => {
     setItems(cartItems);
-    // console.log('cartItems', cartItems);
   }, [cartItems]);
 
   const handleCheckout = async () => {
-    console.log('xablau');
-    // constroi um objeto no seguinte modelo para enviar ao backend
-    // {
-    //   "userId": "3",
-    //   "sellerId": "2",
-    //   "totalPrice": "190.56",
-    //   "deliveryAddress": "Rua da Pamonha",
-    //   "deliveryNumber": "27",
-    //   "products": [
-    //     { "id": 1, "quantity": 3},
-    //     { "id": 2, "quantity": 6}
-    //   ]
-    // }
-    // const order = {
-    //   userId,
-    //   sellerId: sellers[0].id,
-    //   totalPrice,
-    //   deliveryAddress: 'Rua da Pamonha',
-    //   deliveryNumber: '27',
-    //   products: cartItems.map((item) => {
-    //     const { itemId: id, quantity } = item;
-    //     return { itemId, quantity };
-    //   }),
-    // };
-    // const response = await sendOrder(email, password);
-    // if (response.error === true) {
-    //   setErrorMessage(response.message);
-    //   return navigate('/login');
-    // }
+    const { id: userId, token } = GetUserInfo();
+    const totalPriceNumber = Number(totalPrice.replace(',', '.'));
+    const order = {
+      userId,
+      sellerId: selectedSeller,
+      totalPrice: totalPriceNumber,
+      deliveryAddress: address.street,
+      deliveryNumber: address.number,
+      products: cartItems.map((item) => {
+        const { id, quantity } = item;
+        return { id, quantity };
+      }),
+    };
+    const response = await sendOrder(token, order);
+    if (response.error === true) {
+      setErrorMessage(response.message);
+      return navigate('/login');
+    }
+    const { id: saleId } = response;
 
-    // // const { id } = response;
-    // // navega para a rota /customer/orders/:id
-    // return navigate(`/customer/orders/${id}`);
+    return navigate(`/customer/orders/${saleId}`);
   };
 
   return (
@@ -79,7 +71,7 @@ function CheckoutComponent() {
             </div>
           ))}
         </div>
-        <p>
+        <p datatest-id="customer_checkout__element-order-total-price">
           Total:
           {` R$ ${totalPrice}`}
         </p>
@@ -90,27 +82,52 @@ function CheckoutComponent() {
         tem como options o array sellers */}
         <label htmlFor="seller">
           P. Vendedora Responsável:
-          <select name="seller" id="seller">
+          <select
+            name="seller"
+            id="seller"
+            value={ selectedSeller }
+            onChange={ (e) => setSelectedSeller(e.target.value) }
+          >
             {sellers.map((seller) => (
-              <option key={ seller.id } value={ seller.id }>
+              <option
+                key={ seller.id }
+                value={ seller.id }
+                datatest-id="customer_checkout__select-seller"
+              >
                 {seller.name}
               </option>
             ))}
           </select>
         </label>
-        {/* Form para preencher o endereço de entrega */}
         <form>
           <label htmlFor="street">
             Endereço:
-            <input type="text" name="street" id="street" />
+            <input
+              datatest-id="customer_checkout__input-address"
+              type="text"
+              name="street"
+              id="street"
+              placeholder="Travessa Terceira da Castanheira, Bairro Muruci"
+              value={ address.street }
+              onChange={ (e) => setAddress({ ...address, street: e.target.value }) }
+            />
           </label>
           <label htmlFor="number">
             Número:
-            <input type="text" name="number" id="number" />
+            <input
+              datatest-id="customer_checkout__input-address-number"
+              type="text"
+              name="number"
+              id="number"
+              placeholder="198"
+              value={ address.number }
+              onChange={ (e) => setAddress({ ...address, number: e.target.value }) }
+            />
           </label>
         </form>
       </div>
       <button
+        datatest-id="customer_checkout__button-submit-order"
         type="button"
         onClick={ () => handleCheckout() }
       >

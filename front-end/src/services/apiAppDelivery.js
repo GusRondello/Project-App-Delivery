@@ -15,8 +15,8 @@ async function singIn(email, password) {
   try {
     const { data, status, statusText } = await api.post('/login', { email, password });
     console.log(data, status, statusText);
-    const { role, name } = jwt(data.token);
-    return { token: data.token, role, name, email };
+    const { role, name, id } = jwt(data.token);
+    return { token: data.token, role, name, email, id };
   } catch (err) {
     console.log(err.response.status);
     console.log(err.response.data.message);
@@ -80,7 +80,7 @@ async function sendOrder(token, requisition) {
       },
     };
     const { data, status, statusText } = await api
-      .post('/customer/orders', { requisition }, axiosToken);
+      .post('/customer/checkout', { ...requisition }, axiosToken);
     console.log(data, status, statusText);
     return data;
   } catch (err) {

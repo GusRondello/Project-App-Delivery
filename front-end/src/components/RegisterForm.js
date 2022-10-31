@@ -21,15 +21,12 @@ function RegisterForm() {
     const response = await registerService(name, email, password);
     if (response.error === true) {
       setErrorMessage(response.message);
-
       return;
     }
 
-    const { token, role } = response;
-    saveUserInfo({ name, email, role, token });
-    login();
-    // setCustomerName(name);
-    // saveToken(token);
+    const { token, role, id } = response;
+    saveUserInfo({ id, name, email, role, token });
+
     return navigate('/customer/products');
   };
 
