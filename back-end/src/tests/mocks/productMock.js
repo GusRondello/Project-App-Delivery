@@ -1,37 +1,23 @@
-const productsMock = [
-  [
-    {
-      id: 1,
-      userId: 3,
-      sellerId: 2,
-      totalPrice: 190.56,
-      deliveryAddress: 'Rua da Pamonha',
-      deliveryNumber: '27',
-      saleDate: '2022-10-29T05:04:07.000Z',
-      status: 'Pendente'
-    },
-    {
-      id: 2,
-      userId: 3,
-      sellerId: 2,
-      totalPrice: 190.56,
-      deliveryAddress: 'Rua da Pamonha',
-      deliveryNumber: '27',
-      saleDate: '2022-10-29T05:06:34.000Z',
-      status: 'Pendente'
-    },
-    {
-      id: 3,
-      userId: 3,
-      sellerId: 2,
-      totalPrice: 190.56,
-      deliveryAddress: 'Rua da Pamonha',
-      deliveryNumber: '27',
-      saleDate:'2022-10-29T05:08:21.000Z',
-      status: 'Pendente'
-    },
-  ]
-];
+const productsMock =  [
+  {
+    id: 1,
+    name: "Skol Lata 250ml",
+    price: 2.2,
+    urlImage: "http://localhost:3001/images/skol_lata_350ml.jpg"
+  },
+  {
+    id: 2,
+    name: "Heineken 600ml",
+    price: 7.5,
+    urlImage: "http://localhost:3001/images/heineken_600ml.jpg"
+  },
+  {
+    id: 3,
+    name: 'Antarctica Pilsen 300ml',
+    price: 2.49,
+    urlImage: 'http://localhost:3001/images/antarctica_pilsen_300ml.jpg'
+  },
+]
 
 module.exports = {
   productsMock,

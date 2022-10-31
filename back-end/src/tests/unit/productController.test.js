@@ -10,7 +10,7 @@ const { productController } = require('../../controllers');
 const { productsMock } = require('../mocks/productMock');
 
 
-describe('User controller', () => {
+describe('Product controller', () => {
   let getAllStub;
   let token;
 
@@ -33,7 +33,7 @@ describe('User controller', () => {
 
     describe('Success', () => {
   
-      it('should return code 200 and a token in the response body', async () => {
+      it('should return code 200 and a products in the response body', async () => {
         const response = await testController(productController.getAll, { });
     
         expect(response.status).to.be.equal(200);
