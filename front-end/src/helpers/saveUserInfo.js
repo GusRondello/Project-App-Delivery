@@ -7,5 +7,5 @@
 // }
 
 export default function saveUserInfo(userInfo) {
-  localStorage.setItem('userAppDelivery', JSON.stringify(userInfo));
+  localStorage.setItem('user', JSON.stringify(userInfo));
 }

@@ -7,12 +7,11 @@ import getTotalPrice from '../helpers/getTotalPrice';
 
 function Products() {
   const [productsList, setProductsList] = useState([]);
-  const { productsArray, /* setProductsArray,
-    setIsCartUpdated */ } = useContext(CustomerContext);
+  const { productsArray, cartItems } = useContext(CustomerContext);
 
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
-  console.log('totalPrice', totalPrice);
+  // console.log('totalPrice', totalPrice);
 
   useEffect(() => {
     setProductsList(productsArray);
@@ -70,6 +69,8 @@ function Products() {
       <button
         type="button"
         data-testid="customer_products__checkout-bottom-value"
+        // desabilita caso não houver itens no carrinho
+        disabled={ cartItems.length === 0 }
         onClick={ () => navigate('/customer/checkout') }
       >
         {` R$ ${totalPrice}`}

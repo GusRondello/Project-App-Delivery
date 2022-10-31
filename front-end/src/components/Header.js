@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DeliveryContext from '../context/DeliveryContext ';
 import getUserInfo from '../helpers/getUserInfo';
-import saveUserInfo from '../helpers/saveUserInfo';
+// import saveUserInfo from '../helpers/saveUserInfo';
 
 function Header() {
   // const { customerName } = React.useContext(DeliveryContext);
@@ -42,7 +42,8 @@ function Header() {
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
             // localStorage.clear();
-            saveUserInfo({});
+            localStorage.removeItem('user');
+            // saveUserInfo({});
             navigate('/login');
           } }
         >

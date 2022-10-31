@@ -28,8 +28,12 @@ function ProductsCard({ product }) {
       <p data-testid={ `customer_products__element-card-price-${product.id}` }>
         {product.price.replace('.', ',')}
       </p>
-      <p data-testid={ `customer_products__img-card-bg-image-${product.id}` }>
-        <img src={ product.urlImage } alt={ product.name } />
+      <p>
+        <img
+          data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+          src={ product.urlImage }
+          alt={ product.name }
+        />
       </p>
       <div>
         {/* Botão para diminuir quantidade de itens; */}

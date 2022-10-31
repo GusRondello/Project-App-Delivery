@@ -9,7 +9,6 @@ import getCartItems from '../helpers/getCartItems';
 import saveTotalPrice from '../helpers/saveTotalPrice';
 // import getTotalPrice from '../helpers/getTotalPrice';
 import getUserInfo from '../helpers/getUserInfo';
-import saveUserInfo from '../helpers/saveUserInfo';
 
 // const mockProducts = [
 //   {
@@ -122,7 +121,7 @@ function CustomerProvider({ children }) {
       const { token } = getUserInfo();
       const { error, products } = await getProducts(token);
       if (error === true) {
-        saveUserInfo({});
+        localStorage.removeItem('user');
         return navigate('/login');
       }
       const productsWithQtd = products.map((product) => ({ ...product, quantity: 0 }));
@@ -130,9 +129,8 @@ function CustomerProvider({ children }) {
       // transforma a chave price em string e deixa com 2 cadas decimais
       const productsWithQtdAndPrice = productsWithQtd.map((product) => {
         const { price } = product;
-        const priceToFixed = price.toFixed(2);
-        console.log('priceToFixed ', priceToFixed);
-        const priceString = priceToFixed.toString();
+        // const priceToFixed = price.toFixed(2);
+        const priceString = price.toString();
         return { ...product, price: priceString };
       });
       console.log('productsWithQtdAndPrice', productsWithQtdAndPrice);

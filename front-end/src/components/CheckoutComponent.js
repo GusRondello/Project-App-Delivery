@@ -30,26 +30,18 @@ function CheckoutComponent() {
     // console.log('cartItems', cartItems);
   }, [cartItems]);
 
-  // const handleCheckout = async (email, password) => {
-  //   const response = await singInService(email, password);
-  //   if (response.error === true) {
-  //     setErrorMessage(response.message);
-  //     return navigate('/login');
-  //   }
+  const handleCheckout = async () => {
+    console.log('xablau');
+    // const response = await singInService(email, password);
+    // if (response.error === true) {
+    //   setErrorMessage(response.message);
+    //   return navigate('/login');
+    // }
 
-  //   const { token, role, name } = response;
-  //   // setCustomerName(name);
-  //   // saveToken(token);
-  //   // console.log(name, email, role);
-  //   saveUserInfo({ name, email, role, token });
-  //   if (role === 'seller') {
-  //     return navigate('/seller/orders/');
-  //   }
-  //   if (role === 'administrator') {
-  //     return navigate('/admin/manage');
-  //   }
-  //   return navigate('/customer/products');
-  // };
+    // const { id } = response;
+    // // navega para a rota /customer/orders/:id
+    // return navigate(`/customer/orders/${id}`);
+  };
 
   return (
     <div>
@@ -95,7 +87,7 @@ function CheckoutComponent() {
       </div>
       <button
         type="button"
-        // onClick={ () => { handleCheckout } }
+        onClick={ () => handleCheckout() }
       >
         FINALIZAR PEDIDO
       </button>
