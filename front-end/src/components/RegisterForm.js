@@ -12,7 +12,6 @@ function RegisterForm() {
     email: '',
     password: '',
   });
-  
   // const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
