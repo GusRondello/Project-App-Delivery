@@ -17,8 +17,6 @@ function ProductsCard({ product }) {
     });
     setProductsArray(newProductsQtd);
     setIsCartUpdated(true);
-
-    window.location.reload();
   };
 
   return (
@@ -28,7 +26,7 @@ function ProductsCard({ product }) {
         {product.name}
       </p>
       <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-        {product.price}
+        {product.price.replace('.', ',')}
       </p>
       <p data-testid={ `customer_products__img-card-bg-image-${product.id}` }>
         <img src={ product.urlImage } alt={ product.name } />
@@ -78,7 +76,7 @@ ProductsCard.propTypes = {
   product: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
-    price: propTypes.number.isRequired,
+    price: propTypes.string.isRequired,
     urlImage: propTypes.string.isRequired,
     quantity: propTypes.number.isRequired,
   }).isRequired,

@@ -127,7 +127,16 @@ function CustomerProvider({ children }) {
       }
       const productsWithQtd = products.map((product) => ({ ...product, quantity: 0 }));
       // console.log('productsAPI', productsWithQtd);
-      combineWithLocalStorageQtd(productsWithQtd);
+      // transforma a chave price em string e deixa com 2 cadas decimais
+      const productsWithQtdAndPrice = productsWithQtd.map((product) => {
+        const { price } = product;
+        const priceToFixed = price.toFixed(2);
+        console.log('priceToFixed ', priceToFixed);
+        const priceString = priceToFixed.toString();
+        return { ...product, price: priceString };
+      });
+      console.log('productsWithQtdAndPrice', productsWithQtdAndPrice);
+      combineWithLocalStorageQtd(productsWithQtdAndPrice);
       // setProductsArray(productsWithQtd);
     }
     fetchProducts();
@@ -143,23 +152,25 @@ function CustomerProvider({ children }) {
       // converte o resultado para number
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
-        const subtotal = Number((price * quantity).toFixed(2));
+        const subtotal = (price * quantity).toFixed(2);
         return { ...product, subtotal };
       });
       // adiciona o totalPrice ao carrinho, arredondando para 2 casas decimais
       const totalPriceCart = cartWithSubtotal.reduce((acc, product) => {
         const { price, quantity } = product;
         return acc + (price * quantity);
-      }, 0).toFixed(2);
+      }, 0).toFixed(2).replace('.', ',');
+      console.log('totalPriceCart', totalPriceCart);
+      // o valor de totalPriceCart deve ser separado por vírgula ao invés de ponto
+      // const totalPriceCartString = totalPriceCart.toString().replace('.', ',');
       // constroi um objeto com duas chaves, uma produtos e outra totalPrice
       // const cartWithTotalPrice = { products: cartWithSubtotal,
       //   totalPrice: totalPriceCart };
       console.log('cartWithSubtotal', cartWithSubtotal, totalPriceCart);
       saveCartItems(cartWithSubtotal);
       setCartItems(cartWithSubtotal);
-      const xablau = getCartItems();
-      console.log('xablau', xablau);
       saveTotalPrice(totalPriceCart);
+      setIsCartUpdated(false);
     }
   }, [productsArray]);
 

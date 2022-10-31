@@ -1,18 +1,23 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
-import React, { /* useEffect, useState,  */useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../context/CustomerContext';
 import ProductsCard from './ProductsCard';
 import getTotalPrice from '../helpers/getTotalPrice';
 
 function Products() {
+  const [productsList, setProductsList] = useState([]);
   const { productsArray, /* setProductsArray,
     setIsCartUpdated */ } = useContext(CustomerContext);
 
   const navigate = useNavigate();
-  // getCartItems() = 0: {products: Array(3), totalPrice: 85.68}
-  // desestrutura totalPrice de dentro de getCartItems().
   const totalPrice = getTotalPrice();
+  console.log('totalPrice', totalPrice);
+
+  useEffect(() => {
+    setProductsList(productsArray);
+    // console.log('productsArray', productsArray);
+  }, [productsArray]);
 
   // const handleCartOnLocalStorage = (newProductsQtd) => {
   //   const cart = newProductsQtd.map((product) => {
@@ -54,7 +59,7 @@ function Products() {
   return (
     <div>
       <div>
-        {productsArray?.map((product) => (
+        {productsList?.map((product) => (
           <div key={ product.id }>
             <ProductsCard product={ product } />
           </div>
@@ -67,7 +72,6 @@ function Products() {
         data-testid="customer_products__checkout-bottom-value"
         onClick={ () => navigate('/customer/checkout') }
       >
-        Ver Carrinho:
         {` R$ ${totalPrice}`}
       </button>
     </div>

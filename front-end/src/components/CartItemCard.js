@@ -16,7 +16,7 @@ function CartItemCard({ product, index }) {
     setProductsArray(newProductsQtd);
     setIsCartUpdated(true);
 
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -35,7 +35,7 @@ function CartItemCard({ product, index }) {
         {product.price}
       </p>
       <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
-        {product.subtotal}
+        {Number(product.subtotal)}
       </p>
 
       {/* Botão para remover o item, ao ser clicado percorre productsArray e atualiza a quantidade */}
@@ -55,7 +55,7 @@ CartItemCard.propTypes = {
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
-    subtotal: propTypes.number.isRequired,
+    subtotal: propTypes.string.isRequired,
     quantity: propTypes.number.isRequired,
   }).isRequired,
   index: propTypes.number.isRequired,
