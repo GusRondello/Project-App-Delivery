@@ -71,7 +71,7 @@ function CheckoutComponent() {
             </div>
           ))}
         </div>
-        <p datatest-id="customer_checkout__element-order-total-price">
+        <p data-testid="customer_checkout__element-order-total-price">
           Total:
           {` R$ ${totalPrice}`}
         </p>
@@ -83,6 +83,7 @@ function CheckoutComponent() {
         <label htmlFor="seller">
           P. Vendedora Responsável:
           <select
+            data-testid="customer_checkout__select-seller"
             name="seller"
             id="seller"
             value={ selectedSeller }
@@ -92,7 +93,6 @@ function CheckoutComponent() {
               <option
                 key={ seller.id }
                 value={ seller.id }
-                datatest-id="customer_checkout__select-seller"
               >
                 {seller.name}
               </option>
@@ -103,7 +103,7 @@ function CheckoutComponent() {
           <label htmlFor="street">
             Endereço:
             <input
-              datatest-id="customer_checkout__input-address"
+              data-testid="customer_checkout__input-address"
               type="text"
               name="street"
               id="street"
@@ -115,7 +115,7 @@ function CheckoutComponent() {
           <label htmlFor="number">
             Número:
             <input
-              datatest-id="customer_checkout__input-address-number"
+              data-testid="customer_checkout__input-address-number"
               type="text"
               name="number"
               id="number"
@@ -127,7 +127,7 @@ function CheckoutComponent() {
         </form>
       </div>
       <button
-        datatest-id="customer_checkout__button-submit-order"
+        data-testid="customer_checkout__button-submit-order"
         type="button"
         onClick={ () => handleCheckout() }
       >

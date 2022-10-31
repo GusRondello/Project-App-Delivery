@@ -23,31 +23,33 @@ function CartItemCard({ product, index }) {
     <div>
       {/* {console.log(product)} */}
       <p
-        data-testid={ `customer_checkout__element
-      -order-table-item-number-${product.id}` }
+        data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
       >
         {index + 1}
       </p>
-      <p data-testid={ `customer_checkout__element-order-table-name-${product.id}` }>
+      <p data-testid={ `customer_checkout__element-order-table-name-${index}` }>
         {product.name}
       </p>
-      <p data-testid={ `customer_checkout__element-order-table-quantity-${product.id}` }>
+      <p
+        data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
+      >
         {product.quantity}
       </p>
       <p
-        data-testid={ `customer_checkout__element-order
-      -table-unit-price-${product.id}` }
+        data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
       >
         {product.price}
       </p>
-      <p data-testid={ `customer_checkout__element-order-table-sub-total-${product.id}` }>
+      <p
+        data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
+      >
         {Number(product.subtotal)}
       </p>
 
       {/* Botão para remover o item, ao ser clicado percorre productsArray e atualiza a quantidade */}
       <button
         type="button"
-        data-testid={ `customer_checkout__element-order-table-remove-${product.id}` }
+        data-testid={ `customer_checkout__element-order-table-remove-${index}` }
         onClick={ () => handleRemoveItem() }
       >
         Remover
