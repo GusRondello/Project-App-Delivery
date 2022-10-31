@@ -9,7 +9,7 @@ const create = async (req, res, _next) => {
     deliveryNumber, 
     saleDate, 
     products } = req.body;
-  await saleService.create({
+  const result = await saleService.create({
     userId,
     sellerId,
     totalPrice,
@@ -19,7 +19,7 @@ const create = async (req, res, _next) => {
     products,
   });
 
-  res.sendStatus(201);
+  res.status(201).json(result);
 };
 
 const getUserOrders = async (_req, res, _next) => {
