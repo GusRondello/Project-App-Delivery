@@ -64,7 +64,7 @@ function Products() {
       para a tela /customer/checkout  */}
       <button
         type="button"
-        data-testid="customer_products__button-cart"
+        data-testid="customer_products__checkout-bottom-value"
         onClick={ () => navigate('/customer/checkout') }
       >
         Ver Carrinho:

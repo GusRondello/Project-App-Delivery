@@ -81,8 +81,9 @@ import saveUserInfo from '../helpers/saveUserInfo';
 // ];
 
 function CustomerProvider({ children }) {
-  const [productsArray, setProductsArray] = useState(getCartItems());
+  const [productsArray, setProductsArray] = useState([]);
   const [isCartUpdated, setIsCartUpdated] = useState(false);
+  const [cartItems, setCartItems] = useState(getCartItems() || []);
   // const [totalPrice, setTotalPrice] = useState(0);
 
   const navigate = useNavigate();
@@ -138,21 +139,26 @@ function CustomerProvider({ children }) {
         const { urlImage, ...rest } = product;
         return rest;
       }).filter((product) => product.quantity > 0);
-      // percorre o carrinho e adiciona o subtotal de cada produto
+      // percorre o carrinho e adiciona o subtotal de cada produto, arredondando para duas casas decimais
+      // converte o resultado para number
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
-        return { ...product, subtotal: price * quantity };
+        const subtotal = Number((price * quantity).toFixed(2));
+        return { ...product, subtotal };
       });
-      // adiciona o totalPrice ao carrinho
+      // adiciona o totalPrice ao carrinho, arredondando para 2 casas decimais
       const totalPriceCart = cartWithSubtotal.reduce((acc, product) => {
         const { price, quantity } = product;
         return acc + (price * quantity);
-      }, 0);
+      }, 0).toFixed(2);
       // constroi um objeto com duas chaves, uma produtos e outra totalPrice
       // const cartWithTotalPrice = { products: cartWithSubtotal,
       //   totalPrice: totalPriceCart };
       console.log('cartWithSubtotal', cartWithSubtotal, totalPriceCart);
       saveCartItems(cartWithSubtotal);
+      setCartItems(cartWithSubtotal);
+      const xablau = getCartItems();
+      console.log('xablau', xablau);
       saveTotalPrice(totalPriceCart);
     }
   }, [productsArray]);
@@ -161,6 +167,7 @@ function CustomerProvider({ children }) {
     productsArray,
     setProductsArray,
     setIsCartUpdated,
+    cartItems,
   }), [productsArray, isCartUpdated]);
 
   CustomerProvider.propTypes = {

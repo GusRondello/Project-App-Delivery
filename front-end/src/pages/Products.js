@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import Products from '../components/Products';
+import ProductsComponent from '../components/ProductsComponent';
 import CustomerProvider from '../context/CustomerProvider';
 
 function Produtos() {
@@ -8,7 +8,7 @@ function Produtos() {
     <div>
       <CustomerProvider>
         <Header />
-        <Products />
+        <ProductsComponent />
       </CustomerProvider>
     </div>
   );

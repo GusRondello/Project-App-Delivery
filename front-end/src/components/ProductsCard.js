@@ -17,25 +17,27 @@ function ProductsCard({ product }) {
     });
     setProductsArray(newProductsQtd);
     setIsCartUpdated(true);
+
+    window.location.reload();
   };
 
   return (
     <div>
       {/* {console.log(product)} */}
-      <p data-testid={ `customer_products__element-card-title-<${product.id}>` }>
+      <p data-testid={ `customer_products__element-card-title-${product.id}` }>
         {product.name}
       </p>
-      <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
+      <p data-testid={ `customer_products__element-card-price-${product.id}` }>
         {product.price}
       </p>
-      <p data-testid={ `customer_products__img-card-bg-image-<${product.id}>` }>
+      <p data-testid={ `customer_products__img-card-bg-image-${product.id}` }>
         <img src={ product.urlImage } alt={ product.name } />
       </p>
       <div>
         {/* Botão para diminuir quantidade de itens; */}
         <button
           type="button"
-          data-testid={ `customer_products__button-card-rm-item-<${product.id}>` }
+          data-testid={ `customer_products__button-card-rm-item-${product.id}` }
           onClick={ () => handleQuantity('remove') }
         >
           -
@@ -43,7 +45,7 @@ function ProductsCard({ product }) {
         {/* Elemento que exibe a quantidade de itens e permite também definir outro valor */}
         <input
           type="number"
-          data-testid={ `customer_products__input-card-quantity-<${product.id}>` }
+          data-testid={ `customer_products__input-card-quantity-${product.id}` }
           value={ product.quantity }
           onChange={ (e) => {
             const newProductsQtd = productsArray.map((item) => {
@@ -62,7 +64,7 @@ function ProductsCard({ product }) {
         {/* Botão para adicionar quantidade de itens; */}
         <button
           type="button"
-          data-testid={ `customer_products__button-card-add-item-<${product.id}>` }
+          data-testid={ `customer_products__button-card-add-item-${product.id}` }
           onClick={ () => handleQuantity('add') }
         >
           +
