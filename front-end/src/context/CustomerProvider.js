@@ -150,7 +150,7 @@ function CustomerProvider({ children }) {
       // converte o resultado para number
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
-        const subtotal = (price * quantity).toFixed(2);
+        const subtotal = (price * quantity).toFixed(2).replace('.', ',');
         return { ...product, subtotal };
       });
       // adiciona o totalPrice ao carrinho, arredondando para 2 casas decimais

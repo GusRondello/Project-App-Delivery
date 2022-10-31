@@ -38,12 +38,12 @@ function CartItemCard({ product, index }) {
       <p
         data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
       >
-        {product.price}
+        {product.price.replace('.', ',')}
       </p>
       <p
         data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
       >
-        {Number(product.subtotal)}
+        {(product.subtotal)}
       </p>
 
       {/* Botão para remover o item, ao ser clicado percorre productsArray e atualiza a quantidade */}
