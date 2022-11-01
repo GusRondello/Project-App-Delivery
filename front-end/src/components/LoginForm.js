@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import saveToken from '../helpers/saveToken';
+import saveUserInfo from '../helpers/saveUserInfo';
 import { singIn as singInService } from '../services';
+// import DeliveryContext from '../context/DeliveryContext ';
 
 function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -10,6 +11,7 @@ function LoginForm() {
     email: '',
     password: '',
   });
+  // const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
 
@@ -44,8 +46,9 @@ function LoginForm() {
       return navigate('/login');
     }
 
-    const { token, role } = response;
-    saveToken(token);
+    const { token, role, name } = response;
+
+    saveUserInfo({ name, email, role, token });
     if (role === 'seller') {
       return navigate('/seller/orders/');
     }

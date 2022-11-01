@@ -1,24 +1,27 @@
 import React, { useState, useMemo/* , useEffect */ } from 'react';
 import PropTypes from 'prop-types';
 // import { useHistory } from 'react-router-dom';
-import StatisticsContext from './DeliveryContext ';
+import DeliveryContext from './DeliveryContext ';
 
 function DeliveryProvider({ children }) {
-  const [xablau, setXablau] = useState([]);
+  const [customerName, setCustomerName] = useState([]);
+  const [cart, setCart] = useState('xablau');
 
   const contextValue = useMemo(() => ({
-    xablau,
-    setXablau,
-  }), [xablau]);
+    customerName,
+    setCustomerName,
+    cart,
+    setCart,
+  }), [customerName, cart]);
 
   DeliveryProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
 
   return (
-    <StatisticsContext.Provider value={ contextValue }>
+    <DeliveryContext.Provider value={ contextValue }>
       {children}
-    </StatisticsContext.Provider>
+    </DeliveryContext.Provider>
   );
 }
 

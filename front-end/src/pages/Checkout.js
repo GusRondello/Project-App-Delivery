@@ -1,17 +1,17 @@
 import React from 'react';
 import Header from '../components/Header';
-import ProductsComponent from '../components/ProductsComponent';
 import CustomerProvider from '../context/CustomerProvider';
+import CheckoutComponent from '../components/CheckoutComponent';
 
-function Produtos() {
+function Checkout() {
   return (
     <div>
       <CustomerProvider>
         <Header />
-        <ProductsComponent />
+        <CheckoutComponent />
       </CustomerProvider>
     </div>
   );
 }
 
-export default Produtos;
+export default Checkout;
