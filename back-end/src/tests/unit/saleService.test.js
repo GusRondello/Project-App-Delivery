@@ -62,7 +62,7 @@ describe('Sale service', () => {
         it('should return an user sales array', async () => {
           const data = { id: 1, role: 'customer' };
           const sut = await saleService.getUserOrders(data);
-          console.log(sut);
+
           expect(sut).to.be.an('array');
           expect(sut[0]).to.haveOwnProperty('userId', 3);
         });
