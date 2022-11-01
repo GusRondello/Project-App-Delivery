@@ -2,9 +2,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../context/CustomerContext';
-// import getTotalPrice from '../helpers/getTotalPrice';
-// import getCartItems from '../helpers/getCartItems';
-// import CartItemCard from './CartItemCard';
+import getTotalPrice from '../helpers/getTotalPrice';
+import DetailItemCard from './DetailItemCard';
 import { sendOrder, getSalle } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
 
@@ -19,38 +18,44 @@ const sellers = [
   },
 ];
 
+const CUSTOMER = 'customer_order_details__';
+const DATATESTID_37 = `${CUSTOMER}element-order-details-label-order-id`;
+const DATATESTID_38 = `${CUSTOMER}element-order-details-label-seller-name`;
+const DATATESTID_39 = `${CUSTOMER}element-order-details-label-order-date`;
+const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
+const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
+
 function SalleDetailComponent() {
   const [items, setItems] = useState([]);
   const { cartItems } = useContext(CustomerContext);
-  const [salleX, setSalle] = useState([]);
+  const [salle, setSalle] = useState([]);
 
   // const { state: { salle } } = useLocation();
 
   const navigate = useNavigate();
-  // const totalPrice = getTotalPrice();
+  const totalPrice = getTotalPrice();
   // console.log('totalPrice', totalPrice);
   useEffect(() => {
     setItems(cartItems);
   }, [cartItems]);
-
-  console.log('items', items);
-  console.log('salle', salleX);
 
   // useEffect responsável por receber os dados da salle da api
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
       const salleId = window.location.pathname.split('/')[3];
-      console.log('salleId', salleId);
+      // console.log('salleId', salleId);
       // retorna em uma const error e sale
       const data = await getSalle(token, salleId);
-      // if (data === error) {
-      //   console.log('error', error);
-      //   // localStorage.removeItem('user');
-      //   return/*  navigate('/login') */;
-      // }
-      console.log('data', data);
-      setSalle(data);
+      // console.log('data', data);
+      if (data.error) {
+        localStorage.removeItem('user');
+        return navigate('/login');
+      }
+      const { saleDate } = data;
+      const saleDateFormatted = saleDate.split('T')[0].split('-').reverse().join('/');
+
+      setSalle({ ...data, saleDate: saleDateFormatted });
     }
     fetchSalle();
   }, []);
@@ -72,47 +77,43 @@ function SalleDetailComponent() {
   return (
     <div>
       <h2>Detalhe do Pedido</h2>
-      Renderiza os dados apenas se salle não for um array vazio
-      {salleX && salleX.length !== 0 && (
+      {salle && salle.length !== 0 && (
         <div>
-          {/* Componente que possui como informações: PEDIDO nº do pedido,
-       P. Vend: nome do vendedor, data do pedido, Status do pedido,
-       Botão para marcar como entregue */}
-          <span>
+          <span data-testid={ `${DATATESTID_37}` }>
             PEDIDO
             {' '}
-            {salleX.id}
+            {salle.id}
           </span>
-          <span>
+          <span data-testid={ `${DATATESTID_38}` }>
             P. Vend:
             {' '}
-            {/* compara o id do vendedor em salleX com o id do vendedor em sellers */}
-            {sellers.find((seller) => seller.id === salleX.sellerId).name}
+            {/* compara o id do vendedor em salle com o id do vendedor em sellers */}
+            {sellers.find((seller) => seller.id === salle.sellerId).name}
           </span>
-          <span>{salleX.saleDate}</span>
-          <span>{salleX.status}</span>
+          <span data-testid={ `${DATATESTID_39}` }>{salle.saleDate}</span>
+          <span data-testid={ `${DATATESTID_40}${salle.id}` }>{salle.status}</span>
           <button
             type="button"
-            data-testid="mark-as-delivered-btn"
+            data-testid={ `${DATATESTID_47}` }
             onClick={ () => handleChangeStatus() }
           >
             MARCAR COMO ENTREGUE
           </button>
         </div>
       )}
-      {/* <div>
+      <div>
         <div>
           {items?.map((product, index) => (
             <div key={ product.id }>
-              <CartItemCard product={ product } index={ index } />
+              <DetailItemCard product={ product } index={ index } />
             </div>
           ))}
         </div>
-        <p data-testid="customer_checkout__element-order-total-price">
-          Total:
-          {` R$ ${totalPrice}`}
-        </p>
-      </div> */}
+      </div>
+      <p data-testid="customer_order_details__element-order-total-price">
+        Total:
+        {` R$ ${totalPrice}`}
+      </p>
     </div>
   );
 }

@@ -56,7 +56,8 @@ async function getProducts(token) {
         Authorization: token,
       },
     };
-    const { data, status, statusText } = await api.get('/customer/products', axiosToken);
+    const { data, status, statusText } = await api
+      .get('/customer/products', axiosToken);
     console.log(data, status, statusText);
     return data;
   } catch (err) {
@@ -72,27 +73,44 @@ async function getProducts(token) {
 }
 
 // função axios que retorna os detalhes do pedido
+// async function getSalle(token, id) {
+//   try {
+//     const axiosToken = {
+//       headers: {
+//         Authorization: token,
+//       },
+//     };
+//     const /* { data: sale, status, statusText } */ xablau = await api
+//       .get(`/customer/orders/${id}999`, axiosToken);
+//     console.log('xablau', xablau);
+//     return sale;
+//   } catch (err) {
+//     console.log(err.response.status);
+//     console.log(err.response.data.message);
+//     console.log(err);
+//     return {
+//       error: true,
+//       status: err.response.status,
+//       message: err.response.data.message,
+//     };
+//   }
+// }
+
 async function getSalle(token, id) {
-  try {
-    const axiosToken = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    const { data: sale, status, statusText } = await api
-      .get(`/customer/orders/${id}`, axiosToken);
-    console.log(sale, status, statusText);
-    return sale;
-  } catch (err) {
-    console.log(err.response.status);
-    console.log(err.response.data.message);
-    console.log(err);
-    return {
-      error: true,
-      status: err.response.status,
-      message: err.response.data.message,
-    };
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ salle = await api
+    .get(`/customer/orders/${id}`, axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!salle.data) {
+    return salle.response.data;
   }
+  return salle.data;
 }
 
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
