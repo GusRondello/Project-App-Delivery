@@ -71,6 +71,30 @@ async function getProducts(token) {
   }
 }
 
+// função axios que retorna os detalhes do pedido
+async function getSalle(token, id) {
+  try {
+    const axiosToken = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const { data: sale, status, statusText } = await api
+      .get(`/customer/orders/${id}`, axiosToken);
+    console.log(sale, status, statusText);
+    return sale;
+  } catch (err) {
+    console.log(err.response.status);
+    console.log(err.response.data.message);
+    console.log(err);
+    return {
+      error: true,
+      status: err.response.status,
+      message: err.response.data.message,
+    };
+  }
+}
+
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
 async function sendOrder(token, requisition) {
   try {
@@ -95,4 +119,4 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder };
+export { singIn, register, getProducts, sendOrder, getSalle };

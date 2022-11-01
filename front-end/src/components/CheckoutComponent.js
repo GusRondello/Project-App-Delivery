@@ -51,14 +51,14 @@ function CheckoutComponent() {
       }),
     };
 
-    const response = await sendOrder(token, order);
-    if (response.error === true) {
-      setErrorMessage(response.message);
+    const salle = await sendOrder(token, order);
+    if (salle.error === true) {
+      setErrorMessage(salle.message);
       return navigate('/login');
     }
-    const { id: saleId } = response;
+    const { id: saleId } = salle;
 
-    return navigate(`/customer/orders/${saleId}`);
+    return navigate(`/customer/orders/${saleId}`, { state: { salle } });
   };
 
   return (
