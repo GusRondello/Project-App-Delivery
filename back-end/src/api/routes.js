@@ -16,7 +16,8 @@ router.post('/customer/checkout', middlewares.validation(schemas.sale), saleCont
 router.get('/customer/orders', saleController.getUserOrders);
 router.get('/customer/orders/:id', saleController.getOrderById);
 router.patch('/customer/orders/:id', saleController.updateOrderStatus);
+router.get('/seller/orders', saleController.getUserOrders);
+router.get('/seller/orders/:id', saleController.getOrderById); 
+router.patch('/seller/orders/:id', saleController.updateOrderStatus);
 
 module.exports = router;
-
-// Fluxo vendedor
