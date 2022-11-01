@@ -51,7 +51,7 @@ function LoginForm() {
     // saveToken(token);
     // console.log(name, email, role);
     saveUserInfo({ id, name, email, role, token });
-
+    
     if (role === 'seller') {
       return navigate('/seller/orders/');
     }
