@@ -12,7 +12,6 @@ function RegisterForm() {
     email: '',
     password: '',
   });
-  // const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
 
@@ -21,7 +20,6 @@ function RegisterForm() {
     const response = await registerService(name, email, password);
     if (response.error === true) {
       setErrorMessage(response.message);
-
       return;
     }
 

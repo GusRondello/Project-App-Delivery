@@ -8,7 +8,7 @@ const { errorHandler } = require('../../middlewares');
 const testController = require('../helpers/testController');
 
 
-describe.only('Error handler middleware', () => {
+describe('Error handler middleware', () => {
   describe('Whe receive a boom error instance', () => {
     it('should return hapi/boom error status code and its payload in the req body', async () => {
       const response = await testController(errorHandler, {}, boom.notFound('Not found'));
