@@ -34,8 +34,23 @@ const getOrderById = async (id) => {
   return orderFound;
 };
 
+const updateOrderStatus = async ({ id, status }) => {
+  const statusValues = ['Pendente', 'Preparando', 'Em Trânsito', 'Entregue'];
+
+  if (!statusValues.includes(status)) throw boom.badRequest('Invalid status');
+
+  const sale = await Sale.update({ status }, { where: { id } });
+
+  if (!sale) throw boom.notFound('Order not found');
+
+  const updatedSale = await Sale.findByPk(id);
+
+  return updatedSale;
+};
+
 module.exports = {
   create,
   getUserOrders,
   getOrderById,
+  updateOrderStatus,
 };
