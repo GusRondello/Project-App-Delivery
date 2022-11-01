@@ -1,11 +1,12 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState/* , useContext */ } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CustomerContext from '../context/CustomerContext';
+// import CustomerContext from '../context/CustomerContext';
 import getTotalPrice from '../helpers/getTotalPrice';
-import DetailItemCard from './DetailItemCard';
+// import DetailItemCard from './DetailItemCard';
 import { sendOrder, getSalle } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
+import DetailsTable from './DetailsTable';
 
 const sellers = [
   {
@@ -23,11 +24,12 @@ const DATATESTID_37 = `${CUSTOMER}element-order-details-label-order-id`;
 const DATATESTID_38 = `${CUSTOMER}element-order-details-label-seller-name`;
 const DATATESTID_39 = `${CUSTOMER}element-order-details-label-order-date`;
 const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
+const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
 const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
 
 function SalleDetailComponent() {
-  const [items, setItems] = useState([]);
-  const { cartItems } = useContext(CustomerContext);
+  // const [items, setItems] = useState([]);
+  // const { cartItems } = useContext(CustomerContext);
   const [salle, setSalle] = useState([]);
 
   // const { state: { salle } } = useLocation();
@@ -35,9 +37,9 @@ function SalleDetailComponent() {
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
   // console.log('totalPrice', totalPrice);
-  useEffect(() => {
-    setItems(cartItems);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   setItems(cartItems);
+  // }, [cartItems]);
 
   // useEffect responsável por receber os dados da salle da api
   useEffect(() => {
@@ -48,10 +50,10 @@ function SalleDetailComponent() {
       // retorna em uma const error e sale
       const data = await getSalle(token, salleId);
       // console.log('data', data);
-      if (data.error) {
-        localStorage.removeItem('user');
-        return navigate('/login');
-      }
+      // if (data.error) {
+      //   localStorage.removeItem('user');
+      //   return navigate('/login');
+      // }
       const { saleDate } = data;
       const saleDateFormatted = saleDate.split('T')[0].split('-').reverse().join('/');
 
@@ -102,15 +104,10 @@ function SalleDetailComponent() {
         </div>
       )}
       <div>
-        <div>
-          {items?.map((product, index) => (
-            <div key={ product.id }>
-              <DetailItemCard product={ product } index={ index } />
-            </div>
-          ))}
-        </div>
+        {/* Cria uma tabela com o cabeçalho contendo: Item, Descrição, Quantidade, Valor Unitário e Sub Total */}
+        <DetailsTable />
       </div>
-      <p data-testid="customer_order_details__element-order-total-price">
+      <p data-testid={ `${DATATESTID_46}` }>
         Total:
         {` R$ ${totalPrice}`}
       </p>

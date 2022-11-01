@@ -1,34 +1,24 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
+const CUSTOMER = 'customer_order_details__';
+const DATATESTID_41 = `${CUSTOMER}element-order-table-item-number-`;
+const DATATESTID_42 = `${CUSTOMER}element-order-table-name-`;
+const DATATESTID_43 = `${CUSTOMER}element-order-table-quantity-`;
+const DATATESTID_44 = `${CUSTOMER}element-order-table-unit-price-`;
+const DATATESTID_45 = `${CUSTOMER}element-order-table-sub-total-`;
+
 function DetailItemCard({ product, index }) {
   return (
-    <div>
-      {/* {console.log(product)} */}
-      <p
-        data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
-      >
-        {index + 1}
-      </p>
-      <p data-testid={ `customer_checkout__element-order-table-name-${index}` }>
-        {product.name}
-      </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
-      >
-        {product.quantity}
-      </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
-      >
+    <tr key={ index }>
+      <td data-testid={ `${DATATESTID_41}${index}` }>{index + 1}</td>
+      <td data-testid={ `${DATATESTID_42}${index}` }>{product.name}</td>
+      <td data-testid={ `${DATATESTID_43}${index}` }>{product.quantity}</td>
+      <td data-testid={ `${DATATESTID_44}${index}` }>
         {product.price.replace('.', ',')}
-      </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
-      >
-        {(product.subtotal)}
-      </p>
-    </div>
+      </td>
+      <td data-testid={ `${DATATESTID_45}${index}` }>{(product.subtotal)}</td>
+    </tr>
   );
 }
 
