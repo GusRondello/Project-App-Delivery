@@ -7,17 +7,19 @@ chai.use(chaiAsPromised);
 
 const { Sale, SaleProduct } = require('../../database/models');
 const { saleService } = require('../../services');
-const { saleMock, salesUserMock, createSaleDataMock } = require('../mocks/saleMock');
+const { saleMock, salesUserMock, createSaleDataMock, saleUpdated } = require('../mocks/saleMock');
 
 describe('Sale service', () => {
   let findAllStub;
   let findByPkStub;
   let createStub;
+  let updateStub;
 
   before(() => {
     findAllStub = sinon.stub(Sale, 'findAll');
     findByPkStub = sinon.stub(Sale, 'findByPk');
     createStub = sinon.stub(Sale, 'create');
+    updateStub = sinon.stub(Sale, 'update');
 
     sinon.stub(SaleProduct, 'bulkCreate');
   });
@@ -26,6 +28,7 @@ describe('Sale service', () => {
     findAllStub.restore();
     findByPkStub.restore();
     createStub.restore();
+    updateStub.restore();
 
     SaleProduct.bulkCreate.restore();
   });
@@ -53,13 +56,28 @@ describe('Sale service', () => {
 
   describe('getUserOrders', () => {
     describe('Success', () => {
-      before(() => findAllStub.resolves(salesUserMock));
+      describe('userId', () => {
+        before(() => findAllStub.resolves(salesUserMock.filter(({ userId }) => userId === 3)));
 
-      it('should return an user sales array', async () => {
-        const sut = await saleService.getUserOrders(3);
+        it('should return an user sales array', async () => {
+          const data = { id: 1, role: 'customer' };
+          const sut = await saleService.getUserOrders(data);
+          console.log(sut);
+          expect(sut).to.be.an('array');
+          expect(sut[0]).to.haveOwnProperty('userId', 3);
+        });
+      });
 
-        expect(sut).to.be.an('array');
-        expect(sut[0]).to.haveOwnProperty('userId', 3);
+      describe('sellerId', () => {
+        before(() => findAllStub.resolves(salesUserMock.filter(({ sellerId }) => sellerId === 1)));
+
+        it('should return an seller sales array', async () => {
+          const data = { id: 3, role: 'seller' };
+          const sut = await saleService.getUserOrders(data);
+  
+          expect(sut).to.be.an('array');
+          expect(sut[0]).to.haveOwnProperty('sellerId', 1);
+        });
       });
     });
   });
@@ -68,7 +86,7 @@ describe('Sale service', () => {
     describe('Success', () => {
       before(() => findByPkStub.resolves(salesUserMock[1]));
 
-      it('should return one user sale object', async () => {
+      it('should return an user sale object', async () => {
         await expect(saleService.getOrderById(2))
           .to.eventually.to.be.an('object')
           .and.to.be.eql(salesUserMock[1]);
@@ -78,9 +96,50 @@ describe('Sale service', () => {
     describe('Failure', () => {
       before(() => findByPkStub.resolves(null));
 
-      it('should return one user sale object', async () => {
+      it('should return an user sale object', async () => {
         await expect(saleService.getOrderById(90))
           .to.eventually.to.rejectedWith('Order not found')
+      });
+    });
+  });
+
+  describe('updateOrderStatus', () => {
+    describe('Success', () => {
+      before(() => {
+        updateStub.resolves([1])
+        findByPkStub.resolves(saleUpdated);
+      });
+
+      it('should return an user sale object updated', async () => {
+        const updateData = { id: 1, status: 'Entregue' }
+
+        await expect(saleService.updateOrderStatus(updateData))
+          .to.eventually.to.be.an('object')
+          .and.to.be.eql(saleUpdated);
+      });
+    });
+
+    describe('Failure', () => {
+      describe('When status is invalid', () => {
+        before(() => updateStub.resolves(null));
+        
+        it('should throw an invalid status error', async () => {
+          const updateData = { id: 1, status: 'xablau' };
+
+          await expect(saleService.updateOrderStatus(updateData))
+            .to.eventually.to.rejectedWith('Invalid status')
+        });
+      });
+
+      describe('When sale is not found', () => {
+        before(() => findByPkStub.resolves(null));
+
+        it('should throw an invalid status error', async () => {
+          const updateData = { id: 90, status: 'Entregue' };
+
+          await expect(saleService.updateOrderStatus(updateData))
+            .to.eventually.to.rejectedWith('Order not found')
+        });
       });
     });
   });
