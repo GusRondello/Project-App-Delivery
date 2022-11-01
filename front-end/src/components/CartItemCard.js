@@ -22,26 +22,34 @@ function CartItemCard({ product, index }) {
   return (
     <div>
       {/* {console.log(product)} */}
-      <p data-testid={ `customer_products__element-card-title-<${product.id}>` }>
+      <p
+        data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
+      >
         {index + 1}
       </p>
-      <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
+      <p data-testid={ `customer_checkout__element-order-table-name-${index}` }>
         {product.name}
       </p>
-      <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
+      <p
+        data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
+      >
         {product.quantity}
       </p>
-      <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
-        {product.price}
+      <p
+        data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
+      >
+        {product.price.replace('.', ',')}
       </p>
-      <p data-testid={ `customer_products__element-card-price-<${product.id}>` }>
-        {Number(product.subtotal)}
+      <p
+        data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
+      >
+        {(product.subtotal)}
       </p>
 
       {/* Botão para remover o item, ao ser clicado percorre productsArray e atualiza a quantidade */}
       <button
         type="button"
-        data-testid={ `customer_products__button-card-rm-item-<${product.id}>` }
+        data-testid={ `customer_checkout__element-order-table-remove-${index}` }
         onClick={ () => handleRemoveItem() }
       >
         Remover
@@ -54,7 +62,7 @@ CartItemCard.propTypes = {
   product: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
-    price: propTypes.number.isRequired,
+    price: propTypes.string.isRequired,
     subtotal: propTypes.string.isRequired,
     quantity: propTypes.number.isRequired,
   }).isRequired,

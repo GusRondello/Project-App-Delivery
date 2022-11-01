@@ -46,9 +46,9 @@ function LoginForm() {
       return navigate('/login');
     }
 
-    const { token, role, name } = response;
+    const { id, token, role, name } = response;
+    saveUserInfo({ id, name, email, role, token });
 
-    saveUserInfo({ name, email, role, token });
     if (role === 'seller') {
       return navigate('/seller/orders/');
     }

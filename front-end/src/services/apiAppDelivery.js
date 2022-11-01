@@ -15,8 +15,8 @@ async function singIn(email, password) {
   try {
     const { data, status, statusText } = await api.post('/login', { email, password });
     console.log(data, status, statusText);
-    const { role, name } = jwt(data.token);
-    return { token: data.token, role, name, email };
+    const { role, name, id } = jwt(data.token);
+    return { token: data.token, role, name, email, id };
   } catch (err) {
     console.log(err.response.status);
     console.log(err.response.data.message);
@@ -71,6 +71,30 @@ async function getProducts(token) {
   }
 }
 
+// função axios que retorna os detalhes do pedido
+async function getSalle(token, id) {
+  try {
+    const axiosToken = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const { data: sale, status, statusText } = await api
+      .get(`/customer/orders/${id}`, axiosToken);
+    console.log(sale, status, statusText);
+    return sale;
+  } catch (err) {
+    console.log(err.response.status);
+    console.log(err.response.data.message);
+    console.log(err);
+    return {
+      error: true,
+      status: err.response.status,
+      message: err.response.data.message,
+    };
+  }
+}
+
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
 async function sendOrder(token, requisition) {
   try {
@@ -80,7 +104,7 @@ async function sendOrder(token, requisition) {
       },
     };
     const { data, status, statusText } = await api
-      .post('/customer/orders', { requisition }, axiosToken);
+      .post('/customer/checkout', { ...requisition }, axiosToken);
     console.log(data, status, statusText);
     return data;
   } catch (err) {
@@ -95,4 +119,4 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder };
+export { singIn, register, getProducts, sendOrder, getSalle };

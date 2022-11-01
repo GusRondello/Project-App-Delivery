@@ -23,8 +23,8 @@ function RegisterForm() {
       return;
     }
 
-    const { token, role } = response;
-    saveUserInfo({ name, email, role, token });
+    const { token, role, id } = response;
+    saveUserInfo({ id, name, email, role, token });
 
     return navigate('/customer/products');
   };
