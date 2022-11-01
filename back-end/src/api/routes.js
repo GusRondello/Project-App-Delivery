@@ -18,3 +18,5 @@ router.get('/customer/orders/:id', saleController.getOrderById);
 router.patch('/customer/orders/:id', saleController.updateOrderStatus);
 
 module.exports = router;
+
+// Fluxo vendedor
