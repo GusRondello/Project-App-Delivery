@@ -15,5 +15,6 @@ router.get('/customer/products', productController.getAll);
 router.post('/customer/checkout', middlewares.validation(schemas.sale), saleController.create);
 router.get('/customer/orders', saleController.getUserOrders);
 router.get('/customer/orders/:id', saleController.getOrderById);
+router.patch('/customer/orders/:id', saleController.updateOrderStatus);
 
 module.exports = router;

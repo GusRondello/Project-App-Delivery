@@ -1,3 +1,4 @@
+const boom = require('@hapi/boom');
 const { saleService } = require('../services');
 
 const create = async (req, res, _next) => {
@@ -38,8 +39,20 @@ const getOrderById = async (req, res, _next) => {
   return res.status(200).json(order);
 };
 
+const updateOrderStatus = async (req, res, _next) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  
+  if (!status) throw boom.badRequest('status is required');
+
+  const updateOrder = await saleService.updateOrderStatus({ id, status });
+  
+  return res.status(200).json(updateOrder);
+};
+
 module.exports = {
   create,
   getUserOrders,
   getOrderById,
+  updateOrderStatus,
 };
