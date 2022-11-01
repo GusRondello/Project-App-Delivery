@@ -9,19 +9,21 @@ const { saleService } = require('../../services');
 const { tokenHelper } = require('../../helpers');
 const testController = require('../helpers/testController');
 const { saleController } = require('../../controllers');
-const { saleMock, createSaleDataMock, salesUserMock } = require('../mocks/saleMock');
+const { saleMock, createSaleDataMock, salesUserMock, saleUpdated } = require('../mocks/saleMock');
 
 
 describe('Sale controller', () => {
   let createStub;
   let getUserOrdersStub;
   let getOrderByIdStub;
+  let updateOrderStatusStub;
   let token;
 
   before(() => {
     createStub = sinon.stub(saleService, 'create');
     getUserOrdersStub = sinon.stub(saleService, 'getUserOrders');
     getOrderByIdStub = sinon.stub(saleService, 'getOrderById');
+    updateOrderStatusStub = sinon.stub(saleService, 'updateOrderStatus');
 
     token = tokenHelper.createToken({
       id: 1,
@@ -35,6 +37,7 @@ describe('Sale controller', () => {
     createStub.restore();
     getUserOrdersStub.restore();
     getOrderByIdStub.restore();
+    updateOrderStatusStub.restore();
   });
 
   describe('create', () => {
@@ -84,7 +87,6 @@ describe('Sale controller', () => {
         expect(result.error)
           .to.be.instanceof(Error)
           .and.to.haveOwnProperty('message', 'Response locals user variable was not defined');
-
       });
     });
   });
@@ -100,6 +102,32 @@ describe('Sale controller', () => {
         expect(response.status).to.be.equal(200);
         expect(response.body).to.be.an('object');
         expect(response.body).to.be.eql(salesUserMock[0]);
+      });
+    });
+  });
+
+  describe('updateOrderStatus', () => {
+    before(() => updateOrderStatusStub.resolves(saleUpdated));
+
+    describe('Success', () => {
+  
+      it('should return code 200 and a object in the response body', async () => {
+        const response = await testController(saleController.updateOrderStatus, { params: { id: 1 }, body: { status: 'Entregue' }});
+    
+        expect(response.status).to.be.equal(200);
+        expect(response.body).to.be.an('object');
+        expect(response.body).to.be.eql(saleUpdated);
+      });
+    });
+
+    describe('Failure', () => {
+  
+      it('should return an error', async () => {
+        const result = await testController(saleController.updateOrderStatus, { params: { id: 1 }, body: {} });
+    
+        expect(result.error)
+          .to.be.instanceof(Error)
+          .and.to.haveOwnProperty('message', 'Status is required');
       });
     });
   });

@@ -43,7 +43,7 @@ const updateOrderStatus = async (req, res, _next) => {
   const { id } = req.params;
   const { status } = req.body;
   
-  if (!status) throw boom.badRequest('status is required');
+  if (!status) throw boom.badRequest('Status is required');
 
   const updateOrder = await saleService.updateOrderStatus({ id, status });
   
