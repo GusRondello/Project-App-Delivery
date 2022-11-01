@@ -19,9 +19,10 @@ const create = async ({ products, ...data }) => {
   return saleCreated;
 };
 
-const getUserOrders = async (userId) => {
+const getUserOrders = async ({ id, role }) => {
+  const key = role === 'customer' ? 'userId' : 'sellerId';
   const findUserOrders = await Sale.findAll({
-    where: { userId },
+    where: { [key]: id },
   });
   return findUserOrders;
 };
