@@ -1,5 +1,5 @@
 const boom = require('@hapi/boom');
-const { Sale, SaleProduct } = require('../database/models');
+const { Sale, SaleProduct, Product } = require('../database/models');
 
 const create = async ({ products, ...data }) => {
   const saleCreated = await Sale.create({
@@ -23,11 +23,17 @@ const getUserOrders = async (userId) => {
   const findUserOrders = await Sale.findAll({
     where: { userId },
   });
+
   return findUserOrders;
 };
 
 const getOrderById = async (id) => {
-  const orderFound = await Sale.findByPk(id);
+  const orderFound = await Sale.findOne({
+    where: { id },
+    include: [
+      { model: Product, as: 'products', through: { attributes: [] } },
+    ],
+  });
 
   if (!orderFound) throw boom.notFound('Order not found');
 
