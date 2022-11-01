@@ -27,7 +27,7 @@ const getUserOrders = async (userId) => {
 };
 
 const getOrderById = async (id) => {
-  const orderFound = Sale.findByPk(id);
+  const orderFound = await Sale.findByPk(id);
 
   if (!orderFound) throw boom.notFound('Order not found');
 
