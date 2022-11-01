@@ -50,6 +50,7 @@ function CheckoutComponent() {
         return { id, quantity };
       }),
     };
+
     const response = await sendOrder(token, order);
     if (response.error === true) {
       setErrorMessage(response.message);

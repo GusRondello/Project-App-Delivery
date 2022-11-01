@@ -64,7 +64,7 @@ function CustomerProvider({ children }) {
         const priceString = price.toString();
         return { ...product, price: priceString };
       });
-      console.log('productsWithQtdAndPrice', productsWithQtdAndPrice);
+      // console.log('productsWithQtdAndPrice', productsWithQtdAndPrice);
       combineWithLocalStorageQtd(productsWithQtdAndPrice);
       // setProductsArray(productsWithQtd);
     }
