@@ -3,20 +3,20 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../context/CustomerContext';
 import getTotalPrice from '../helpers/getTotalPrice';
-import { sendOrder } from '../services';
+import { sendOrder, getSellers } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
 import CheckoutTable from './CheckoutTable';
 
-const sellers = [
-  {
-    id: 1,
-    name: 'Sandra',
-  },
-  {
-    id: 2,
-    name: 'Maria',
-  },
-];
+// const sellers = [
+//   {
+//     id: 1,
+//     name: 'Sandra',
+//   },
+//   {
+//     id: 2,
+//     name: 'Maria',
+//   },
+// ];
 
 function CheckoutComponent() {
   const [items, setItems] = useState([]);
@@ -25,6 +25,7 @@ function CheckoutComponent() {
     street: '',
     number: '',
   });
+  const [sellers, setSellers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState(sellers[0].id);
 
   const navigate = useNavigate();
@@ -33,6 +34,18 @@ function CheckoutComponent() {
   useEffect(() => {
     setItems(cartItems);
   }, [cartItems]);
+
+  // useEffect responsável por receber os dados da salle da api
+  useEffect(() => {
+    async function fetchSellers() {
+      const { token } = GetUserInfo();
+      const data = await getSellers(token);
+      console.log('data', data);
+
+      setSellers(data);
+    }
+    fetchSellers();
+  }, []);
 
   const handleCheckout = async () => {
     const { id: userId, token } = GetUserInfo();

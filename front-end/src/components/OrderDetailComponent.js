@@ -39,7 +39,7 @@ function OrderDetailComponent() {
   //   setItems(cartItems);
   // }, [cartItems]);
 
-  // useEffect responsável por receber os dados da salle da api
+  // useEffect responsável por receber os detales da order da api
   useEffect(() => {
     async function fetchOrder() {
       const { token } = GetUserInfo();

@@ -130,6 +130,23 @@ async function getAllOrders(token) {
   return orders.data;
 }
 
+async function getSellers(token) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ orders = await api
+    .get('/customer/sellers', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
+}
+
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
 async function sendOrder(token, requisition) {
   try {
@@ -154,4 +171,4 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder, getOrder, getAllOrders };
+export { singIn, register, getProducts, sendOrder, getOrder, getAllOrders, getSellers };
