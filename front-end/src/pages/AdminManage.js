@@ -2,25 +2,28 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import SelectField from '../components/SelectField';
 import TextField from '../components/TextField';
+import getUserInfo from '../helpers/getUserInfo';
 import { validateEmail, validateMinLength } from '../helpers/validators';
+import { registerAsAdmin as registerAsAdminService } from '../services';
 
 const MIN_NAME_LENGTH = 12;
 const MIN_PASSWORD_LENGTH = 6;
 
 function AdminManage() {
   const [form, setForm] = useState({
+    serverError: '',
     valid: false,
     values: {
       name: '',
       email: '',
       password: '',
-      type: 'customer',
+      role: 'customer',
     },
     errors: {
       name: true,
       email: true,
       password: true,
-      type: false,
+      role: false,
     },
   });
 
@@ -34,6 +37,7 @@ function AdminManage() {
         const valid = Object.values(errors).every((it) => it === false);
 
         return {
+          ...state,
           valid,
           errors,
           values: { ...state.values, [name]: value },
@@ -42,11 +46,35 @@ function AdminManage() {
     };
   }
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const { token } = getUserInfo();
+    const { name, email, password, role } = form.values;
+    const response = await registerAsAdminService(
+      { name, email, password, role },
+      token,
+    );
+
+    if (response.error) {
+      setForm((state) => ({ ...state, serverError: response.message }));
+    } else {
+      setForm((state) => ({ ...state, serverError: '' }));
+    }
+  }
+
+  console.log(form);
+
   return (
     <div>
       <Header />
-      <form>
+      <form onSubmit={ handleSubmit }>
         <h2>Cadastrar novo usuário</h2>
+        {form.serverError && (
+          <p data-testid="admin_manage__element-invalid-register">
+            {form.serverError}
+          </p>
+        )}
         <fieldset>
           <TextField
             name="name"
@@ -77,7 +105,7 @@ function AdminManage() {
             ) }
           />
           <SelectField
-            name="type"
+            name="role"
             label="Tipo"
             testId="admin_manage__select-role"
             options={ [
@@ -85,8 +113,8 @@ function AdminManage() {
               { value: 'seller', label: 'Vendedor' },
               { value: 'customer', label: 'Cliente' },
             ] }
-            value={ form.values.type }
-            onChange={ handleFormChange('type') }
+            value={ form.values.role }
+            onChange={ handleFormChange('role') }
           />
           <button
             disabled={ !form.valid }

@@ -1,4 +1,5 @@
-const { userService } = require('../services');
+const { tokenHelper } = require("../helpers");
+const { userService } = require("../services");
 
 const login = async (req, res, _next) => {
   const { email, password } = req.body;
@@ -8,8 +9,26 @@ const login = async (req, res, _next) => {
 };
 
 const create = async (req, res, _next) => {
+  const { name, email, password, role } = req.body;
+  const { id } = await userService.create({ name, email, password, role });
+
+  return res.status(201).json({
+    id,
+    name,
+    email,
+    role,
+  });
+};
+
+const createCustomer = async (req, res, _next) => {
   const { name, email, password } = req.body;
-  const token = await userService.create({ name, email, password });
+  const { id, role } = await userService.create({
+    name,
+    email,
+    password,
+    role: "customer",
+  });
+  const token = tokenHelper.createToken({ id, name, email, role });
 
   return res.status(201).json({ token });
 };
@@ -24,4 +43,5 @@ module.exports = {
   login,
   create,
   getSellers,
+  createCustomer,
 };

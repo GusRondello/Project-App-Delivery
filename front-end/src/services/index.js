@@ -1,1 +1,8 @@
-export { singIn, register, getProducts, sendOrder, getSalle } from './apiAppDelivery';
+export {
+  singIn,
+  register,
+  registerAsAdmin,
+  getProducts,
+  sendOrder,
+  getSalle,
+} from './apiAppDelivery';
