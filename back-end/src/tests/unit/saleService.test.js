@@ -84,7 +84,7 @@ describe('Sale service', () => {
 
   describe('getOrderById', () => {
     describe('Success', () => {
-      before(() => findByPkStub.resolves(salesUserMock[1]));
+      before(() => findByPkStub.resolves(saleMock));
 
       it('should return an user sale object', async () => {
         await expect(saleService.getOrderById(2))
