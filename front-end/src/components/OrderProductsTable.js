@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import OrderItemCard from './OrderItemCard';
 import CustomerContext from '../context/CustomerContext';
 
-function OrderTable() {
+function OrderProductsTable() {
   const [items, setItems] = useState([]);
   const { cartItems } = useContext(CustomerContext);
 
@@ -37,4 +37,4 @@ function OrderTable() {
   );
 }
 
-export default OrderTable;
+export default OrderProductsTable;

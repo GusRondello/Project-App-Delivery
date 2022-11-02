@@ -15,8 +15,6 @@ function CartItemCard({ product, index }) {
     });
     setProductsArray(newProductsQtd);
     setIsCartUpdated(true);
-
-    // window.location.reload();
   };
 
   return (

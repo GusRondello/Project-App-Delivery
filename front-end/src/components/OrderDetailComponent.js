@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 // import DetailItemCard from './DetailItemCard';
 import { sendOrder, getOrder } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
-import OrderTable from './OrderTable';
+import OrderProductsTable from './OrderProductsTable';
 
 const sellers = [
   {
@@ -103,7 +103,7 @@ function OrderDetailComponent() {
       )}
       <div>
         {/* Cria uma tabela com o cabeçalho contendo: Item, Descrição, Quantidade, Valor Unitário e Sub Total */}
-        <OrderTable />
+        <OrderProductsTable />
       </div>
       <p data-testid={ `${DATATESTID_46}` }>
         Total:

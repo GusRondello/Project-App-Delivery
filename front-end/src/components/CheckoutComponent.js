@@ -3,10 +3,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../context/CustomerContext';
 import getTotalPrice from '../helpers/getTotalPrice';
-// import getCartItems from '../helpers/getCartItems';
-import CartItemCard from './CartItemCard';
 import { sendOrder } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
+import CheckoutTable from './CheckoutTable';
 
 const sellers = [
   {
@@ -21,7 +20,6 @@ const sellers = [
 
 function CheckoutComponent() {
   const [items, setItems] = useState([]);
-  // const [reload, setReload] = useState(false);
   const { cartItems } = useContext(CustomerContext);
   const [address, setAddress] = useState({
     street: '',
@@ -45,7 +43,7 @@ function CheckoutComponent() {
       totalPrice: totalPriceNumber,
       deliveryAddress: address.street,
       deliveryNumber: address.number,
-      products: cartItems.map((item) => {
+      products: items.map((item) => {
         const { id, quantity } = item;
         return { id, quantity };
       }),
@@ -65,13 +63,7 @@ function CheckoutComponent() {
     <div>
       <h2>Finalizar Pedido</h2>
       <div>
-        <div>
-          {items?.map((product, index) => (
-            <div key={ product.id }>
-              <CartItemCard product={ product } index={ index } />
-            </div>
-          ))}
-        </div>
+        <CheckoutTable />
         <p data-testid="customer_checkout__element-order-total-price">
           Total:
           {` R$ ${totalPrice}`}
