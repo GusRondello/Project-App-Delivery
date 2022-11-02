@@ -84,17 +84,20 @@ function OrderDetailComponent() {
             {' '}
             {order.id}
           </span>
-          <span data-testid={ `${DATATESTID_38}` }>
+          <span>
             P. Vend:
             {' '}
             {/* compara o id do vendedor em order com o id do vendedor em sellers */}
-            {sellers.find((seller) => seller.id === order.sellerId).name}
+            <p data-testid={ `${DATATESTID_38}` }>
+              {sellers.find((seller) => seller.id === order.sellerId).name}
+            </p>
           </span>
           <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
           <span data-testid={ `${DATATESTID_40}${order.id}` }>{order.status}</span>
           <button
             type="button"
             data-testid={ `${DATATESTID_47}` }
+            disabled={ order.status !== 'Em Trânsito' }
             onClick={ () => handleChangeStatus() }
           >
             MARCAR COMO ENTREGUE

@@ -89,19 +89,14 @@ function CustomerProvider({ children }) {
         const { price, quantity } = product;
         return acc + (price * quantity);
       }, 0).toFixed(2).replace('.', ',');
-      console.log('totalPriceCart', totalPriceCart);
-      // o valor de totalPriceCart deve ser separado por vírgula ao invés de ponto
-      // const totalPriceCartString = totalPriceCart.toString().replace('.', ',');
-      // constroi um objeto com duas chaves, uma produtos e outra totalPrice
-      // const cartWithTotalPrice = { products: cartWithSubtotal,
-      //   totalPrice: totalPriceCart };
+      // console.log('totalPriceCart', totalPriceCart);
       console.log('cartWithSubtotal', cartWithSubtotal, totalPriceCart);
       saveCartItems(cartWithSubtotal);
       setCartItems(cartWithSubtotal);
       saveTotalPrice(totalPriceCart);
       setIsCartUpdated(false);
     }
-  }, [productsArray]);
+  }, [productsArray, isCartUpdated]);
 
   const contextValue = useMemo(() => ({
     productsArray,
