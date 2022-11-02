@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import DetailItemCard from './DetailItemCard';
+import OrderItemCard from './OrderItemCard';
 import CustomerContext from '../context/CustomerContext';
 
-function DetailsTable() {
+function OrderTable() {
   const [items, setItems] = useState([]);
   const { cartItems } = useContext(CustomerContext);
 
@@ -24,10 +24,10 @@ function DetailsTable() {
         </thead>
         <tbody>
           {/* Percorre o array de items e renderiza cada item em uma linha da tabela */}
-          {items.map((item, index) => (
-            <DetailItemCard
-              key={ index }
-              product={ item }
+          {items.map((product, index) => (
+            <OrderItemCard
+              key={ product.id }
+              product={ product }
               index={ index }
             />
           ))}
@@ -37,4 +37,4 @@ function DetailsTable() {
   );
 }
 
-export default DetailsTable;
+export default OrderTable;

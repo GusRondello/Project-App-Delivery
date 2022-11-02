@@ -1,17 +1,17 @@
 import React from 'react';
 import Header from '../components/Header';
 import CustomerProvider from '../context/CustomerProvider';
-import SalleDetailComponent from '../components/SalleDetailComponent';
+import OrderDetailComponent from '../components/OrderDetailComponent';
 
-function SalleDetail() {
+function OrderDetail() {
   return (
     <div>
       <CustomerProvider>
         <Header />
-        <SalleDetailComponent />
+        <OrderDetailComponent />
       </CustomerProvider>
     </div>
   );
 }
 
-export default SalleDetail;
+export default OrderDetail;

@@ -2,11 +2,10 @@
 import React, { useEffect, useState/* , useContext */ } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import CustomerContext from '../context/CustomerContext';
-import getTotalPrice from '../helpers/getTotalPrice';
 // import DetailItemCard from './DetailItemCard';
-import { sendOrder, getSalle } from '../services';
+import { sendOrder, getOrder } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
-import DetailsTable from './DetailsTable';
+import OrderTable from './OrderTable';
 
 const sellers = [
   {
@@ -27,15 +26,14 @@ const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
 const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
 const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
 
-function SalleDetailComponent() {
+function OrderDetailComponent() {
   // const [items, setItems] = useState([]);
   // const { cartItems } = useContext(CustomerContext);
-  const [salle, setSalle] = useState([]);
+  const [order, setOrder] = useState([]);
 
   // const { state: { salle } } = useLocation();
 
   const navigate = useNavigate();
-  const totalPrice = getTotalPrice();
   // console.log('totalPrice', totalPrice);
   // useEffect(() => {
   //   setItems(cartItems);
@@ -43,12 +41,12 @@ function SalleDetailComponent() {
 
   // useEffect responsável por receber os dados da salle da api
   useEffect(() => {
-    async function fetchSalle() {
+    async function fetchOrder() {
       const { token } = GetUserInfo();
       const salleId = window.location.pathname.split('/')[3];
       // console.log('salleId', salleId);
       // retorna em uma const error e sale
-      const data = await getSalle(token, salleId);
+      const data = await getOrder(token, salleId);
       // console.log('data', data);
       // if (data.error) {
       //   localStorage.removeItem('user');
@@ -57,9 +55,9 @@ function SalleDetailComponent() {
       const { saleDate } = data;
       const saleDateFormatted = saleDate.split('T')[0].split('-').reverse().join('/');
 
-      setSalle({ ...data, saleDate: saleDateFormatted });
+      setOrder({ ...data, saleDate: saleDateFormatted });
     }
-    fetchSalle();
+    fetchOrder();
   }, []);
 
   const handleChangeStatus = async () => {
@@ -79,21 +77,21 @@ function SalleDetailComponent() {
   return (
     <div>
       <h2>Detalhe do Pedido</h2>
-      {salle && salle.length !== 0 && (
+      {order && order.length !== 0 && (
         <div>
           <span data-testid={ `${DATATESTID_37}` }>
             PEDIDO
             {' '}
-            {salle.id}
+            {order.id}
           </span>
           <span data-testid={ `${DATATESTID_38}` }>
             P. Vend:
             {' '}
-            {/* compara o id do vendedor em salle com o id do vendedor em sellers */}
-            {sellers.find((seller) => seller.id === salle.sellerId).name}
+            {/* compara o id do vendedor em order com o id do vendedor em sellers */}
+            {sellers.find((seller) => seller.id === order.sellerId).name}
           </span>
-          <span data-testid={ `${DATATESTID_39}` }>{salle.saleDate}</span>
-          <span data-testid={ `${DATATESTID_40}${salle.id}` }>{salle.status}</span>
+          <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
+          <span data-testid={ `${DATATESTID_40}${order.id}` }>{order.status}</span>
           <button
             type="button"
             data-testid={ `${DATATESTID_47}` }
@@ -105,14 +103,14 @@ function SalleDetailComponent() {
       )}
       <div>
         {/* Cria uma tabela com o cabeçalho contendo: Item, Descrição, Quantidade, Valor Unitário e Sub Total */}
-        <DetailsTable />
+        <OrderTable />
       </div>
       <p data-testid={ `${DATATESTID_46}` }>
         Total:
-        {` R$ ${totalPrice}`}
+        {` R$ ${order.totalPrice}`}
       </p>
     </div>
   );
 }
 
-export default SalleDetailComponent;
+export default OrderDetailComponent;

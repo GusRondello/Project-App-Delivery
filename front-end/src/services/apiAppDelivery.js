@@ -96,21 +96,38 @@ async function getProducts(token) {
 //   }
 // }
 
-async function getSalle(token, id) {
+async function getOrder(token, id) {
   const axiosToken = {
     headers: {
       Authorization: token,
     },
   };
-  const /* { data: sale, status, statusText } */ salle = await api
+  const /* { data: sale, status, statusText } */ order = await api
     .get(`/customer/orders/${id}`, axiosToken).catch((err) => {
       console.error(err);
       return err;
     });
-  if (!salle.data) {
-    return salle.response.data;
+  if (!order.data) {
+    return order.response.data;
   }
-  return salle.data;
+  return order.data;
+}
+
+async function getAllOrders(token) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ orders = await api
+    .get('/customer/orders', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
 }
 
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
@@ -137,4 +154,4 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder, getSalle };
+export { singIn, register, getProducts, sendOrder, getOrder, getAllOrders };

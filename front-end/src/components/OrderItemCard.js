@@ -8,7 +8,7 @@ const DATATESTID_43 = `${CUSTOMER}element-order-table-quantity-`;
 const DATATESTID_44 = `${CUSTOMER}element-order-table-unit-price-`;
 const DATATESTID_45 = `${CUSTOMER}element-order-table-sub-total-`;
 
-function DetailItemCard({ product, index }) {
+function OrderItemCard({ product, index }) {
   return (
     <tr key={ index }>
       <td data-testid={ `${DATATESTID_41}${index}` }>{index + 1}</td>
@@ -22,7 +22,7 @@ function DetailItemCard({ product, index }) {
   );
 }
 
-DetailItemCard.propTypes = {
+OrderItemCard.propTypes = {
   product: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
@@ -33,4 +33,4 @@ DetailItemCard.propTypes = {
   index: propTypes.number.isRequired,
 };
 
-export default DetailItemCard;
+export default OrderItemCard;
