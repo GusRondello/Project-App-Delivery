@@ -1,57 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
-import CustomerContext from '../context/CustomerContext';
+
+const DATATESTID_33 = 'customer_orders__element-order-id-';
+const DATATESTID_34 = 'customer_orders__element-delivery-status-';
+const DATATESTID_35 = 'customer_orders__element-order-date-';
+const DATATESTID_36 = 'customer_orders__element-card-price-';
 
 function OrderCard({ order }) {
-  const { productsArray, setProductsArray,
-    setIsCartUpdated } = useContext(CustomerContext);
-
-  const handleRemoveItem = () => {
-    const newProductsQtd = productsArray.map((item) => {
-      if (item.id === product.id) {
-        return { ...item, quantity: 0 };
-      }
-      return item;
-    });
-    setProductsArray(newProductsQtd);
-    setIsCartUpdated(true);
-  };
-
   return (
     <div>
       {/* {console.log(product)} */}
-      <p
-        data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
-      >
-        {index + 1}
+      <p data-testid={ `${DATATESTID_33}${order.id}` }>{order.id}</p>
+      <p data-testid={ `${DATATESTID_34}${order.id}` }>{order.status}</p>
+      <p data-testid={ `${DATATESTID_35}${order.id}` }>{order.saleDate}</p>
+      <p data-testid={ `${DATATESTID_36}${order.id}` }>
+        {order.totalPrice.replace('.', ',')}
       </p>
-      <p data-testid={ `customer_checkout__element-order-table-name-${index}` }>
-        {product.name}
-      </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
-      >
-        {product.quantity}
-      </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
-      >
-        {product.price.replace('.', ',')}
-      </p>
-      <p
-        data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
-      >
-        {(product.subtotal)}
-      </p>
-
-      {/* Botão para remover o item, ao ser clicado percorre productsArray e atualiza a quantidade */}
-      <button
-        type="button"
-        data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-        onClick={ () => handleRemoveItem() }
-      >
-        Remover
-      </button>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState/* , useContext */ } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import CustomerContext from '../context/CustomerContext';
 // import getTotalPrice from '../helpers/getTotalPrice';
 // import DetailItemCard from './DetailItemCard';
@@ -20,7 +20,7 @@ function OrdersComponent() {
   // const { cartItems } = useContext(CustomerContext);
   const [orders, setOrders] = useState([]);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const totalPrice = getTotalPrice();
   // console.log('totalPrice', totalPrice);
   // useEffect(() => {
@@ -32,9 +32,15 @@ function OrdersComponent() {
     async function fetchSalle() {
       const { token } = GetUserInfo();
       const data = await getAllOrders(token);
-      console.log('data', data);
 
-      setOrders(data);
+      const ordersDateFormatted = data.map((order) => {
+        const { saleDate } = order;
+        const saleDateFormatted = saleDate.split('T')[0].split('-').reverse().join('/');
+        return { ...order, saleDate: saleDateFormatted };
+      });
+      // console.log('ordersDateFormatted', ordersDateFormatted);
+
+      setOrders(ordersDateFormatted);
     }
     fetchSalle();
   }, []);
@@ -44,9 +50,13 @@ function OrdersComponent() {
       {orders && orders.length !== 0 && (
         // Faz um map de orders chamando o componente OrderCard
         orders.map((order) => (
-          <div key={ order.id }>
+          <button
+            key={ order.id }
+            type="button"
+            onClick={ () => navigate(`/customer/orders/${order.id}`) }
+          >
             <OrderCard order={ order } />
-          </div>
+          </button>
         ))
       )}
     </div>
