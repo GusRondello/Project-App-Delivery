@@ -39,8 +39,17 @@ const create = async (userData) => {
   return token;
 };
 
+const getSellers = async () => {
+  const sellers = await User.findAll({
+    where: { role: 'seller' },
+  });
+
+  return sellers;
+};
+
 module.exports = {
   login,
   create,
   checkUserExistsBy,
+  getSellers,
 };

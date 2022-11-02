@@ -2,7 +2,7 @@ const salesUserMock = [
   {
     id: 1,
     userId: 3,
-    sellerId: 2,
+    sellerId: 1,
     totalPrice: 190.56,
     deliveryAddress: 'Rua da Pamonha',
     deliveryNumber: '27',
@@ -22,7 +22,7 @@ const salesUserMock = [
   {
     id: 3,
     userId: 3,
-    sellerId: 2,
+    sellerId: 3,
     totalPrice: 190.56,
     deliveryAddress: 'Rua da Pamonha',
     deliveryNumber: '27',
@@ -55,8 +55,20 @@ const createSaleDataMock = {
   ]
 };
 
+const saleUpdated = {
+  id: 1,
+  userId: 3,
+  sellerId: 2,
+  totalPrice: 190.56,
+  deliveryAddress: 'Rua da Pamonha',
+  deliveryNumber: '27',
+  saleDate: '2022-10-29T05:04:07.000Z',
+  status: 'Entregue'
+}
+
 module.exports = {
   salesUserMock,
   saleMock,
   createSaleDataMock,
+  saleUpdated,
 };
