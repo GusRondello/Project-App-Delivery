@@ -1,22 +1,10 @@
-// Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CustomerContext from '../context/CustomerContext';
-import getTotalPrice from '../helpers/getTotalPrice';
-import { sendOrder/* , getSellers */ } from '../services';
-import getUserInfo from '../helpers/getUserInfo';
+import CustomerContext from '../../context/CustomerContext';
+import getTotalPrice from '../../helpers/getTotalPrice';
+import { sendOrder } from '../../services';
+import getUserInfo from '../../helpers/getUserInfo';
 import CheckoutTable from './CheckoutTable';
-
-// const sellers = [
-//   {
-//     id: 1,
-//     name: 'Sandra',
-//   },
-//   {
-//     id: 2,
-//     name: 'Maria',
-//   },
-// ];
 
 function CheckoutComponent() {
   const [items, setItems] = useState([]);
@@ -26,7 +14,6 @@ function CheckoutComponent() {
     street: '',
     number: '',
   });
-  // const [sellers, setSellers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState(sellers[0]?.id || '');
 
   const navigate = useNavigate();
@@ -37,10 +24,6 @@ function CheckoutComponent() {
     setSellersArray(sellers);
     setSelectedSeller(sellers[0]?.id);
   }, [cartItems, sellers]);
-
-  // useEffect(() => {
-
-  // }, [sellers]);
 
   const handleCheckout = async () => {
     const { id: userId, token } = getUserInfo();

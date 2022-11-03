@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import CustomerContext from '../context/CustomerContext';
+import CustomerContext from '../../context/CustomerContext';
 import CheckoutItemCard from './CheckoutItemCard';
 
 function CheckoutProductsTable() {

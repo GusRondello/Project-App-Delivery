@@ -9,7 +9,6 @@ const DATATESTID_36 = 'customer_orders__element-card-price-';
 function OrderCard({ order }) {
   return (
     <div>
-      {/* {console.log(product)} */}
       <p data-testid={ `${DATATESTID_33}${order.id}` }>{order.id}</p>
       <p data-testid={ `${DATATESTID_34}${order.id}` }>{order.status}</p>
       <p data-testid={ `${DATATESTID_35}${order.id}` }>{order.saleDate}</p>

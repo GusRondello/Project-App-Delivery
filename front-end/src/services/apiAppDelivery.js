@@ -5,12 +5,6 @@ const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
-// const axiosToken = {
-//   headers: {
-//     Authorization: `Token: ${token}`,
-//   },
-// };
-
 async function singIn(email, password) {
   try {
     const { data, status, statusText } = await api.post('/login', { email, password });

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import CustomerProvider from '../context/CustomerProvider';
-import OrdersComponent from '../components/OrdersComponent';
+import OrdersComponent from '../components/Orders/OrdersComponent';
 
 function Orders() {
   return (
