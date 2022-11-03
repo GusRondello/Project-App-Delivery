@@ -1,5 +1,5 @@
-const { tokenHelper } = require("../helpers");
-const { userService } = require("../services");
+const { tokenHelper } = require('../helpers');
+const { userService } = require('../services');
 
 const login = async (req, res, _next) => {
   const { email, password } = req.body;
@@ -26,7 +26,7 @@ const createCustomer = async (req, res, _next) => {
     name,
     email,
     password,
-    role: "customer",
+    role: 'customer',
   });
   const token = tokenHelper.createToken({ id, name, email, role });
 
