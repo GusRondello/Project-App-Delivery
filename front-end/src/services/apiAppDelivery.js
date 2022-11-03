@@ -56,7 +56,8 @@ async function getProducts(token) {
         Authorization: token,
       },
     };
-    const { data, status, statusText } = await api.get('/customer/products', axiosToken);
+    const { data, status, statusText } = await api
+      .get('/customer/products', axiosToken);
     console.log(data, status, statusText);
     return data;
   } catch (err) {
@@ -72,27 +73,78 @@ async function getProducts(token) {
 }
 
 // função axios que retorna os detalhes do pedido
-async function getSalle(token, id) {
-  try {
-    const axiosToken = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    const { data: sale, status, statusText } = await api
-      .get(`/customer/orders/${id}`, axiosToken);
-    console.log(sale, status, statusText);
-    return sale;
-  } catch (err) {
-    console.log(err.response.status);
-    console.log(err.response.data.message);
-    console.log(err);
-    return {
-      error: true,
-      status: err.response.status,
-      message: err.response.data.message,
-    };
+// async function getSalle(token, id) {
+//   try {
+//     const axiosToken = {
+//       headers: {
+//         Authorization: token,
+//       },
+//     };
+//     const /* { data: sale, status, statusText } */ xablau = await api
+//       .get(`/customer/orders/${id}999`, axiosToken);
+//     console.log('xablau', xablau);
+//     return sale;
+//   } catch (err) {
+//     console.log(err.response.status);
+//     console.log(err.response.data.message);
+//     console.log(err);
+//     return {
+//       error: true,
+//       status: err.response.status,
+//       message: err.response.data.message,
+//     };
+//   }
+// }
+
+async function getOrder(token, id) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ order = await api
+    .get(`/customer/orders/${id}`, axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!order.data) {
+    return order.response.data;
   }
+  return order.data;
+}
+
+async function getAllOrders(token) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ orders = await api
+    .get('/customer/orders', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
+}
+
+async function getSellers(token) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ orders = await api
+    .get('/customer/sellers', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
 }
 
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
@@ -119,4 +171,4 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder, getSalle };
+export { singIn, register, getProducts, sendOrder, getOrder, getAllOrders, getSellers };
