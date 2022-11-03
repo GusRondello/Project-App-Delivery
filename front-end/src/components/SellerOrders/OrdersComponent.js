@@ -25,6 +25,7 @@ function OrdersComponent() {
 
         return { ...order, saleDate: date };
       });
+      console.log('ordersDateFormatted', ordersDateFormatted);
 
       setOrders(ordersDateFormatted);
     }

@@ -18,7 +18,15 @@ function OrderProductsTable() {
       const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
       const { products } = await getOrderProducts(token, salleId);
-      setItems(products);
+
+      const productsWithSubTotal = products.map((item) => {
+        // const quantity = product.quantity;
+        const { price, product } = item;
+        const subTotal = (price * product.quantity).toFixed(2).replace('.', ',');
+        return { ...item, subTotal };
+      });
+      // console.log('productsWithSubTotal', productsWithSubTotal);
+      setItems(productsWithSubTotal);
     }
     fetchOrderProducts();
   }, []);

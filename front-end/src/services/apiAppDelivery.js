@@ -10,11 +10,11 @@ const api = axios.create({
 */
 async function singIn(email, password) {
   try {
-    const { data, status, statusText } = await api.post('/login', {
+    const { data/* , status, statusText */ } = await api.post('/login', {
       email,
       password,
     });
-    console.log(data, status, statusText);
+    // console.log(data, status, statusText);
     const { role, name, id } = jwt(data.token);
     return { token: data.token, role, name, email, id };
   } catch (err) {
@@ -51,6 +51,9 @@ async function register(name, email, password) {
   }
 }
 
+/*
+    ** Admin functions
+*/
 async function registerAsAdmin(user, token) {
   const { name, email, password, role } = user;
 
@@ -83,6 +86,9 @@ async function registerAsAdmin(user, token) {
   }
 }
 
+/*
+    ** Customer functions
+*/
 // função axios que retorna os produtos do banco de dados
 async function getProducts(token) {
   try {
@@ -224,25 +230,6 @@ async function getAllSellerOrders(token) {
   }
   return orders.data;
 }
-
-// função axios que envia o id do pedido ao banco de dados e recebe os produtos do pedido
-// async function getOrderProducts(token, id) {
-//   const axiosToken = {
-//     headers: {
-//       Authorization: token,
-//     },
-//   };
-//   const /* { data: sale, status, statusText } */ order = await api
-//     .get(`/seller/orders/${id}`, axiosToken).catch((err) => {
-//       console.error(err);
-//       return err;
-//     });
-//   // console.log('order', order.data);
-//   if (!order.data) {
-//     return order.response.data;
-//   }
-//   return order.data;
-// }
 
 export { singIn, register, getProducts, sendOrder, getCustomerOrder,
   getAllCustomerOrders, getAllSellerOrders, getSellers, getSellerOrder,

@@ -6,13 +6,12 @@ import { sendOrder, getSellerOrder } from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
 
-const CUSTOMER = 'customer_order_details__';
-const DATATESTID_37 = `${CUSTOMER}element-order-details-label-order-id`;
-// const DATATESTID_38 = `${CUSTOMER}element-order-details-label-seller-name`;
-const DATATESTID_39 = `${CUSTOMER}element-order-details-label-order-date`;
-const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
-const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
-const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
+const DATATESTID_53 = 'seller_order_details__element-order-details-label-order-';
+const DATATESTID_54 = 'seller_order_details__element-order-details-label-delivery-status';
+const DATATESTID_55 = 'seller_order_details__element-order-details-label-order-date';
+const DATATESTID_56 = 'seller_order_details__button-preparing-check';
+const DATATESTID_57 = 'seller_order_details__button-dispatch-check';
+const DATATESTID_63 = 'seller_order_details__element-order-total-price';
 
 function OrderDetailComponent() {
   const [order, setOrder] = useState([]);
@@ -40,7 +39,6 @@ function OrderDetailComponent() {
 
   const handleChangeStatus = async (status) => {
     const { id: userId, token } = getUserInfo();
-    // prepara a constante oderStatusUpdated com o status recebido por parâmetro
     const oderStatusUpdated = {
       userId,
       status,
@@ -58,16 +56,16 @@ function OrderDetailComponent() {
       <h2>Detalhe do Pedido</h2>
       {order && order.length !== 0 && (
         <div>
-          <span data-testid={ `${DATATESTID_37}` }>
+          <span data-testid={ `${DATATESTID_53}` }>
             PEDIDO
             {' '}
             {order.id}
           </span>
-          <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
-          <span data-testid={ `${DATATESTID_40}${order.id}` }>{order.status}</span>
+          <span data-testid={ `${DATATESTID_55}` }>{order.saleDate}</span>
+          <span data-testid={ `${DATATESTID_54}${order.id}` }>{order.status}</span>
           <button
             type="button"
-            data-testid={ `${DATATESTID_47}` }
+            data-testid={ `${DATATESTID_56}` }
             disabled={ order.status !== 'Pendente' }
             onClick={ () => handleChangeStatus('Preparando') }
           >
@@ -75,7 +73,7 @@ function OrderDetailComponent() {
           </button>
           <button
             type="button"
-            data-testid={ `${DATATESTID_47}` }
+            data-testid={ `${DATATESTID_57}` }
             disabled={ order.status !== 'Preparando' }
             onClick={ () => handleChangeStatus('Em Trânsito') }
           >
@@ -88,7 +86,7 @@ function OrderDetailComponent() {
       </div>
       <span>
         Total: R$
-        <span data-testid={ `${DATATESTID_46}` }>
+        <span data-testid={ `${DATATESTID_63}` }>
           {order.totalPrice?.replace('.', ',')}
         </span>
       </span>
