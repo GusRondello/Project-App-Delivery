@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import OrderItemCard from './OrderItemCard';
-import CustomerContext from '../context/CustomerContext';
+import CustomerContext from '../../context/CustomerContext';
 
 function OrderProductsTable() {
   const [items, setItems] = useState([]);

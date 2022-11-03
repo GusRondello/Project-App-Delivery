@@ -1,12 +1,26 @@
 import React from "react";
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import renderWithRouter from "./helpers/renderWithRouter";
 import App from '../App'
-import Login from "../pages/Login";
 
 describe('Testa a página de login', () => {
   it('Testa se a página é renderizada', () => {
     renderWithRouter(<App/>)
+  });
+
+  it('Testa se a tela de login contém os elementos', () => {
+    renderWithRouter(<App />, ['/login']);
+    const emailInput = screen.getByTestId('common_login__input-email');
+    const passwordInput = screen.getByTestId('common_login__input-password');
+    const loginButton = screen.getByTestId('common_login__button-login');
+    const registerButton = screen.getByTestId('common_login__button-register');
+    // const errorMessage = screen.getByTestId('common_login__element-invalid-email');
+
+    expect(emailInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(loginButton).toBeInTheDocument();
+    expect(registerButton).toBeInTheDocument();
+    // expect(errorMessage).toBeInTheDocument();
   });
 
   // it('Testa se o texto "Login" é renderizado', () => {
@@ -109,3 +123,4 @@ describe('Testa a página de login', () => {
   //   expect(setupHeaderEl).toBeInTheDocument();
   // });
 });
+
