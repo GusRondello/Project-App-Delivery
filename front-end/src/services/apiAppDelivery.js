@@ -245,4 +245,5 @@ async function getAllSellerOrders(token) {
 // }
 
 export { singIn, register, getProducts, sendOrder, getCustomerOrder,
-  getAllCustomerOrders, getAllSellerOrders, getSellers, getSellerOrder };
+  getAllCustomerOrders, getAllSellerOrders, getSellers, getSellerOrder,
+  registerAsAdmin };
