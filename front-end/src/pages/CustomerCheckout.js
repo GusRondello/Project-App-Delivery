@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import CheckoutComponent from '../components/Checkout/CheckoutComponent';
+import CheckoutComponent from '../components/CustomerCheckout/CheckoutComponent';
 
 function Checkout() {
   return (

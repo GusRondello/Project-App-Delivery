@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import OrderDetailComponent from '../components/OrderDetail/OrderDetailComponent';
+import OrderDetailComponent from '../components/CustomerOrderDetail/OrderDetailComponent';
 
 function OrderDetail() {
   return (

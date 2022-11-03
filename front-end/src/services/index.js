@@ -1,2 +1,2 @@
-export { singIn, register, getProducts, sendOrder,
-  getOrder, getAllOrders, getSellers } from './apiAppDelivery';
+export { singIn, register, getProducts, sendOrder, getOrder,
+  getAllCustomerOrders, getAllSellerOrders, getSellers } from './apiAppDelivery';

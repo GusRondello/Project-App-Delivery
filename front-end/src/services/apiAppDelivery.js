@@ -107,7 +107,7 @@ async function getOrder(token, id) {
   return order.data;
 }
 
-async function getAllOrders(token) {
+async function getAllCustomerOrders(token) {
   const axiosToken = {
     headers: {
       Authorization: token,
@@ -124,6 +124,24 @@ async function getAllOrders(token) {
   return orders.data;
 }
 
+async function getAllSellerOrders(token) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ orders = await api
+    .get('/seller/orders', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
+}
+
+// função axios que recebe todos os vendedores cadastrados no banco de dados
 async function getSellers(token) {
   const axiosToken = {
     headers: {
@@ -165,4 +183,5 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder, getOrder, getAllOrders, getSellers };
+export { singIn, register, getProducts, sendOrder, getOrder,
+  getAllCustomerOrders, getAllSellerOrders, getSellers };

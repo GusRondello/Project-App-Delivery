@@ -3,6 +3,7 @@ import React from 'react';
 // import rockGlass from './images/rockGlass.svg';
 import Common from './routers/Common';
 import Customer from './routers/Customer';
+import Seller from './routers/Seller';
 import DeliveryProvider from './context/DeliveryProvider';
 import CustomerProvider from './context/CustomerProvider';
 
@@ -14,6 +15,7 @@ function App() {
         <CustomerProvider>
           <Customer />
         </CustomerProvider>
+        <Seller />
       </DeliveryProvider>
     </div>
   );

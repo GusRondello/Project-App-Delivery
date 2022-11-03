@@ -59,7 +59,7 @@ function LoginForm() {
     saveUserInfo({ id, name, email, role, token });
 
     if (role === 'seller') {
-      return navigate('/seller/orders/');
+      return navigate('/seller/orders');
     }
     if (role === 'administrator') {
       return navigate('/admin/manage');

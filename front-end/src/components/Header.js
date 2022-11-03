@@ -31,6 +31,18 @@ function Header() {
           </button>
         </div>
       )}
+      {role === 'seller'
+      && (
+        <div>
+          <button
+            type="button"
+            data-testid="seller_orders__element-navbar-link-orders"
+            onClick={ () => navigate('/seller/orders') }
+          >
+            Pedidos
+          </button>
+        </div>
+      )}
       <div>
         <p data-testid="customer_products__element-navbar-user-full-name">
           { name }

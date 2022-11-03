@@ -1,9 +1,6 @@
-import React, { useEffect, useState/* , useContext */ } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import CustomerContext from '../context/CustomerContext';
-// import getTotalPrice from '../helpers/getTotalPrice';
-// import DetailItemCard from './DetailItemCard';
-import { getAllOrders } from '../../services';
+import { getAllSellerOrders } from '../../services';
 import GetUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
@@ -15,7 +12,7 @@ function OrdersComponent() {
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
-      const data = await getAllOrders(token);
+      const data = await getAllSellerOrders(token);
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
@@ -38,7 +35,7 @@ function OrdersComponent() {
           <button
             key={ order.id }
             type="button"
-            onClick={ () => navigate(`/customer/orders/${order.id}`) }
+            onClick={ () => navigate(`/seller/orders/${order.id}`) }
           >
             <OrderCard order={ order } />
           </button>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Products from '../pages/Products';
-import Checkout from '../pages/Checkout';
-import Orders from '../pages/Orders';
-import OrderDetail from '../pages/OrderDetail';
+import Products from '../pages/CustomerProducts';
+import Checkout from '../pages/CustomerCheckout';
+import Orders from '../pages/CustomerOrders';
+import OrderDetail from '../pages/CustomerOrderDetail';
 
 function Customer() {
   return (
