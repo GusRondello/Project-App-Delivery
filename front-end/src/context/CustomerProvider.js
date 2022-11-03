@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from './CustomerContext';
-import { getProducts } from '../services/apiAppDelivery';
+import { getProducts, getSellers } from '../services/apiAppDelivery';
 import saveCartItems from '../helpers/saveCartItems';
 import getCartItems from '../helpers/getCartItems';
 import saveTotalPrice from '../helpers/saveTotalPrice';
@@ -14,9 +14,21 @@ function CustomerProvider({ children }) {
   const [productsArray, setProductsArray] = useState([]);
   const [isCartUpdated, setIsCartUpdated] = useState(false);
   const [cartItems, setCartItems] = useState(getCartItems() || []);
-  // const [totalPrice, setTotalPrice] = useState(0);
+  const [sellers, setSellers] = useState([]);
 
   const navigate = useNavigate();
+
+  // useEffect responsável por receber os sellers da api
+  useEffect(() => {
+    async function fetchSellers() {
+      const { token } = getUserInfo();
+      const data = await getSellers(token);
+
+      setSellers(data);
+      // setSelectedSeller(data[0].id);
+    }
+    fetchSellers();
+  }, []);
 
   // useEffect que vigia a alteração do productsArray e atualiza o totalPrice baseado
   // no valor e quantidade de cada produto no carrinho
@@ -103,6 +115,7 @@ function CustomerProvider({ children }) {
     setProductsArray,
     setIsCartUpdated,
     cartItems,
+    sellers,
   }), [productsArray, isCartUpdated]);
 
   CustomerProvider.propTypes = {

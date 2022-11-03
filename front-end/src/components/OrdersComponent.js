@@ -7,27 +7,11 @@ import { getAllOrders } from '../services';
 import GetUserInfo from '../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
-// const CUSTOMER = 'customer_order_details__';
-// const DATATESTID_37 = `${CUSTOMER}element-order-details-label-order-id`;
-// const DATATESTID_38 = `${CUSTOMER}element-order-details-label-seller-name`;
-// const DATATESTID_39 = `${CUSTOMER}element-order-details-label-order-date`;
-// const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
-// const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
-// const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
-
 function OrdersComponent() {
-  // const [items, setItems] = useState([]);
-  // const { cartItems } = useContext(CustomerContext);
   const [orders, setOrders] = useState([]);
 
   const navigate = useNavigate();
-  // const totalPrice = getTotalPrice();
-  // console.log('totalPrice', totalPrice);
-  // useEffect(() => {
-  //   setItems(cartItems);
-  // }, [cartItems]);
 
-  // useEffect responsável por receber as orders da api
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
@@ -35,10 +19,11 @@ function OrdersComponent() {
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
-        const saleDateFormatted = saleDate.split('T')[0].split('-').reverse().join('/');
-        return { ...order, saleDate: saleDateFormatted };
+        const date = new Date(saleDate)
+          .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
+
+        return { ...order, saleDate: date };
       });
-      // console.log('ordersDateFormatted', ordersDateFormatted);
 
       setOrders(ordersDateFormatted);
     }

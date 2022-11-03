@@ -3,8 +3,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../context/CustomerContext';
 import getTotalPrice from '../helpers/getTotalPrice';
-import { sendOrder, getSellers } from '../services';
-import GetUserInfo from '../helpers/getUserInfo';
+import { sendOrder/* , getSellers */ } from '../services';
+import getUserInfo from '../helpers/getUserInfo';
 import CheckoutTable from './CheckoutTable';
 
 // const sellers = [
@@ -20,35 +20,30 @@ import CheckoutTable from './CheckoutTable';
 
 function CheckoutComponent() {
   const [items, setItems] = useState([]);
-  const { cartItems } = useContext(CustomerContext);
+  const [sellersArray, setSellersArray] = useState([]);
+  const { cartItems, sellers } = useContext(CustomerContext);
   const [address, setAddress] = useState({
     street: '',
     number: '',
   });
-  const [sellers, setSellers] = useState([]);
-  const [selectedSeller, setSelectedSeller] = useState(sellers[0].id);
+  // const [sellers, setSellers] = useState([]);
+  const [selectedSeller, setSelectedSeller] = useState(sellers[0]?.id || '');
 
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
   // console.log('totalPrice', totalPrice);
   useEffect(() => {
     setItems(cartItems);
-  }, [cartItems]);
+    setSellersArray(sellers);
+    setSelectedSeller(sellers[0]?.id);
+  }, [cartItems, sellers]);
 
-  // useEffect responsável por receber os dados da salle da api
-  useEffect(() => {
-    async function fetchSellers() {
-      const { token } = GetUserInfo();
-      const data = await getSellers(token);
-      console.log('data', data);
+  // useEffect(() => {
 
-      setSellers(data);
-    }
-    fetchSellers();
-  }, []);
+  // }, [sellers]);
 
   const handleCheckout = async () => {
-    const { id: userId, token } = GetUserInfo();
+    const { id: userId, token } = getUserInfo();
     const totalPriceNumber = Number(totalPrice.replace(',', '.'));
     const order = {
       userId,
@@ -95,7 +90,7 @@ function CheckoutComponent() {
             value={ selectedSeller }
             onChange={ (e) => setSelectedSeller(e.target.value) }
           >
-            {sellers.map((seller) => (
+            {sellersArray.map((seller) => (
               <option
                 key={ seller.id }
                 value={ seller.id }
