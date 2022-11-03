@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
+import getUserInfo from '../helpers/getUserInfo';
 import { singIn as singInService } from '../services';
 // import DeliveryContext from '../context/DeliveryContext ';
 
@@ -14,6 +15,14 @@ function LoginForm() {
   // const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
+
+  // useEffect que chama a função getUserInfo e caso existir user redireciona para a rota /customer/products
+  useEffect(() => {
+    const userInfo = getUserInfo();
+    if (userInfo) {
+      return navigate('/customer/products');
+    }
+  }, []);
 
   const validateLogin = () => {
     const re = /\S+@\S+\.\S+/;

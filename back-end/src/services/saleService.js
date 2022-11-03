@@ -4,7 +4,6 @@ const { Sale, SaleProduct, Product } = require('../database/models');
 const create = async ({ products, ...data }) => {
   const saleCreated = await Sale.create({
     ...data,
-    saleDate: new Date(),
     status: 'Pendente',
   });
 
