@@ -12,9 +12,11 @@ function OrdersComponent() {
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
-      console.log('token', token);
       const data = await getAllSellerOrders(token);
-      console.log('data', data);
+      // if (data.error === true) {
+      //   setErrorMessage(data.message);
+      //   return navigate('/login');
+      // }
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;

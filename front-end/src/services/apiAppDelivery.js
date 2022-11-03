@@ -5,6 +5,9 @@ const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
+/*
+    ** Common functions
+*/
 async function singIn(email, password) {
   try {
     const { data, status, statusText } = await api.post('/login', { email, password });
@@ -42,6 +45,9 @@ async function register(name, email, password) {
   }
 }
 
+/*
+    ** Customer functions
+*/
 // função axios que retorna os produtos do banco de dados
 async function getProducts(token) {
   try {
@@ -66,31 +72,7 @@ async function getProducts(token) {
   }
 }
 
-// função axios que retorna os detalhes do pedido
-// async function getSalle(token, id) {
-//   try {
-//     const axiosToken = {
-//       headers: {
-//         Authorization: token,
-//       },
-//     };
-//     const /* { data: sale, status, statusText } */ xablau = await api
-//       .get(`/customer/orders/${id}999`, axiosToken);
-//     console.log('xablau', xablau);
-//     return sale;
-//   } catch (err) {
-//     console.log(err.response.status);
-//     console.log(err.response.data.message);
-//     console.log(err);
-//     return {
-//       error: true,
-//       status: err.response.status,
-//       message: err.response.data.message,
-//     };
-//   }
-// }
-
-async function getOrder(token, id) {
+async function getCustomerOrder(token, id) {
   const axiosToken = {
     headers: {
       Authorization: token,
@@ -115,23 +97,6 @@ async function getAllCustomerOrders(token) {
   };
   const /* { data: sale, status, statusText } */ orders = await api
     .get('/customer/orders', axiosToken).catch((err) => {
-      console.error(err);
-      return err;
-    });
-  if (!orders.data) {
-    return orders.response.data;
-  }
-  return orders.data;
-}
-
-async function getAllSellerOrders(token) {
-  const axiosToken = {
-    headers: {
-      Authorization: token,
-    },
-  };
-  const /* { data: sale, status, statusText } */ orders = await api
-    .get('/seller/orders', axiosToken).catch((err) => {
       console.error(err);
       return err;
     });
@@ -183,5 +148,63 @@ async function sendOrder(token, requisition) {
   }
 }
 
-export { singIn, register, getProducts, sendOrder, getOrder,
-  getAllCustomerOrders, getAllSellerOrders, getSellers };
+/*
+    ** Seller functions
+*/
+// função axios que recebe as informações do pedido para o vendedor
+async function getSellerOrder(token, id) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ order = await api
+    .get(`/seller/orders/${id}`, axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!order.data) {
+    return order.response.data;
+  }
+  return order.data;
+}
+
+// função axios que recebe todos os pedidos para o vendedor
+async function getAllSellerOrders(token) {
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const /* { data: sale, status, statusText } */ orders = await api
+    .get('/seller/orders', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
+}
+
+// função axios que envia o id do pedido ao banco de dados e recebe os produtos do pedido
+// async function getOrderProducts(token, id) {
+//   const axiosToken = {
+//     headers: {
+//       Authorization: token,
+//     },
+//   };
+//   const /* { data: sale, status, statusText } */ order = await api
+//     .get(`/seller/orders/${id}`, axiosToken).catch((err) => {
+//       console.error(err);
+//       return err;
+//     });
+//   // console.log('order', order.data);
+//   if (!order.data) {
+//     return order.response.data;
+//   }
+//   return order.data;
+// }
+
+export { singIn, register, getProducts, sendOrder, getCustomerOrder,
+  getAllCustomerOrders, getAllSellerOrders, getSellers, getSellerOrder };

@@ -36,7 +36,7 @@ function Header() {
         <div>
           <button
             type="button"
-            data-testid="seller_orders__element-navbar-link-orders"
+            data-testid="xablau/* seller_orders__element-navbar-link-orders */"
             onClick={ () => navigate('/seller/orders') }
           >
             Pedidos
