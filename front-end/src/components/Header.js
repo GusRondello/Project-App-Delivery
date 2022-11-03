@@ -12,8 +12,7 @@ function Header() {
 
   return (
     <div>
-      {role === 'customer'
-      && (
+      {role === 'customer' && (
         <div>
           <button
             type="button"
@@ -43,9 +42,20 @@ function Header() {
           </button>
         </div>
       )}
+      {role === 'administrator' && (
+        <div>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => navigate('/admin/manage') }
+          >
+            Gerenciar Usuários
+          </button>
+        </div>
+      )}
       <div>
         <p data-testid="customer_products__element-navbar-user-full-name">
-          { name }
+          {name}
         </p>
       </div>
       <div>

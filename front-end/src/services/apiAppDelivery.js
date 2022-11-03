@@ -10,7 +10,10 @@ const api = axios.create({
 */
 async function singIn(email, password) {
   try {
-    const { data, status, statusText } = await api.post('/login', { email, password });
+    const { data, status, statusText } = await api.post('/login', {
+      email,
+      password,
+    });
     console.log(data, status, statusText);
     const { role, name, id } = jwt(data.token);
     return { token: data.token, role, name, email, id };
@@ -28,8 +31,11 @@ async function singIn(email, password) {
 
 async function register(name, email, password) {
   try {
-    const { data, status, statusText } = await api
-      .post('/register', { name, email, password });
+    const { data, status, statusText } = await api.post('/register', {
+      name,
+      email,
+      password,
+    });
     console.log(data, status, statusText);
     const { role } = jwt(data.token);
     return { token: data.token, role, name, email };
@@ -45,9 +51,38 @@ async function register(name, email, password) {
   }
 }
 
-/*
-    ** Customer functions
-*/
+async function registerAsAdmin(user, token) {
+  const { name, email, password, role } = user;
+
+  try {
+    const { data, status, statusText } = await api.post(
+      '/admin/create-user',
+      {
+        name,
+        email,
+        password,
+        role,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+    console.log(data, status, statusText);
+    return data;
+  } catch (err) {
+    console.log(err.response.status);
+    console.log(err.response.data.message);
+    console.log(err);
+    return {
+      error: true,
+      status: err.response.status,
+      message: err.response.data.message,
+    };
+  }
+}
+
 // função axios que retorna os produtos do banco de dados
 async function getProducts(token) {
   try {
@@ -132,8 +167,11 @@ async function sendOrder(token, requisition) {
         Authorization: token,
       },
     };
-    const { data, status, statusText } = await api
-      .post('/customer/checkout', { ...requisition }, axiosToken);
+    const { data, status, statusText } = await api.post(
+      '/customer/checkout',
+      { ...requisition },
+      axiosToken,
+    );
     console.log(data, status, statusText);
     return data;
   } catch (err) {
