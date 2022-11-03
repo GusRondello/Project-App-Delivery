@@ -31,7 +31,7 @@ const getOrderById = async (id) => {
   const orderFound = await Sale.findOne({
     where: { id },
     include: [
-      { model: Product, as: 'products', through: { attributes: [] } },
+      { model: Product, as: 'products', through: { attributes: ['quantity'], as: 'product' } },
     ],
   });
 
