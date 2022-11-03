@@ -1,12 +1,15 @@
 import React from 'react';
 import Header from '../components/Header';
 import CheckoutComponent from '../components/CustomerCheckout/CheckoutComponent';
+import CustomerProvider from '../context/CustomerProvider';
 
 function Checkout() {
   return (
     <div>
       <Header />
-      <CheckoutComponent />
+      <CustomerProvider>
+        <CheckoutComponent />
+      </CustomerProvider>
     </div>
   );
 }

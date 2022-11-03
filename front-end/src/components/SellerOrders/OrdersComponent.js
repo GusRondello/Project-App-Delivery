@@ -12,7 +12,9 @@ function OrdersComponent() {
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
+      console.log('token', token);
       const data = await getAllSellerOrders(token);
+      console.log('data', data);
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;

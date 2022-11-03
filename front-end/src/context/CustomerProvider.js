@@ -21,6 +21,7 @@ function CustomerProvider({ children }) {
   // useEffect responsável por receber os sellers da api
   useEffect(() => {
     async function fetchSellers() {
+      console.log('fetchSellers');
       const { token } = getUserInfo();
       const data = await getSellers(token);
 

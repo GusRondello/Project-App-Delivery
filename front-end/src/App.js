@@ -5,16 +5,14 @@ import Common from './routers/Common';
 import Customer from './routers/Customer';
 import Seller from './routers/Seller';
 import DeliveryProvider from './context/DeliveryProvider';
-import CustomerProvider from './context/CustomerProvider';
+// import CustomerProvider from './context/CustomerProvider';
 
 function App() {
   return (
     <div className="App">
       <DeliveryProvider>
         <Common />
-        <CustomerProvider>
-          <Customer />
-        </CustomerProvider>
+        <Customer />
         <Seller />
       </DeliveryProvider>
     </div>
