@@ -136,7 +136,7 @@ async function getAllCustomerOrders(token) {
       Authorization: token,
     },
   };
-  const /* { data: sale, status, statusText } */ orders = await api
+  const orders = await api
     .get('/customer/orders', axiosToken).catch((err) => {
       console.error(err);
       return err;
@@ -167,29 +167,21 @@ async function getSellers(token) {
 
 // função axios que envia o pedido para o banco de dados e recebe o id do pedido
 async function sendOrder(token, requisition) {
-  try {
-    const axiosToken = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    const { data, status, statusText } = await api.post(
-      '/customer/checkout',
-      { ...requisition },
-      axiosToken,
-    );
-    console.log(data, status, statusText);
-    return data;
-  } catch (err) {
-    console.log(err.response.status);
-    console.log(err.response.data.message);
-    console.log(err);
-    return {
-      error: true,
-      status: err.response.status,
-      message: err.response.data.message,
-    };
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const order = await api
+    .post('/customer/checkout', { ...requisition }, axiosToken)
+    .catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!order.data) {
+    return order.response.data;
   }
+  return order.data;
 }
 
 /*
@@ -202,7 +194,7 @@ async function getSellerOrder(token, id) {
       Authorization: token,
     },
   };
-  const /* { data: sale, status, statusText } */ order = await api
+  const order = await api
     .get(`/seller/orders/${id}`, axiosToken).catch((err) => {
       console.error(err);
       return err;
@@ -220,8 +212,28 @@ async function getAllSellerOrders(token) {
       Authorization: token,
     },
   };
-  const /* { data: sale, status, statusText } */ orders = await api
+  const orders = await api
     .get('/seller/orders', axiosToken).catch((err) => {
+      console.error(err);
+      return err;
+    });
+  if (!orders.data) {
+    return orders.response.data;
+  }
+  return orders.data;
+}
+
+// função axios que envia a atualização do pedido para o banco de dados
+async function sendOrderStatusUpdate(token, requisition, id) {
+  console.log('requisition', requisition, id);
+  const axiosToken = {
+    headers: {
+      Authorization: token,
+    },
+  };
+  const orders = await api
+    .patch(`/seller/orders/${id}`, { ...requisition }, axiosToken)
+    .catch((err) => {
       console.error(err);
       return err;
     });
@@ -233,4 +245,4 @@ async function getAllSellerOrders(token) {
 
 export { singIn, register, getProducts, sendOrder, getCustomerOrder,
   getAllCustomerOrders, getAllSellerOrders, getSellers, getSellerOrder,
-  registerAsAdmin };
+  registerAsAdmin, sendOrderStatusUpdate };

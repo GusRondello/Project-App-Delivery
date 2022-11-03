@@ -1,3 +1,3 @@
 export { singIn, register, registerAsAdmin, getProducts, sendOrder, getCustomerOrder,
   getAllCustomerOrders, getAllSellerOrders, getSellers,
-  getSellerOrder } from './apiAppDelivery';
+  getSellerOrder, sendOrderStatusUpdate } from './apiAppDelivery';
