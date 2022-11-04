@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
-import { singIn as singInService } from '../services';
+import { singIn as singInService } from '../services/apiAppDelivery';
 // import DeliveryContext from '../context/DeliveryContext ';
 
 function LoginForm() {

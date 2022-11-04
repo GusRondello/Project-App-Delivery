@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DeliveryContext from '../context/DeliveryContext ';
 import saveUserInfo from '../helpers/saveUserInfo';
-import { register as registerService } from '../services';
+import { register as registerService } from '../services/apiAppDelivery';
 
 function RegisterForm() {
   const [isDisabled, setIsDisabled] = useState(true);

@@ -2,7 +2,7 @@ import React, { /* useContext,  */useEffect, useState } from 'react';
 import OrderItemCard from './OrderItemCard';
 // import CustomerContext from '../../context/CustomerContext';
 import getUserInfo from '../../helpers/getUserInfo';
-import { getSellerOrder as getOrderProducts } from '../../services';
+import { getSellerOrder as getOrderProducts } from '../../services/apiAppDelivery';
 
 function OrderProductsTable() {
   const [items, setItems] = useState([]);

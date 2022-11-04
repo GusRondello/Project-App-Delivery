@@ -4,7 +4,7 @@ import SelectField from '../components/SelectField';
 import TextField from '../components/TextField';
 import getUserInfo from '../helpers/getUserInfo';
 import { validateEmail, validateMinLength } from '../helpers/validators';
-import { registerAsAdmin as registerAsAdminService } from '../services';
+import { registerAsAdmin as registerAsAdminService } from '../services/apiAppDelivery';
 
 const MIN_NAME_LENGTH = 12;
 const MIN_PASSWORD_LENGTH = 6;

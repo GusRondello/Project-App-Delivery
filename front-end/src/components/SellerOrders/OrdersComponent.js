@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllSellerOrders } from '../../services';
+import { getAllSellerOrders } from '../../services/apiAppDelivery';
 import GetUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 

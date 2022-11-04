@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
 import getTotalPrice from '../../helpers/getTotalPrice';
-import { sendOrder } from '../../services';
+import { sendOrder } from '../../services/apiAppDelivery';
 import getUserInfo from '../../helpers/getUserInfo';
 import CheckoutTable from './CheckoutTable';
 

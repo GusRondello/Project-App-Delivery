@@ -1,3 +1,3 @@
-export { singIn, register, registerAsAdmin, getProducts, sendOrder, getCustomerOrder,
-  getAllCustomerOrders, getAllSellerOrders, getSellers,
-  getSellerOrder, sendOrderStatusUpdate } from './apiAppDelivery';
+import * as api from './apiAppDelivery';
+
+export default { ...api };

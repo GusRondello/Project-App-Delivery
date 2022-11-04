@@ -1,10 +1,11 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DetailItemCard from './DetailItemCard';
-import { sendOrderStatusUpdate, getSellerOrder } from '../../services';
+import { sendOrderStatusUpdate, getSellerOrder } from '../../services/apiAppDelivery';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
+import DeliveryContext from '../../context/DeliveryContext ';
 
 const DATATESTID_53 = 'seller_order_details__element-order-details-label-order-id';
 const DATATESTID_54 = 'seller_order_details__element-order-details-label-delivery-status';
@@ -16,8 +17,10 @@ const DATATESTID_63 = 'seller_order_details__element-order-total-price';
 function OrderDetailComponent() {
   const [order, setOrder] = useState([]);
   const [orderStatus, setOrderStatus] = useState('');
+  const { isStatusUpdated, setIsStatusUpdated } = useContext(DeliveryContext);
 
   const navigate = useNavigate();
+  console.log('orderStatus', orderStatus);
 
   // useEffect responsável por receber os detales da order da api
   useEffect(() => {
@@ -34,9 +37,10 @@ function OrderDetailComponent() {
 
       setOrder({ ...data, saleDate: date });
       setOrderStatus(data.status);
+      setIsStatusUpdated(false);
     }
     fetchOrder();
-  }, []);
+  }, [isStatusUpdated]);
 
   const handleChangeStatus = async (status) => {
     console.log('status', status);
@@ -47,6 +51,7 @@ function OrderDetailComponent() {
     };
 
     const response = await sendOrderStatusUpdate(token, oderStatusUpdated, salleId);
+    setIsStatusUpdated(true);
     console.log('response', response);
     if (response.error === true) {
       setErrorMessage(response.message);
