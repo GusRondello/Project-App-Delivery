@@ -4,15 +4,12 @@ import PropTypes from 'prop-types';
 import DeliveryContext from './DeliveryContext ';
 
 function DeliveryProvider({ children }) {
-  const [customerName, setCustomerName] = useState([]);
-  const [cart, setCart] = useState('xablau');
+  const [isStatusUpdated, setIsStatusUpdated] = useState(false);
+  console.log('isStatusUpdated', isStatusUpdated);
 
   const contextValue = useMemo(() => ({
-    customerName,
-    setCustomerName,
-    cart,
-    setCart,
-  }), [customerName, cart]);
+    isStatusUpdated, setIsStatusUpdated,
+  }), [isStatusUpdated]);
 
   DeliveryProvider.propTypes = {
     children: PropTypes.node.isRequired,

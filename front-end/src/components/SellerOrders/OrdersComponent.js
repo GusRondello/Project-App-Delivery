@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllSellerOrders } from '../../services';
+import { getAllSellerOrders } from '../../services/apiAppDelivery';
 import GetUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
@@ -25,6 +25,7 @@ function OrdersComponent() {
 
         return { ...order, saleDate: date };
       });
+      console.log('ordersDateFormatted', ordersDateFormatted);
 
       setOrders(ordersDateFormatted);
     }

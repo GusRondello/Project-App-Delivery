@@ -2,7 +2,7 @@ import React, { /* useContext,  */useEffect, useState } from 'react';
 import OrderItemCard from './OrderItemCard';
 // import CustomerContext from '../../context/CustomerContext';
 import getUserInfo from '../../helpers/getUserInfo';
-import { getSellerOrder as getOrderProducts } from '../../services';
+import { getSellerOrder as getOrderProducts } from '../../services/apiAppDelivery';
 
 function OrderProductsTable() {
   const [items, setItems] = useState([]);
@@ -18,7 +18,15 @@ function OrderProductsTable() {
       const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
       const { products } = await getOrderProducts(token, salleId);
-      setItems(products);
+
+      const productsWithSubTotal = products.map((item) => {
+        // const quantity = product.quantity;
+        const { price, product } = item;
+        const subTotal = (price * product.quantity).toFixed(2).replace('.', ',');
+        return { ...item, subTotal };
+      });
+      // console.log('productsWithSubTotal', productsWithSubTotal);
+      setItems(productsWithSubTotal);
     }
     fetchOrderProducts();
   }, []);

@@ -1,52 +1,58 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DetailItemCard from './DetailItemCard';
-import { sendOrder, getSellerOrder } from '../../services';
+import { sendOrderStatusUpdate, getSellerOrder } from '../../services/apiAppDelivery';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
+import DeliveryContext from '../../context/DeliveryContext ';
 
-const CUSTOMER = 'customer_order_details__';
-const DATATESTID_37 = `${CUSTOMER}element-order-details-label-order-id`;
-// const DATATESTID_38 = `${CUSTOMER}element-order-details-label-seller-name`;
-const DATATESTID_39 = `${CUSTOMER}element-order-details-label-order-date`;
-const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
-const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
-const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
+const DATATESTID_53 = 'seller_order_details__element-order-details-label-order-id';
+const DATATESTID_54 = 'seller_order_details__element-order-details-label-delivery-status';
+const DATATESTID_55 = 'seller_order_details__element-order-details-label-order-date';
+const DATATESTID_56 = 'seller_order_details__button-preparing-check';
+const DATATESTID_57 = 'seller_order_details__button-dispatch-check';
+const DATATESTID_63 = 'seller_order_details__element-order-total-price';
 
 function OrderDetailComponent() {
   const [order, setOrder] = useState([]);
+  const [orderStatus, setOrderStatus] = useState('');
+  const { isStatusUpdated, setIsStatusUpdated } = useContext(DeliveryContext);
 
   const navigate = useNavigate();
+  console.log('orderStatus', orderStatus);
 
   // useEffect responsável por receber os detales da order da api
   useEffect(() => {
     async function fetchOrder() {
       const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
-      console.log('salleId', salleId);
 
       const data = await getSellerOrder(token, salleId);
-      console.log('data', data);
+      // console.log('data', data);
       const { saleDate } = data;
 
       const date = new Date(saleDate)
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
       setOrder({ ...data, saleDate: date });
+      setOrderStatus(data.status);
+      setIsStatusUpdated(false);
     }
     fetchOrder();
-  }, []);
+  }, [isStatusUpdated]);
 
   const handleChangeStatus = async (status) => {
-    const { id: userId, token } = getUserInfo();
-    // prepara a constante oderStatusUpdated com o status recebido por parâmetro
+    console.log('status', status);
+    const { token } = getUserInfo();
+    const salleId = window.location.pathname.split('/')[3];
     const oderStatusUpdated = {
-      userId,
       status,
     };
 
-    const response = await sendOrder(token, oderStatusUpdated);
+    const response = await sendOrderStatusUpdate(token, oderStatusUpdated, salleId);
+    setIsStatusUpdated(true);
+    console.log('response', response);
     if (response.error === true) {
       setErrorMessage(response.message);
       return navigate('/login');
@@ -58,26 +64,28 @@ function OrderDetailComponent() {
       <h2>Detalhe do Pedido</h2>
       {order && order.length !== 0 && (
         <div>
-          <span data-testid={ `${DATATESTID_37}` }>
+          <span data-testid={ `${DATATESTID_53}` }>
             PEDIDO
             {' '}
             {order.id}
           </span>
-          <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
-          <span data-testid={ `${DATATESTID_40}${order.id}` }>{order.status}</span>
+          <span data-testid={ `${DATATESTID_55}` }>{order.saleDate}</span>
+          <span data-testid={ `${DATATESTID_54}${order.id}` }>{order.status}</span>
           <button
             type="button"
-            data-testid={ `${DATATESTID_47}` }
-            disabled={ order.status !== 'Pendente' }
+            data-testid={ `${DATATESTID_56}` }
+            disabled={ orderStatus !== 'Pendente' }
             onClick={ () => handleChangeStatus('Preparando') }
+            // value={ orderStatus }
           >
             PREPARAR PEDIDO
           </button>
           <button
             type="button"
-            data-testid={ `${DATATESTID_47}` }
-            disabled={ order.status !== 'Preparando' }
+            data-testid={ `${DATATESTID_57}` }
+            disabled={ orderStatus !== 'Preparando' }
             onClick={ () => handleChangeStatus('Em Trânsito') }
+            // value={ orderStatus }
           >
             SAIU PARA ENTREGA
           </button>
@@ -88,7 +96,7 @@ function OrderDetailComponent() {
       </div>
       <span>
         Total: R$
-        <span data-testid={ `${DATATESTID_46}` }>
+        <span data-testid={ `${DATATESTID_63}` }>
           {order.totalPrice?.replace('.', ',')}
         </span>
       </span>

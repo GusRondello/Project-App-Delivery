@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 // import CustomerContext from '../context/CustomerContext';
 // import getTotalPrice from '../helpers/getTotalPrice';
 // import DetailItemCard from './DetailItemCard';
-import { getAllCustomerOrders } from '../../services';
+import { getAllCustomerOrders } from '../../services/apiAppDelivery';
 import GetUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
