@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from './CustomerContext';
-import { getProducts, getSellers } from '../services/apiAppDelivery';
+import api from '../services';
 import saveCartItems from '../helpers/saveCartItems';
 import getCartItems from '../helpers/getCartItems';
 import saveTotalPrice from '../helpers/saveTotalPrice';
@@ -22,7 +22,7 @@ function CustomerProvider({ children }) {
   useEffect(() => {
     async function fetchSellers() {
       const { token } = getUserInfo();
-      const data = await getSellers(token);
+      const data = await api.getSellers(token);
 
       setSellers(data);
       // setSelectedSeller(data[0].id);
@@ -62,7 +62,7 @@ function CustomerProvider({ children }) {
   useEffect(() => {
     async function fetchProducts() {
       const { token } = getUserInfo();
-      const { error, products } = await getProducts(token);
+      const { error, products } = await api.getProducts(token);
       if (error === true) {
         localStorage.removeItem('user');
         return navigate('/login');

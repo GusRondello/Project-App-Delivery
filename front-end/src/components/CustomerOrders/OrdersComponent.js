@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // import getTotalPrice from '../helpers/getTotalPrice';
 // import DetailItemCard from './DetailItemCard';
 import api from '../../services';
-import GetUserInfo from '../../helpers/getUserInfo';
+import getUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
 function OrdersComponent() {
@@ -14,7 +14,7 @@ function OrdersComponent() {
 
   useEffect(() => {
     async function fetchSalle() {
-      const { token } = GetUserInfo();
+      const { token } = getUserInfo();
       const data = await api.getAllCustomerOrders(token);
 
       const ordersDateFormatted = data.map((order) => {

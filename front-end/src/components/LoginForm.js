@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
 import api from '../services';
-// import DeliveryContext from '../context/DeliveryContext ';
 
 function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -28,6 +27,7 @@ function LoginForm() {
     const re = /\S+@\S+\.\S+/;
     const emailValidation = re.test(formLogin.email);
     const PASSWORD_LENGH = 6;
+
     if (emailValidation && formLogin.password.length >= PASSWORD_LENGH) {
       setIsDisabled(false);
     } else {

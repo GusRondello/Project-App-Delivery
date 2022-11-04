@@ -13,11 +13,6 @@ function OrdersComponent() {
     async function fetchSalle() {
       const { token } = GetUserInfo();
       const data = await api.getAllSellerOrders(token);
-      // if (data.error === true) {
-      //   setErrorMessage(data.message);
-      //   return navigate('/login');
-      // }
-
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
         const date = new Date(saleDate)

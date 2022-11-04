@@ -2,9 +2,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
-// import DetailItemCard from './DetailItemCard';
+import DeliveryContext from '../../context/DeliveryContext ';
 import api from '../../services';
-import GetUserInfo from '../../helpers/getUserInfo';
+import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
 
 const CUSTOMER = 'customer_order_details__';
@@ -16,14 +16,14 @@ const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
 const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
 
 function OrderDetailComponent() {
+  const [orderStatus, setOrderStatus] = useState('');
   const [sellersArray, setSellersArray] = useState([]);
-  const { sellers } = useContext(CustomerContext);
   const [order, setOrder] = useState([]);
-
-  // const { state: { salle } } = useLocation();
+  const { sellers } = useContext(CustomerContext);
+  const { isStatusUpdated, setIsStatusUpdated } = useContext(DeliveryContext);
 
   const navigate = useNavigate();
-  // console.log('totalPrice', totalPrice);
+  console.log('orderStatus', orderStatus);
   useEffect(() => {
     setSellersArray(sellers);
   }, [sellers]);
@@ -31,7 +31,7 @@ function OrderDetailComponent() {
   // useEffect responsável por receber os detales da order da api
   useEffect(() => {
     async function fetchOrder() {
-      const { token } = GetUserInfo();
+      const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
 
       const data = await api.getCustomerOrder(token, salleId);
@@ -41,18 +41,22 @@ function OrderDetailComponent() {
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
       setOrder({ ...data, saleDate: date });
+      setOrderStatus(data.status);
+      setIsStatusUpdated(false);
     }
     fetchOrder();
-  }, []);
+  }, [isStatusUpdated]);
 
   const handleChangeStatus = async () => {
-    const { id: userId, token } = GetUserInfo();
+    const { token } = getUserInfo();
+    const salleId = window.location.pathname.split('/')[3];
     const oderStatusUpdated = {
-      userId,
       status: 'Entregue',
     };
 
-    const response = await api.sendOrder(token, oderStatusUpdated);
+    const response = await api.updateOrderStatus(token, oderStatusUpdated, salleId);
+    setIsStatusUpdated(true);
+
     if (response.error === true) {
       setErrorMessage(response.message);
       return navigate('/login');
@@ -82,7 +86,7 @@ function OrderDetailComponent() {
           <button
             type="button"
             data-testid={ `${DATATESTID_47}` }
-            disabled={ order.status !== 'Em Trânsito' }
+            disabled={ orderStatus !== 'Em Trânsito' }
             onClick={ () => handleChangeStatus() }
           >
             MARCAR COMO ENTREGUE

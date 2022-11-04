@@ -4,6 +4,7 @@ import React from 'react';
 import Common from './routers/Common';
 import Customer from './routers/Customer';
 import Seller from './routers/Seller';
+import Admin from './routers/Admin';
 import DeliveryProvider from './context/DeliveryProvider';
 // import CustomerProvider from './context/CustomerProvider';
 
@@ -14,6 +15,7 @@ function App() {
         <Common />
         <Customer />
         <Seller />
+        <Admin />
       </DeliveryProvider>
     </div>
   );
