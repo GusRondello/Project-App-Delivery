@@ -1,11 +1,10 @@
-import { render } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { render } from '@testing-library/react';
 
-function renderWithRouter(component, historyEntries = ['/']) {
+const renderWithRouter = (component, historyEntries = ['/']) => {
   const history = createMemoryHistory({ initialEntries: historyEntries });
-
   return {
     ...render(
       <MemoryRouter history={ history } initialEntries={ historyEntries }>
@@ -14,6 +13,6 @@ function renderWithRouter(component, historyEntries = ['/']) {
     ),
     history,
   };
-}
+};
 
 export default renderWithRouter;

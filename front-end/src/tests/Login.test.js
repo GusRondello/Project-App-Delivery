@@ -67,7 +67,7 @@ describe('Login Page', () => {
     });
   });
 
-  describe('Test sign up', () => {
+  describe('Test sign up button', () => {
     it('should not disable register button', async () => {
       renderWithRouter(<App />, ['/login']);
       const registerButton = screen.getByRole('button', { name: /Não tem uma conta?/i });
@@ -91,7 +91,7 @@ describe('Login Page', () => {
   describe('Test when login request submission fails', () => {
     beforeEach(() => {
       const errorResponse = {
-        error: 'UserNotFound',
+        error: 'NotFound',
         message: 'User not found',
         statusCode: 404
       }
@@ -107,8 +107,6 @@ describe('Login Page', () => {
       userEvent.type(emailInput, 'test@test.com');
       userEvent.type(passwordInput, 'test123456');
   
-      expect(loginButton).not.toBeDisabled();
-  
       userEvent.click(loginButton);
   
       await waitFor(
@@ -120,7 +118,9 @@ describe('Login Page', () => {
 
   describe('Test when login request submission was successful', () => {
     beforeEach(() => {
+      const { products } = mocks.productsMock;
       api.singIn.mockResolvedValue(mocks.userMock.userInfos);
+      api.getProducts.mockResolvedValue({ products });
     });
   
     it('should redirect to products page after submit login forms', async () => {

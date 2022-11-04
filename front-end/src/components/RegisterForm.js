@@ -39,7 +39,6 @@ function RegisterForm() {
   };
 
   const validateRegister = () => {
-    console.log('password', formSignUp.password);
     const PASSWORD_LENGH = 6;
     const NAME_LENGH = 12;
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
