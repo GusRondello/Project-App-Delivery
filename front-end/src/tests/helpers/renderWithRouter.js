@@ -6,12 +6,14 @@ import { MemoryRouter } from 'react-router-dom';
 function renderWithRouter(component, historyEntries = ['/']) {
   const history = createMemoryHistory({ initialEntries: historyEntries });
 
-  return render(
-    <MemoryRouter history={ history } initialEntries={ historyEntries }>
-      {component}
-    </MemoryRouter>,
+  return {
+    ...render(
+      <MemoryRouter history={ history } initialEntries={ historyEntries }>
+        {component}
+      </MemoryRouter>,
+    ),
     history,
-  );
+  };
 }
 
 export default renderWithRouter;

@@ -50,7 +50,7 @@ function LoginForm() {
 
   const singIn = async (email, password) => {
     const response = await api.singIn(email, password);
-
+    console.log(response);
     if (response.error) {
       setErrorMessage(response.message);
       return navigate('/login');
