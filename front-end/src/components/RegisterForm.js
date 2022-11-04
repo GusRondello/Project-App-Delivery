@@ -18,7 +18,7 @@ function RegisterForm() {
   const register = async (event, name, email, password) => {
     event.preventDefault();
     const response = await api.register(name, email, password);
-    if (response.error === true) {
+    if (response.error) {
       setErrorMessage(response.message);
       return;
     }

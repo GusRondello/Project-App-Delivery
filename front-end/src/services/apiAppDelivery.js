@@ -19,9 +19,13 @@ async function singIn(email, password) {
 
     return { token: result.data.token, role, name, email, id };
   } catch (error) {
-    console.log(error?.response?.data);
+    console.log(error);
 
-    return error.response.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -35,11 +39,15 @@ async function register(name, email, password) {
 
     const { role } = jwt(result.data.token);
 
-    return { token: data.token, role, name, email };
+    return { token: result.data.token, role, name, email };
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -60,7 +68,11 @@ async function registerAsAdmin(user, token) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -78,7 +90,11 @@ async function getProducts(token) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -95,7 +111,11 @@ async function getCustomerOrder(token, id) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -112,7 +132,11 @@ async function getAllCustomerOrders(token) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -130,7 +154,11 @@ async function getSellers(token) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -152,7 +180,11 @@ async function sendOrder(token, requisition) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -173,7 +205,11 @@ async function getSellerOrder(token, id) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
 
@@ -191,28 +227,13 @@ async function getAllSellerOrders(token) {
   } catch (error) {
     console.log(error);
 
-    return error?.response?.data;
+    if (error?.response?.data) {
+      return error.response.data;
+    }
+
+    return { error };
   }
 }
-
-// função axios que envia o id do pedido ao banco de dados e recebe os produtos do pedido
-// async function getOrderProducts(token, id) {
-//   const axiosToken = {
-//     headers: {
-//       Authorization: token,
-//     },
-//   };
-//   const /* { data: sale, status, statusText } */ order = await api
-//     .get(`/seller/orders/${id}`, axiosToken).catch((err) => {
-//       console.error(err);
-//       return err;
-//     });
-//   // console.log('order', order.data);
-//   if (!order.data) {
-//     return order.response.data;
-//   }
-//   return order.data;
-// }
 
 export { singIn, register, getProducts, sendOrder, getCustomerOrder,
   getAllCustomerOrders, getAllSellerOrders, getSellers, getSellerOrder,
