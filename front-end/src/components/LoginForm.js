@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
-import { singIn as singInService } from '../services';
+import api from '../services';
 // import DeliveryContext from '../context/DeliveryContext ';
 
 function LoginForm() {
@@ -49,8 +49,9 @@ function LoginForm() {
   };
 
   const singIn = async (email, password) => {
-    const response = await singInService(email, password);
-    if (response.error === true) {
+    const response = await api.singIn(email, password);
+
+    if (response.error) {
       setErrorMessage(response.message);
       return navigate('/login');
     }

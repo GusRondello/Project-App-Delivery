@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllSellerOrders } from '../../services';
+import api from '../../services';
 import GetUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
@@ -12,7 +12,7 @@ function OrdersComponent() {
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
-      const data = await getAllSellerOrders(token);
+      const data = await api.getAllSellerOrders(token);
       // if (data.error === true) {
       //   setErrorMessage(data.message);
       //   return navigate('/login');

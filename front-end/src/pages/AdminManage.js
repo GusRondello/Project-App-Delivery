@@ -4,7 +4,7 @@ import SelectField from '../components/SelectField';
 import TextField from '../components/TextField';
 import getUserInfo from '../helpers/getUserInfo';
 import { validateEmail, validateMinLength } from '../helpers/validators';
-import { registerAsAdmin as registerAsAdminService } from '../services';
+import api from '../services';
 
 const MIN_NAME_LENGTH = 12;
 const MIN_PASSWORD_LENGTH = 6;
@@ -51,7 +51,7 @@ function AdminManage() {
 
     const { token } = getUserInfo();
     const { name, email, password, role } = form.values;
-    const response = await registerAsAdminService(
+    const response = await api.registerAsAdmin(
       { name, email, password, role },
       token,
     );

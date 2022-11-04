@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DeliveryContext from '../context/DeliveryContext ';
 import saveUserInfo from '../helpers/saveUserInfo';
-import { register as registerService } from '../services';
+import api from '../services';
 
 function RegisterForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -17,7 +17,7 @@ function RegisterForm() {
 
   const register = async (event, name, email, password) => {
     event.preventDefault();
-    const response = await registerService(name, email, password);
+    const response = await api.register(name, email, password);
     if (response.error === true) {
       setErrorMessage(response.message);
       return;

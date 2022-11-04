@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DetailItemCard from './DetailItemCard';
-import { sendOrder, getSellerOrder } from '../../services';
+import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
 
@@ -26,7 +26,7 @@ function OrderDetailComponent() {
       const salleId = window.location.pathname.split('/')[3];
       console.log('salleId', salleId);
 
-      const data = await getSellerOrder(token, salleId);
+      const data = await api.getSellerOrder(token, salleId);
       console.log('data', data);
       const { saleDate } = data;
 
@@ -46,7 +46,7 @@ function OrderDetailComponent() {
       status,
     };
 
-    const response = await sendOrder(token, oderStatusUpdated);
+    const response = await api.sendOrder(token, oderStatusUpdated);
     if (response.error === true) {
       setErrorMessage(response.message);
       return navigate('/login');

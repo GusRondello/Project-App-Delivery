@@ -2,7 +2,7 @@ import React, { /* useContext,  */useEffect, useState } from 'react';
 import OrderItemCard from './OrderItemCard';
 // import CustomerContext from '../../context/CustomerContext';
 import getUserInfo from '../../helpers/getUserInfo';
-import { getSellerOrder as getOrderProducts } from '../../services';
+import api from '../../services';
 
 function OrderProductsTable() {
   const [items, setItems] = useState([]);
@@ -17,7 +17,7 @@ function OrderProductsTable() {
     async function fetchOrderProducts() {
       const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
-      const { products } = await getOrderProducts(token, salleId);
+      const { products } = await api.getSellerOrder(token, salleId);
       setItems(products);
     }
     fetchOrderProducts();
