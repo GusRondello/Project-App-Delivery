@@ -29,7 +29,7 @@ describe('Login Page', () => {
       expect(registerButton).toBeInTheDocument();
     });
 
-    it('should not be enable login button when email field value is invalid', async () => {
+    it('should not enable login button when email field value is invalid', async () => {
       renderWithRouter(<App />, ['/login']);
       const emailInput = screen.getByPlaceholderText('Digite seu e-mail');
       const passwordInput = screen.getByPlaceholderText('Digite sua senha');
@@ -41,7 +41,7 @@ describe('Login Page', () => {
       expect(loginButton).toBeDisabled();
     });
 
-    it('should not be enable login button when password field value is invalid', async () => {
+    it('should not enable login button when password field value is invalid', async () => {
       renderWithRouter(<App />, ['/login']);
       const emailInput = screen.getByPlaceholderText('Digite seu e-mail');
       const passwordInput = screen.getByPlaceholderText('Digite sua senha');
@@ -54,7 +54,7 @@ describe('Login Page', () => {
     });
 
       
-    it('should be enable login button when all fields value are valid', async () => {
+    it('should enable login button when all fields values are valid', async () => {
       renderWithRouter(<App />, ['/login']);
       const emailInput = screen.getByPlaceholderText('Digite seu e-mail');
       const passwordInput = screen.getByPlaceholderText('Digite sua senha');
@@ -68,7 +68,7 @@ describe('Login Page', () => {
   });
 
   describe('Test sign up', () => {
-    it('should not be disable register button', async () => {
+    it('should not disable register button', async () => {
       renderWithRouter(<App />, ['/login']);
       const registerButton = screen.getByRole('button', { name: /Não tem uma conta?/i });
   
