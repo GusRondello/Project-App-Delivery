@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from "./helpers/renderWithRouter";
 import App from '../App'
 import api from '../services'
-import mocks from './mocks'
+import { userMock, productsMock } from './mocks'
 
 jest.mock('../services');
 
@@ -121,8 +121,8 @@ describe('Register Page', () => {
 
   describe('Test sign up succeed', () => {
     beforeEach(() => {
-      const { userInfos } = mocks.userMock;
-      const { products } = mocks.productsMock;
+      const { userInfos } = userMock;
+      const { products } = productsMock;
       api.register.mockResolvedValue({ ...userInfos });
       api.getProducts.mockResolvedValue({ products });
     });
@@ -140,7 +140,7 @@ describe('Register Page', () => {
       userEvent.click(signUpButton);
   
       await waitFor(
-        () => expect(screen.getByText(mocks.userMock.userInfos.name)).toBeInTheDocument(),
+        () => expect(screen.getByText(userMock.userInfos.name)).toBeInTheDocument(),
         { timeout: 1000 }
       );
     });

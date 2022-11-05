@@ -1,7 +1,11 @@
 import userMock from './user';
-import productsMock from './products';
+import productsMock from './product';
+import sellersMock from './seller';
+import salesMock from './sale';
 
-export default {
+export {
   userMock,
   productsMock,
+  sellersMock,
+  salesMock,
 };

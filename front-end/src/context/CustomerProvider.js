@@ -42,7 +42,8 @@ function CustomerProvider({ children }) {
 
   const combineWithLocalStorageQtd = (productsWithQtd) => {
     const products = getCartItems();
-    if (products && products.length > 0) {
+
+    if (products?.length > 0) {
       const productsArrayUpdated = productsWithQtd.map((product) => {
         const { id } = product;
         const productInCart = products.find((prod) => prod.id === id);
@@ -63,6 +64,7 @@ function CustomerProvider({ children }) {
     async function fetchProducts() {
       const { token } = getUserInfo();
       const { error, products } = await api.getProducts(token);
+
       if (error === true) {
         localStorage.removeItem('user');
         return navigate('/login');

@@ -13,6 +13,17 @@ const products = [
   },
 ];
 
+const productInCart = [
+  {
+    id: 11,
+    name: 'Stella Artois 275ml',
+    price: '3.49',
+    quantity: 1,
+    subtotal: '3,49',
+  },
+];
+
 export default {
   products,
+  productInCart,
 };
