@@ -11,7 +11,6 @@ function Products() {
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
 
-
   return (
     <div className="teste122121">
       <div>
