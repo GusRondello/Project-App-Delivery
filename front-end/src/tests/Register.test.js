@@ -8,7 +8,7 @@ import { userMock, productsMock } from './mocks'
 
 jest.mock('../services');
 
-describe.skip('Register Page', () => {
+describe('Register Page', () => {
   afterEach(() => jest.restoreAllMocks());
 
   describe('Test Register renderization', () => {

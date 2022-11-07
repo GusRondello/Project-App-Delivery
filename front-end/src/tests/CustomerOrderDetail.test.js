@@ -10,16 +10,18 @@ jest.mock('../services');
 
 describe('Customer Orders Page', () => {
   beforeEach(() => {
-    const { products } = productsMock;
+    const { products, productInCart } = productsMock;
     const { customerSales } = salesMock;
     const { sellers } = sellersMock;
 
+    api.getCustomerOrder.mockResolvedValue(customerSales);
     api.getAllCustomerOrders.mockResolvedValue(customerSales);
     api.getSellers.mockResolvedValue(sellers);
     api.getProducts.mockResolvedValue({ products: [products[0]] });
     api.getCustomerOrder.mockResolvedValue(customerSales[0]);
 
     localStorage.setItem('user', JSON.stringify(userMock.userInfos));
+    localStorage.setItem('appDeliveryCartItems', JSON.stringify(productInCart));
   });
 
   afterEach(() => jest.restoreAllMocks());
@@ -43,14 +45,14 @@ describe('Customer Orders Page', () => {
     });
 
     it('should not disable "meus pedidos" button', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+      renderWithRouter(<App />, ['/customer/orders/1']);
       const myOrdersButton = screen.getByRole('button', { name: /meus pedidos/i});
   
       expect(myOrdersButton).not.toBeDisabled();
     });
 
     it('should redirect to customer/orders', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+      renderWithRouter(<App />, ['/customer/orders/1']);
       const myOrdersButton = screen.getByRole('button', { name: /meus pedidos/i});
   
       userEvent.click(myOrdersButton);
@@ -64,14 +66,14 @@ describe('Customer Orders Page', () => {
 
   describe('Test "sair" button', () => {
     it('should not disable "sair" button', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+      renderWithRouter(<App />, ['/customer/orders/1']);
       const logoutButton = screen.getByRole('button', { name: /sair/i});
   
       expect(logoutButton).not.toBeDisabled();
     });
 
     it('should redirect to /login', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+      renderWithRouter(<App />, ['/customer/orders/1']);
       const logoutButton = screen.getByRole('button', { name: /sair/i});
   
       userEvent.click(logoutButton);
@@ -85,14 +87,14 @@ describe('Customer Orders Page', () => {
 
   describe('Test "produtos" button', () => {
     it('should not disable "sair" button', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+      renderWithRouter(<App />, ['/customer/orders/1']);
       const productsButton = screen.getByRole('button', { name: /produtos/i});
   
       expect(productsButton).not.toBeDisabled();
     });
 
     it('should stay in products page when is clicked', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+      renderWithRouter(<App />, ['/customer/orders/1']);
       const productsButton = screen.getByRole('button', { name: /produtos/i});
   
       userEvent.click(productsButton);
@@ -104,34 +106,47 @@ describe('Customer Orders Page', () => {
     });
   });
 
-  describe('Test order button', () => {
-    it('should have all elements rendered', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+  describe('Test order infos', () => {
+    it('should have all order detail elements rendered', async () => {
+      renderWithRouter(<App />, ['/customer/orders/1']);
+
+      const date = new Date(salesMock.customerSales[0].saleDate)
+        .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
       await waitFor(() => {
-        const orderId = screen.getByTestId('customer_orders__element-order-id-1');
-        const orderStatus = screen.getByTestId('customer_orders__element-delivery-status-1');
-        const orderDate = screen.getByTestId('customer_orders__element-order-date-1');
-        const orderPrice = screen.getByTestId('customer_orders__element-card-price-1');
+        const orderId = screen.getByText(/PEDIDO 1/i);
+        const sellerName = screen.getByText(sellersMock.sellers[0].name);
+        const orderDate = screen.getByText(date);
+        const orderStatus = screen.getByText(salesMock.customerSales[0].status);
+        const orderTotalPrice = screen.getByText(salesMock.customerSales[0].totalPrice.replace('.', ','));
+        const markAsDeliveredButton = screen.getByRole('button', { name: /marcar como entregue/i });
 
     
         expect(orderId).toBeInTheDocument();
-        expect(orderStatus).toBeInTheDocument();
+        expect(sellerName).toBeInTheDocument();
         expect(orderDate).toBeInTheDocument();
-        expect(orderPrice).toBeInTheDocument();
+        expect(orderStatus).toBeInTheDocument();
+        expect(orderTotalPrice).toBeInTheDocument();
+        expect(markAsDeliveredButton).toBeInTheDocument();
       })
     });
 
-    it('should go to details if clicked', async () => {
-      renderWithRouter(<App />, ['/customer/orders']);
+    it('should have order cart itens rendered', async () => {
+      renderWithRouter(<App />, ['/customer/orders/1']);
 
       await waitFor(() => {
-        const orderButton = screen.getByTestId('customer_orders__element-order-id-1');
-  
-        userEvent.click(orderButton);
-
-        expect(screen.getByText(/Detalhe do pedido/i)).toBeInTheDocument()
-      }, { timeout: 1000 })
+        const cartItem = screen.getByTestId('customer_order_details__element-order-table-item-number-0');
+        const cartItemDescription = screen.getByText(productsMock.productInCart[0].name);
+        const cartItemQuantity = screen.getByText(productsMock.productInCart[0].quantity);
+        const cartItemPrice = screen.getByText(productsMock.productInCart[0].price.replace('.', ','));
+        const cartItemSubTotal = screen.getByText(productsMock.productInCart[0].subtotal.replace('.', ','));
+    
+        expect(cartItem).toBeInTheDocument();
+        expect(cartItemDescription).toBeInTheDocument();
+        expect(cartItemQuantity).toBeInTheDocument();
+        expect(cartItemPrice).toBeInTheDocument();
+        expect(cartItemSubTotal).toBeInTheDocument();
+      })
     });
   });
 });
