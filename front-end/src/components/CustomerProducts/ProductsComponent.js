@@ -6,21 +6,16 @@ import ProductsCard from './ProductsCard';
 import getTotalPrice from '../../helpers/getTotalPrice';
 
 function Products() {
-  const [productsList, setProductsList] = useState([]);
   const { productsArray, cartItems } = useContext(CustomerContext);
 
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
-  // console.log('totalPrice', totalPrice);
 
-  useEffect(() => {
-    setProductsList(productsArray);
-  }, [productsArray]);
 
   return (
-    <div>
+    <div className="teste122121">
       <div>
-        {productsList?.map((product) => (
+        {productsArray?.map((product) => (
           <div key={ product.id }>
             <ProductsCard product={ product } />
           </div>

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from "./helpers/renderWithRouter";
 import App from '../App'
 import api from '../services'
-import mocks from './mocks'
+import { userMock, productsMock } from './mocks'
 
 jest.mock('../services');
 
@@ -118,8 +118,8 @@ describe('Login Page', () => {
 
   describe('Test when login request submission was successful', () => {
     beforeEach(() => {
-      const { products } = mocks.productsMock;
-      api.singIn.mockResolvedValue(mocks.userMock.userInfos);
+      const { products } = productsMock;
+      api.singIn.mockResolvedValue(userMock.userInfos);
       api.getProducts.mockResolvedValue({ products });
     });
   
@@ -137,7 +137,7 @@ describe('Login Page', () => {
       userEvent.click(loginButton);
   
       await waitFor(
-        () => expect(screen.getByText(mocks.userMock.userInfos.name)).toBeInTheDocument(),
+        () => expect(screen.getByText(userMock.userInfos.name)).toBeInTheDocument(),
         { timeout: 1000 }
       );
     });

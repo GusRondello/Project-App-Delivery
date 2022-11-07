@@ -17,9 +17,12 @@ function ProductsCard({ product }) {
     const newProductsQtd = productsArray.map((item) => {
       if (item.id === product.id) {
         const newQuantity = operation === 'add' ? item.quantity + 1 : item.quantity - 1;
+
         if (newQuantity < 0) return { ...item, quantity: 0 };
+
         return { ...item, quantity: newQuantity };
       }
+
       return item;
     });
     setProductsArray(newProductsQtd);
@@ -28,7 +31,6 @@ function ProductsCard({ product }) {
 
   return (
     <div>
-      {/* {console.log(product)} */}
       <p data-testid={ `${DATATESTID_15}${product.id}` }>
         {product.name}
       </p>
