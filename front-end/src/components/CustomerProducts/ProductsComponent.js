@@ -1,5 +1,5 @@
 // Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
 import ProductsCard from './ProductsCard';
@@ -10,7 +10,6 @@ function Products() {
 
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
-
 
   return (
     <div className="teste122121">
