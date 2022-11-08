@@ -1,3 +1,4 @@
+const boom = require('@hapi/boom');
 const { tokenHelper } = require('../helpers');
 const { userService } = require('../services');
 
@@ -45,10 +46,22 @@ const getAllUsers = async (_req, res, _next) => {
   return res.status(200).json(result);
 };
 
+const destroy = async (req, res, _next) => {
+  const { id } = req.params;
+  const parseInt = +id;
+
+  if (Number.isNaN(parseInt)) throw boom.badRequest('ID params should be a number');
+
+  const result = await userService.destroy(id);
+
+  return res.status(204).json(result);
+};
+
 module.exports = {
   login,
   create,
   getSellers,
   createCustomer,
   getAllUsers,
+  destroy,
 };
