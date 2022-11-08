@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext/* , useEffect, useState */ } from 'react';
 import OrderItemCard from './OrderItemCard';
 import CustomerContext from '../../context/CustomerContext';
 
 function OrderProductsTable() {
-  const [items, setItems] = useState([]);
+  // const [items, setItems] = useState([]);
   const { cartItems } = useContext(CustomerContext);
 
-  useEffect(() => {
-    setItems(cartItems);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   setItems(cartItems);
+  // }, [cartItems]);
 
   return (
     <div>
@@ -24,7 +24,7 @@ function OrderProductsTable() {
         </thead>
         <tbody>
           {/* Percorre o array de items e renderiza cada item em uma linha da tabela */}
-          {items.map((product, index) => (
+          {cartItems?.map((product, index) => (
             <OrderItemCard
               key={ product.id }
               product={ product }

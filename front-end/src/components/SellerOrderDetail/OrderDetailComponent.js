@@ -20,7 +20,6 @@ function OrderDetailComponent() {
   const { isStatusUpdated, setIsStatusUpdated } = useContext(DeliveryContext);
 
   const navigate = useNavigate();
-  console.log('orderStatus', orderStatus);
 
   // useEffect responsável por receber os detales da order da api
   useEffect(() => {
@@ -29,12 +28,19 @@ function OrderDetailComponent() {
       const salleId = window.location.pathname.split('/')[3];
 
       const data = await api.getSellerOrder(token, salleId);
-      const { saleDate } = data;
+      console.log('data', data);
+      const { saleDate, products } = data;
 
       const date = new Date(saleDate)
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
-      setOrder({ ...data, saleDate: date });
+      const productsWithSubTotal = products.map((item) => {
+        const { price, product: { quantity } } = item;
+        const subTotal = (price * quantity).toFixed(2).replace('.', ',');
+        return { ...item, subTotal };
+      });
+
+      setOrder({ ...data, products: productsWithSubTotal, saleDate: date });
       setOrderStatus(data.status);
       setIsStatusUpdated(false);
     }
@@ -86,11 +92,11 @@ function OrderDetailComponent() {
           >
             SAIU PARA ENTREGA
           </button>
+          <div>
+            <OrderProductsTable products={ order?.products } />
+          </div>
         </div>
       )}
-      <div>
-        <OrderProductsTable />
-      </div>
       <span>
         Total: R$
         <span data-testid={ `${DATATESTID_63}` }>
