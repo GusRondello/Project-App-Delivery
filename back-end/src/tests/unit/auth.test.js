@@ -41,7 +41,7 @@ describe('Auth middleware', () => {
   });
 
   describe('When receive an unauthorized token', () => {
-    it('should throw an jwt error', async () => {
+    it('should throw an unauthorized error', async () => {
       const userData = {
         id: 1,
         name: 'Test',
@@ -56,8 +56,8 @@ describe('Auth middleware', () => {
     });
   });
 
-  describe('When go to next middleware', () => {
-    it('should throw an jwt error', async () => {
+  describe('When everything is right', () => {
+    it('should go to next middleware', async () => {
       const userData = {
         id: 1,
         name: 'Test',
