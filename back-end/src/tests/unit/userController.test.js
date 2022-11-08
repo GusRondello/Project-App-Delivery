@@ -45,18 +45,20 @@ describe('User controller', () => {
     });
   });
 
-  describe('create', () => {
-    before(() => createStub.resolves(token));
+  describe('createCostumer', () => {
+    before(() => createStub.resolves(userMock));
 
     describe('Success', () => {
   
       it('should return code 200 and a token in the response body', async () => {
         const userData = { ...userMock };
         delete userData.id;
-        const response = await testController(userController.create, { body: userData });
+        const response = await testController(userController.createCustomer, { body: userData });
     
         expect(response.status).to.be.equal(201);
-        expect(response.body).to.be.haveOwnProperty('token', token);
+        expect(response.body).to.has.key('token');
+        expect(response.body.token).to.be.a('string');
+        // expect(response.body).to.has.key('token');
       });
     });
   });

@@ -12,7 +12,7 @@ const testController = async (
   controller,
   request = reqDefault,
   err = null,
-  locals = null,
+  locals = {},
   ) => {
   const result = {
     body: undefined,
@@ -52,7 +52,6 @@ const testController = async (
   } catch (error) {
     nextFunc(error);
   }
-
 
   return {
     ...result,
