@@ -12,5 +12,6 @@ router.post(
   middlewares.validation(schemas.userWithRole),
   userController.create,
 );
+router.get('/users', userController.getAllUsers);
 
 module.exports = router;

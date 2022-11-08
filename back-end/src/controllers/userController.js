@@ -36,7 +36,13 @@ const createCustomer = async (req, res, _next) => {
 const getSellers = async (req, res, _next) => {
   const result = await userService.getSellers();
 
-  return res.status(201).json(result);
+  return res.status(200).json(result);
+};
+
+const getAllUsers = async (_req, res, _next) => {
+  const result = await userService.getAllUsers();
+
+  return res.status(200).json(result);
 };
 
 module.exports = {
@@ -44,4 +50,5 @@ module.exports = {
   create,
   getSellers,
   createCustomer,
+  getAllUsers,
 };

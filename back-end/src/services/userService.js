@@ -50,9 +50,16 @@ const getSellers = async () => {
   return sellers;
 };
 
+const getAllUsers = async () => {
+  const users = User.findAll();
+
+  return users;
+};
+
 module.exports = {
   login,
   create,
   checkUserExistsBy,
   getSellers,
+  getAllUsers,
 };
