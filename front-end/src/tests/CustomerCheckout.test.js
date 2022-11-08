@@ -72,6 +72,54 @@ describe('Customer Checkout Page', () => {
     });
   });
 
+  describe('Test "meus pedidos" button', () => {
+    beforeEach(() => {
+      const { customerSales } = salesMock;
+  
+      api.getAllCustomerOrders.mockResolvedValue(customerSales);
+    });
+
+    it('should not disable "meus pedidos" button', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const myOrdersButton = screen.getByRole('button', { name: /meus pedidos/i});
+  
+      expect(myOrdersButton).not.toBeDisabled();
+    });
+
+    it('should redirect to customer/orders', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const myOrdersButton = screen.getByRole('button', { name: /meus pedidos/i});
+  
+      userEvent.click(myOrdersButton);
+  
+      await waitFor(
+        () => expect(screen.getByText(salesMock.customerSales[0].id)).toBeInTheDocument(),
+        { timeout: 1000 }
+      );
+    });
+  });
+
+  describe('Test "sair" button', () => {
+    it('should not disable "sair" button', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const logoutButton = screen.getByRole('button', { name: /sair/i});
+  
+      expect(logoutButton).not.toBeDisabled();
+    });
+
+    it('should redirect to /login', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const logoutButton = screen.getByRole('button', { name: /sair/i});
+  
+      userEvent.click(logoutButton);
+  
+      await waitFor(
+        () => expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument(),
+        { timeout: 1000 }
+      );
+    });
+  });
+
   describe('Test "remover" button', () => {
     it('should not disable "meus pedidos" button', async () => {
       renderWithRouter(<App />, ['/customer/checkout']);

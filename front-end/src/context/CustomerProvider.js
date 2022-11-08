@@ -93,6 +93,7 @@ function CustomerProvider({ children }) {
       }).filter((product) => product.quantity > 0);
       // percorre o carrinho e adiciona o subtotal de cada produto, arredondando para duas casas decimais
       // converte o resultado para number
+      console.log('productsArray', productsArray);
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
         const subtotal = (price * quantity).toFixed(2).replace('.', ',');
