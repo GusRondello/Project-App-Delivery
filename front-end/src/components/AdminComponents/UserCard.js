@@ -4,11 +4,11 @@ import propTypes from 'prop-types';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 
-// const DATATESTID_22 = `${CUSTOMER}element-order-table-item-number-`;
-// const DATATESTID_23 = `${CUSTOMER}element-order-table-name-`;
-// const DATATESTID_24 = `${CUSTOMER}element-order-table-quantity-`;
-// const DATATESTID_25 = `${CUSTOMER}element-order-table-unit-price-`;
-// const DATATESTID_26 = `${CUSTOMER}element-order-table-sub-total-`;
+const DATATESTID_22 = 'element-order-table-item-number-';
+const DATATESTID_23 = 'element-order-table-name-';
+const DATATESTID_24 = 'element-order-table-quantity-';
+const DATATESTID_25 = 'element-order-table-unit-price-';
+const DATATESTID_26 = 'element-order-table-sub-total-';
 
 function UserCard({ user, index }) {
   // função que chama a api (excludeUser) e passa o id do usuário a ser excluído
@@ -23,8 +23,8 @@ function UserCard({ user, index }) {
       <td data-testid={ `${DATATESTID_22}${index}` }>{index + 1}</td>
       <td data-testid={ `${DATATESTID_23}${index}` }>{user.name}</td>
       <td data-testid={ `${DATATESTID_24}${index}` }>{user.email}</td>
-      <td data-testid={ `${DATATESTID_24}${index}` }>{user.role}</td>
-      <td data-testid={ `${DATATESTID_27}${index}` }>
+      <td data-testid={ `${DATATESTID_25}${index}` }>{user.role}</td>
+      <td data-testid={ `${DATATESTID_26}${index}` }>
         {/* Botão para o usuário */}
         <button
           type="button"

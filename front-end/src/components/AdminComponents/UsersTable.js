@@ -2,13 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import UserCard from './UserCard';
 import api from '../../services';
+import getUserInfo from '../../helpers/getUserInfo';
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     async function fetchUsers() {
-      const data = await api.getUsers();
+      const { token } = getUserInfo();
+      const data = await api.getUsers(token);
+      console.log('data', data);
       setUsers(data);
     }
     fetchUsers();
