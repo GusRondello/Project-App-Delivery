@@ -8,7 +8,7 @@ import { userMock, productsMock } from './mocks'
 
 jest.mock('../services');
 
-describe.skip('Login Page', () => {
+describe('Login Page', () => {
   afterEach(() => jest.restoreAllMocks());
 
   describe('Test Login renderization', () => {

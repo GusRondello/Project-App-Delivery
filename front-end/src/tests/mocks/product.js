@@ -1,7 +1,9 @@
+const SKOL = 'Skol Lata 250ml';
+
 const products = [
   {
     id: 1,
-    name: 'Skol Lata 250ml',
+    name: SKOL,
     price: '2.2',
     urlImage: 'http://localhost:3001/images/skol_lata_350ml.jpg',
   },
@@ -16,7 +18,7 @@ const products = [
 const productsSeller = [
   {
     id: 1,
-    name: 'Skol Lata 250ml',
+    name: SKOL,
     price: '2.2',
     product: {
       quantity: 1,
@@ -36,11 +38,11 @@ const productsSeller = [
 
 const productInCart = [
   {
-    id: 11,
-    name: 'Stella Artois 275ml',
-    price: '6.98',
-    quantity: 2,
-    subtotal: '3,49',
+    id: 1,
+    name: SKOL,
+    price: '2.2',
+    quantity: 3,
+    subtotal: '6,60',
   },
 ];
 

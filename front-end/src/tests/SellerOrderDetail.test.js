@@ -8,16 +8,16 @@ import { productsMock, userMock, salesMock } from './mocks'
 
 jest.mock('../services');
 
-describe.only('Seller Orders Details Page', () => {
+describe('Seller Orders Details Page', () => {
   beforeEach(() => {
-    const { sellerSales } = salesMock;
-    // const { productsSeller } = productsMock;
+    const { customerSale } = salesMock;
+    const { productsSeller } = productsMock;
 
-    // api.getAllSellerOrders.mockResolvedValue(customerSales);
-    // na primeira chamada de getSellerOrder, retorna o mock sellerSales
-    api.getSellerOrder.mockResolvedValue(sellerSales);
+    // api.getAllSellerOrders.mockResolvedValue(customerSale);
+    // na primeira chamada de getSellerOrder, retorna o mock customerSale
+    api.getSellerOrder.mockResolvedValue(customerSale);
     // na segunda chamada de getSellerOrder, retorna o mock productsSeller
-    // api.getSellerOrder.mockResolvedValueOnce({ products: [productsSeller[0]] });
+    // api.getSellerOrder.mockResolvedValue({ products: [productsSeller[0]] });
     api.sendOrderStatusUpdate.mockResolvedValue({});
 
     localStorage.setItem('user', JSON.stringify(userMock.sellerInfos));
@@ -88,14 +88,14 @@ describe.only('Seller Orders Details Page', () => {
     it('should have all order detail elements rendered', async () => {
       renderWithRouter(<App />, ['/seller/orders/1']);
 
-      const date = new Date(salesMock.customerSales[0].saleDate)
+      const date = new Date(salesMock.customerSale.saleDate)
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
       await waitFor(() => {
         const orderId = screen.getByText(/PEDIDO 1/i);
         const orderDate = screen.getByText(date);
-        const orderStatus = screen.getByText(salesMock.customerSales[0].status);
-        const orderTotalPrice = screen.getByText(salesMock.customerSales[0].totalPrice.replace('.', ','));
+        const orderStatus = screen.getByText(salesMock.customerSale.status);
+        const orderTotalPrice = screen.getByText(salesMock.customerSale.totalPrice.replace('.', ','));
         const prepareOrder = screen.getByRole('button', { name: /preparar pedido/i });
         const goingToDelivery = screen.getByRole('button', { name: /saiu para entrega/i });
 
@@ -111,13 +111,15 @@ describe.only('Seller Orders Details Page', () => {
 
     it('should have order cart itens rendered', async () => {
       renderWithRouter(<App />, ['/seller/orders/1']);
+      const { products } = salesMock.customerSale;
+      const subTotal = (products[0].product.quantity * products[0].price);
 
       await waitFor(() => {
         const cartItem = screen.getByTestId('seller_order_details__element-order-table-item-number-0');
-        const cartItemDescription = screen.getByText(productsMock.productInCart[0].name);
-        const cartItemQuantity = screen.getByText(productsMock.productInCart[0].quantity);
-        const cartItemPrice = screen.getByText(productsMock.productInCart[0].price.replace('.', ','));
-        const cartItemSubTotal = screen.getByText(productsMock.productInCart[0].subtotal.replace('.', ','));
+        const cartItemDescription = screen.getByText(products[0].name);
+        const cartItemQuantity = screen.getByText(products[0].product.quantity);
+        const cartItemPrice = screen.getByText(products[0].price.replace('.', ','));
+        const cartItemSubTotal = screen.getByText(subTotal.toFixed(2).replace('.', ','));
     
         expect(cartItem).toBeInTheDocument();
         expect(cartItemDescription).toBeInTheDocument();

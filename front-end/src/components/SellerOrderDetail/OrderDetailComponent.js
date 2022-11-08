@@ -35,8 +35,8 @@ function OrderDetailComponent() {
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
       const productsWithSubTotal = products.map((item) => {
-        const { price, product } = item;
-        const subTotal = (price * product.quantity).toFixed(2).replace('.', ',');
+        const { price, product: { quantity } } = item;
+        const subTotal = (price * quantity).toFixed(2).replace('.', ',');
         return { ...item, subTotal };
       });
 
@@ -92,11 +92,11 @@ function OrderDetailComponent() {
           >
             SAIU PARA ENTREGA
           </button>
+          <div>
+            <OrderProductsTable products={ order?.products } />
+          </div>
         </div>
       )}
-      <div>
-        <OrderProductsTable products={ order?.products } />
-      </div>
       <span>
         Total: R$
         <span data-testid={ `${DATATESTID_63}` }>

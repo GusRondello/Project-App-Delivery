@@ -8,7 +8,7 @@ import { productsMock, userMock, salesMock } from './mocks'
 
 jest.mock('../services');
 
-describe.skip('Seller Orders Page', () => {
+describe('Seller Orders Page', () => {
   beforeEach(() => {
     const { customerSales } = salesMock;
     const { productsSeller } = productsMock;
