@@ -58,6 +58,7 @@ const getAllUsers = async () => {
         [Op.ne]: 'administrator',
       },
     },
+    attributes: { exclude: ['password'] },
   });
 
   return users;
