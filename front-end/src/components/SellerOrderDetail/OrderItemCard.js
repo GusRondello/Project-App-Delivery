@@ -8,13 +8,14 @@ const DATATESTID_61 = 'seller_order_details__element-order-table-unit-price-';
 const DATATESTID_62 = 'seller_order_details__element-order-table-sub-total-';
 
 function OrderItemCard({ product, index }) {
+  // console.log('product', product);
   return (
     <tr key={ index }>
       <td data-testid={ `${DATATESTID_58}${index}` }>{index + 1}</td>
       <td data-testid={ `${DATATESTID_59}${index}` }>{product.name}</td>
       <td data-testid={ `${DATATESTID_60}${index}` }>{product.product.quantity}</td>
       <td data-testid={ `${DATATESTID_61}${index}` }>
-        {product.price.replace('.', ',')}
+        {product?.price.replace('.', ',')}
       </td>
       <td data-testid={ `${DATATESTID_62}${index}` }>{(product.subTotal)}</td>
     </tr>

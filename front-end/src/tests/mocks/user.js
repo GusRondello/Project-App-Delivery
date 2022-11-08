@@ -14,6 +14,15 @@ const userInfos = {
   id: 1,
 };
 
+const sellerInfos = {
+  token: TOKEN,
+  role: 'seller',
+  name: 'Test user mock',
+  email: 'test@test.com',
+  id: 1,
+};
+
 export default {
   userInfos,
+  sellerInfos,
 };

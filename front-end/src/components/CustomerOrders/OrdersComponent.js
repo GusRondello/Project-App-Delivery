@@ -16,6 +16,7 @@ function OrdersComponent() {
     async function fetchSalle() {
       const { token } = getUserInfo();
       const data = await api.getAllCustomerOrders(token);
+      console.log('data', data);
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
@@ -32,9 +33,9 @@ function OrdersComponent() {
 
   return (
     <div>
-      {orders && orders.length !== 0 && (
+      {
         // Faz um map de orders chamando o componente OrderCard
-        orders.map((order) => (
+        orders?.map((order) => (
           <button
             key={ order.id }
             type="button"
@@ -43,7 +44,7 @@ function OrdersComponent() {
             <OrderCard order={ order } />
           </button>
         ))
-      )}
+      }
     </div>
   );
 }

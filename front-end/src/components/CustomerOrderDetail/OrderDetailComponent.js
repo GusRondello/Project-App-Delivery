@@ -17,16 +17,16 @@ const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
 
 function OrderDetailComponent() {
   const [orderStatus, setOrderStatus] = useState('');
-  const [sellersArray, setSellersArray] = useState([]);
+  // const [sellersArray, setSellersArray] = useState([]);
   const [order, setOrder] = useState([]);
   const { sellers } = useContext(CustomerContext);
   const { isStatusUpdated, setIsStatusUpdated } = useContext(DeliveryContext);
 
   const navigate = useNavigate();
-  console.log('orderStatus', orderStatus);
-  useEffect(() => {
-    setSellersArray(sellers);
-  }, [sellers]);
+
+  // useEffect(() => {
+  //   setSellersArray(sellers);
+  // }, [sellers]);
 
   // useEffect responsável por receber os detales da order da api
   useEffect(() => {
@@ -78,7 +78,7 @@ function OrderDetailComponent() {
             {' '}
             {/* compara o id do vendedor em order com o id do vendedor em sellers */}
             <p data-testid={ `${DATATESTID_38}` }>
-              {sellersArray.find((seller) => seller.id === order.sellerId)?.name}
+              {sellers.find((seller) => seller.id === order.sellerId)?.name}
             </p>
           </span>
           <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
