@@ -21,8 +21,10 @@ describe('Customer Products Page', () => {
     localStorage.setItem('appDeliveryCartItems', JSON.stringify([]));
   });
 
-  afterEach(() => jest.restoreAllMocks());
-  afterAll(() => localStorage.clear());
+  afterEach(() => {
+    jest.restoreAllMocks();
+    localStorage.clear();
+  });
 
   describe('Test Customer Products renderization', () => {
     it('should render customer products page', () => {
@@ -102,11 +104,88 @@ describe('Customer Products Page', () => {
       const logoutButton = screen.getByRole('button', { name: /sair/i});
   
       userEvent.click(logoutButton);
+
+      localStorage.getItem('appDeliveryTotalPrice', JSON.stringify('0,00'));
+
   
       await waitFor(
         () => expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument(),
         { timeout: 1000 }
       );
+    });
+  });
+
+  describe('Test increase product quantity button', () => {
+    it('should not disable "sair" button', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const increaseQtyButton = await screen.findByRole('button', { name: '+' });
+  
+      expect(increaseQtyButton).not.toBeDisabled();
+    });
+
+    it('should increase product quantity', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+
+      const increaseQtyButton = await screen.findByRole('button', { name: '+' });
+  
+      userEvent.click(increaseQtyButton);
+
+      const productsCart = JSON.parse(localStorage.getItem('appDeliveryCartItems'));
+  
+      expect(productsCart[0].quantity).toEqual(1);
+    });
+  });
+
+  describe('Test decrease product quantity button', () => {
+    it('should not disable "sair" button', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const increaseQtyButton = await screen.findByRole('button', { name: '-' });
+  
+      expect(increaseQtyButton).not.toBeDisabled();
+    });
+
+    it('should decrease product quantity', async () => {
+      const { productInCart } = productsMock
+      localStorage.setItem('appDeliveryTotalPrice', JSON.stringify(productInCart[0].subtotal));
+      localStorage.setItem('appDeliveryCartItems', JSON.stringify(productInCart));
+  
+      renderWithRouter(<App />, ['/customer/products']);
+
+      const increaseQtyButton = await screen.findByRole('button', { name: '-' });
+  
+      userEvent.click(increaseQtyButton);
+
+      const productsCart = JSON.parse(localStorage.getItem('appDeliveryCartItems'));
+  
+      expect(productsCart[0].quantity).toEqual(2);
+    });
+  });
+
+  describe('Test product quantity input', () => {
+    beforeEach(() => {
+      const { productInCart } = productsMock
+      localStorage.setItem('appDeliveryTotalPrice', JSON.stringify(productInCart[0].subtotal));
+      localStorage.setItem('appDeliveryCartItems', JSON.stringify(productInCart));
+    });
+
+    it('should not disable quantity input', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const qtyInput = await screen.findByTestId('customer_products__input-card-quantity-1');
+  
+      expect(qtyInput).not.toBeDisabled();
+    });
+
+    it('should change product quantity', async () => {
+      renderWithRouter(<App />, ['/customer/products']);
+      const qtyInputTest = await screen.findByTestId('customer_products__input-card-quantity-1');
+      
+      userEvent.clear(qtyInputTest);
+      userEvent.type(qtyInputTest, '1');
+
+      const productsCart = JSON.parse(localStorage.getItem('appDeliveryCartItems'));
+
+      expect(qtyInputTest).toHaveValue(1);
+      expect(productsCart[0].quantity).toEqual(1);
     });
   });
 

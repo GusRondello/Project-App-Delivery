@@ -65,6 +65,7 @@ function ProductsCard({ product }) {
               }
               return item;
             });
+            console.log(newProductsQtd);
             setProductsArray(newProductsQtd);
             setIsCartUpdated(true);
           } }

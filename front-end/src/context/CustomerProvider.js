@@ -77,6 +77,7 @@ function CustomerProvider({ children }) {
         return rest;
       }).filter((product) => product.quantity > 0);
 
+      console.log('productsArray', productsArray);
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
         const subtotal = (price * quantity).toFixed(2).replace('.', ',');

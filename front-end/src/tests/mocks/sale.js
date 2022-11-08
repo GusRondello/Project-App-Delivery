@@ -44,4 +44,8 @@ const customerSale = {
   ],
 };
 
-export default { customerSales, saleCreated, customerSale };
+export default {
+  customerSales,
+  saleCreated,
+  customerSale,
+};
