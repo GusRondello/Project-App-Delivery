@@ -4,9 +4,11 @@ import DeliveryContext from './DeliveryContext ';
 
 function DeliveryProvider({ children }) {
   const [isStatusUpdated, setIsStatusUpdated] = useState(false);
+  const [hasAdminChangedUsers, setHasAdminChangedUsers] = useState(false);
+
   const contextValue = useMemo(() => ({
-    isStatusUpdated, setIsStatusUpdated,
-  }), [isStatusUpdated]);
+    isStatusUpdated, setIsStatusUpdated, hasAdminChangedUsers, setHasAdminChangedUsers,
+  }), [isStatusUpdated, hasAdminChangedUsers]);
 
   DeliveryProvider.propTypes = {
     children: PropTypes.node.isRequired,

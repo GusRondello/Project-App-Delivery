@@ -1,31 +1,33 @@
 // Componente que renderiza o card o usuário vindo do map do UsersTable
-import React from 'react';
+import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
+import DeliveryContext from '../../context/DeliveryContext ';
 
-const DATATESTID_22 = 'element-order-table-item-number-';
-const DATATESTID_23 = 'element-order-table-name-';
-const DATATESTID_24 = 'element-order-table-quantity-';
-const DATATESTID_25 = 'element-order-table-unit-price-';
-const DATATESTID_26 = 'element-order-table-sub-total-';
+const DATATESTID_69 = 'admin_manage__element-user-table-item-number-';
+const DATATESTID_70 = 'admin_manage__element-user-table-name-';
+const DATATESTID_71 = 'admin_manage__element-user-table-email-';
+const DATATESTID_72 = 'admin_manage__element-user-table-role-';
+const DATATESTID_73 = 'admin_manage__element-user-table-remove-';
 
 function UserCard({ user, index }) {
-  // função que chama a api (excludeUser) e passa o id do usuário a ser excluído
+  const { setHasAdminChangedUsers } = useContext(DeliveryContext);
+
   const handleRemoveUser = (id) => {
     console.log(id);
     const { token } = getUserInfo();
     api.excludeUser(token, id);
+    setHasAdminChangedUsers(true);
   };
 
   return (
     <tr key={ index }>
-      <td data-testid={ `${DATATESTID_22}${index}` }>{index + 1}</td>
-      <td data-testid={ `${DATATESTID_23}${index}` }>{user.name}</td>
-      <td data-testid={ `${DATATESTID_24}${index}` }>{user.email}</td>
-      <td data-testid={ `${DATATESTID_25}${index}` }>{user.role}</td>
-      <td data-testid={ `${DATATESTID_26}${index}` }>
-        {/* Botão para o usuário */}
+      <td data-testid={ `${DATATESTID_69}${index}` }>{index + 1}</td>
+      <td data-testid={ `${DATATESTID_70}${index}` }>{user.name}</td>
+      <td data-testid={ `${DATATESTID_71}${index}` }>{user.email}</td>
+      <td data-testid={ `${DATATESTID_72}${index}` }>{user.role}</td>
+      <td data-testid={ `${DATATESTID_73}${index}` }>
         <button
           type="button"
           onClick={ () => handleRemoveUser(user.id) }
