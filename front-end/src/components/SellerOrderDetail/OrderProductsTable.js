@@ -18,6 +18,7 @@ function OrderProductsTable() {
       const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
       const { products } = await api.getSellerOrder(token, salleId);
+      // console.log('products', products);
 
       const productsWithSubTotal = products.map((item) => {
         const { price, product } = item;

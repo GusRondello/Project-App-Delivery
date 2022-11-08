@@ -14,7 +14,7 @@ function OrderItemCard({ product, index }) {
       <td data-testid={ `${DATATESTID_59}${index}` }>{product.name}</td>
       <td data-testid={ `${DATATESTID_60}${index}` }>{product.product.quantity}</td>
       <td data-testid={ `${DATATESTID_61}${index}` }>
-        {product.price.replace('.', ',')}
+        {product?.price.replace('.', ',')}
       </td>
       <td data-testid={ `${DATATESTID_62}${index}` }>{(product.subTotal)}</td>
     </tr>
