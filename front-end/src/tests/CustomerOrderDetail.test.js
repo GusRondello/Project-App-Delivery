@@ -28,7 +28,7 @@ describe.skip('Customer Orders Page', () => {
 
   describe('Test Customer name renderization', () => {
     it('should render customer name', () => {
-      renderWithRouter(<App/>, ['/customer/orders']);
+      renderWithRouter(<App/>, ['/customer/orders/1']);
 
       const { name } = userMock.userInfos;
       const userNameElement = screen.getByText(name);

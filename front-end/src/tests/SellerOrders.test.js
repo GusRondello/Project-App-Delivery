@@ -8,7 +8,7 @@ import { productsMock, userMock, salesMock } from './mocks'
 
 jest.mock('../services');
 
-describe.only('Customer Orders Page', () => {
+describe.skip('Seller Orders Page', () => {
   beforeEach(() => {
     const { customerSales } = salesMock;
     const { productsSeller } = productsMock;
@@ -22,7 +22,7 @@ describe.only('Customer Orders Page', () => {
 
   afterEach(() => jest.restoreAllMocks());
 
-  describe('Test Customer name renderization', () => {
+  describe('Test Seller name renderization', () => {
     it('should render seller name', () => {
       renderWithRouter(<App/>, ['/seller/orders']);
 
@@ -40,7 +40,7 @@ describe.only('Customer Orders Page', () => {
       api.getAllSellerOrders.mockResolvedValue(customerSales);
     });
 
-    it('should not disable "meus pedidos" button', async () => {
+    it('should not disable "Pedidos" button', async () => {
       renderWithRouter(<App />, ['/seller/orders']);
       const ordersButton = screen.getByRole('button', { name: /Pedidos/i});
   
