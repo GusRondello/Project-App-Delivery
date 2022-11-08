@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
-import { singIn as singInService } from '../services';
-// import DeliveryContext from '../context/DeliveryContext ';
+import api from '../services';
 
 function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -28,6 +27,7 @@ function LoginForm() {
     const re = /\S+@\S+\.\S+/;
     const emailValidation = re.test(formLogin.email);
     const PASSWORD_LENGH = 6;
+
     if (emailValidation && formLogin.password.length >= PASSWORD_LENGH) {
       setIsDisabled(false);
     } else {
@@ -49,8 +49,9 @@ function LoginForm() {
   };
 
   const singIn = async (email, password) => {
-    const response = await singInService(email, password);
-    if (response.error === true) {
+    const response = await api.singIn(email, password);
+    console.log(response);
+    if (response.error) {
       setErrorMessage(response.message);
       return navigate('/login');
     }
@@ -59,7 +60,7 @@ function LoginForm() {
     saveUserInfo({ id, name, email, role, token });
 
     if (role === 'seller') {
-      return navigate('/seller/orders/');
+      return navigate('/seller/orders');
     }
     if (role === 'administrator') {
       return navigate('/admin/manage');

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
-import CustomerContext from '../context/CustomerContext';
+import CustomerContext from '../../context/CustomerContext';
 
 const CUSTOMER = 'customer_checkout__';
 const DATATESTID_22 = `${CUSTOMER}element-order-table-item-number-`;

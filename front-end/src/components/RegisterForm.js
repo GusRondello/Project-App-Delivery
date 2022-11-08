@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import DeliveryContext from '../context/DeliveryContext ';
 import saveUserInfo from '../helpers/saveUserInfo';
-import { register as registerService } from '../services';
+import api from '../services';
 
 function RegisterForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -17,8 +17,8 @@ function RegisterForm() {
 
   const register = async (event, name, email, password) => {
     event.preventDefault();
-    const response = await registerService(name, email, password);
-    if (response.error === true) {
+    const response = await api.register(name, email, password);
+    if (response.error) {
       setErrorMessage(response.message);
       return;
     }
@@ -39,7 +39,6 @@ function RegisterForm() {
   };
 
   const validateRegister = () => {
-    console.log('password', formSignUp.password);
     const PASSWORD_LENGH = 6;
     const NAME_LENGH = 12;
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;

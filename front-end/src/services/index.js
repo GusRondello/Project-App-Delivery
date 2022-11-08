@@ -1,2 +1,11 @@
-export { singIn, register, getProducts, sendOrder,
-  getOrder, getAllOrders, getSellers } from './apiAppDelivery';
+import singIn from './commonApi';
+import registerAsAdmin from './adminApi';
+import * as costumerApi from './costumerApi';
+import * as sellerApi from './sellerApi';
+
+export default {
+  singIn,
+  registerAsAdmin,
+  ...costumerApi,
+  ...sellerApi,
+};

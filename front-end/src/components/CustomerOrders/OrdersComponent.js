@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 // import CustomerContext from '../context/CustomerContext';
 // import getTotalPrice from '../helpers/getTotalPrice';
 // import DetailItemCard from './DetailItemCard';
-import { getAllOrders } from '../services';
-import GetUserInfo from '../helpers/getUserInfo';
+import api from '../../services';
+import getUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
 
 function OrdersComponent() {
@@ -14,8 +14,8 @@ function OrdersComponent() {
 
   useEffect(() => {
     async function fetchSalle() {
-      const { token } = GetUserInfo();
-      const data = await getAllOrders(token);
+      const { token } = getUserInfo();
+      const data = await api.getAllCustomerOrders(token);
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;

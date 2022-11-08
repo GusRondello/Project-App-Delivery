@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
+import OrderDetailComponent from '../components/CustomerOrderDetail/OrderDetailComponent';
 import CustomerProvider from '../context/CustomerProvider';
-import OrderDetailComponent from '../components/OrderDetailComponent';
 
 function OrderDetail() {
   return (
     <div>
+      <Header />
       <CustomerProvider>
-        <Header />
         <OrderDetailComponent />
       </CustomerProvider>
     </div>

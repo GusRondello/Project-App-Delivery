@@ -1,19 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import DeliveryContext from '../context/DeliveryContext ';
 import getUserInfo from '../helpers/getUserInfo';
-// import saveUserInfo from '../helpers/saveUserInfo';
 
 function Header() {
-  // const { customerName } = React.useContext(DeliveryContext);
   const { name, role } = getUserInfo();
 
   const navigate = useNavigate();
 
   return (
     <div>
-      {role === 'customer'
-      && (
+      {role === 'customer' && (
         <div>
           <button
             type="button"
@@ -31,9 +27,32 @@ function Header() {
           </button>
         </div>
       )}
+      {role === 'seller'
+      && (
+        <div>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => navigate('/seller/orders') }
+          >
+            Pedidos
+          </button>
+        </div>
+      )}
+      {role === 'administrator' && (
+        <div>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => navigate('/admin/manage') }
+          >
+            Gerenciar Usuários
+          </button>
+        </div>
+      )}
       <div>
         <p data-testid="customer_products__element-navbar-user-full-name">
-          { name }
+          {name}
         </p>
       </div>
       <div>
@@ -41,9 +60,7 @@ function Header() {
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
-            // localStorage.clear();
             localStorage.removeItem('user');
-            // saveUserInfo({});
             navigate('/login');
           } }
         >
