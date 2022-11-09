@@ -4,8 +4,10 @@ import propTypes from 'prop-types';
 function FieldBase({ name, label, children }) {
   return (
     <div>
-      <label htmlFor={ name }>{label}</label>
-      {children}
+      <label htmlFor={ name }>
+        {label}
+        {children}
+      </label>
     </div>
   );
 }

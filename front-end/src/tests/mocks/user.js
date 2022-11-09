@@ -14,6 +14,14 @@ const userInfos = {
   id: 1,
 };
 
+const adminInfos = {
+  token: TOKEN,
+  role: 'administrator',
+  name: 'Test amin mock',
+  email: 'admin@test.com',
+  id: 1,
+};
+
 const sellerInfos = {
   token: TOKEN,
   role: 'seller',
@@ -22,7 +30,54 @@ const sellerInfos = {
   id: 1,
 };
 
+const userRegisterByAdmin = {
+  id: 3,
+  name: 'Xablau Silva',
+  email: 'xablau@email.com',
+  role: 'seller',
+};
+
+const allUsers = [
+  {
+    id: 1,
+    email: 'ze_delivery@email.com',
+    name: 'Ze Delivery',
+    role: 'customer',
+  },
+  {
+    id: 2,
+    name: 'Fulana Pereira',
+    email: 'fulana@deliveryapp.com',
+    role: 'seller',
+  },
+];
+
+const allUsersUpdated = [
+  {
+    id: 1,
+    email: 'ze_delivery@email.com',
+    name: 'Ze Delivery',
+    role: 'customer',
+  },
+  {
+    id: 2,
+    name: 'Fulana Pereira',
+    email: 'fulana@deliveryapp.com',
+    role: 'seller',
+  },
+  {
+    id: 3,
+    name: 'Xablau Silva',
+    email: 'xablau@email.com',
+    role: 'seller',
+  },
+];
+
 export default {
   userInfos,
   sellerInfos,
+  userRegisterByAdmin,
+  allUsers,
+  allUsersUpdated,
+  adminInfos,
 };
