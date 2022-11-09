@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Orders from '../pages/SellerOrders';
 import OrderDetail from '../pages/SellerOrderDetail';
 
+/* Rotas do vendedor */
 function Seller() {
   return (
     <Routes>

@@ -4,6 +4,8 @@ import api from './baseUrl';
 /*
     ** Common functions
 */
+
+/* função axios que envia o email e o password para o backend e recebe um token em caso de sucesso */
 async function singIn(email, password) {
   try {
     const result = await api.post('/login', {

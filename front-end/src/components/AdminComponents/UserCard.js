@@ -16,7 +16,6 @@ function UserCard({ user, index }) {
 
   /* Função responsável por deletar o usuário através da API (api.excludeUser) */
   const handleRemoveUser = (id) => {
-    console.log(id);
     const { token } = getUserInfo();
     api.excludeUser(token, id);
     setHasAdminChangedUsers(true);

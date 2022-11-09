@@ -67,8 +67,6 @@ function AdminManage() {
     }
   }
 
-  // console.log(form);
-
   return (
     <div>
       <Header />
