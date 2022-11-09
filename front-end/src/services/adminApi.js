@@ -58,12 +58,7 @@ async function excludeUser(token, id) {
         Authorization: token,
       },
     };
-    await api
-      .delete(`/admin/users/${id}`, axiosToken)
-      .catch((err) => {
-        console.error(err);
-        return err;
-      });
+    await api.delete(`/admin/users/${id}`, axiosToken);
   } catch (error) {
     console.log(error);
 
