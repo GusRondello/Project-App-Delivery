@@ -26,6 +26,7 @@ describe('User service', () => {
     findOneStub.restore();
     findAllStub.restore();
     createStub.restore();
+    destroyStub.restore();
   });
 
   describe('login', () => {
@@ -147,14 +148,14 @@ describe('User service', () => {
       it('should throw an error, when user to be deleted is an administrator', async () => {
         findOneStub.resolves(admin);
 
-        await expect(userService.destroy()).to.eventually.to.rejectedWith('User is an administrator');
+        await expect(userService.destroy(1)).to.eventually.to.rejectedWith('User is an administrator');
       });
 
       it('should throw an error', async () => {
         findOneStub.resolves(null);
         destroyStub.resolves(0);
 
-        await expect(userService.destroy()).to.eventually.to.rejectedWith('User not found');
+        await expect(userService.destroy(1)).to.eventually.to.rejectedWith('User not found');
       });
     });
   });

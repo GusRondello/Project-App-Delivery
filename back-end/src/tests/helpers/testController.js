@@ -27,6 +27,9 @@ const testController = async (
       result.status = num;
       return response
     },
+    sendStatus: (num) => {
+      result.status = num;
+    },
     send: () => {},
     locals,
   }
