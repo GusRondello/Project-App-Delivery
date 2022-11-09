@@ -14,7 +14,7 @@ function OrderItemCard({ product, index }) {
   const { productsArray, setProductsArray,
     setIsCartUpdated } = useContext(CustomerContext);
 
-  /* função responsável por deletar o produto do carrinho e enviar o novo array de produtos para o context.
+  /* Função responsável por deletar o produto do carrinho e enviar o novo array de produtos para o context.
      Também isCartUpdated como true */
   const handleRemoveItem = () => {
     const newProductsQtd = productsArray.map((item) => {

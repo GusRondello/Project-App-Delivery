@@ -8,7 +8,7 @@ function UsersTable() {
   const [users, setUsers] = useState([]);
   const { hasAdminChangedUsers, setHasAdminChangedUsers } = useContext(DeliveryContext);
 
-  /* função responsável por pegar todos os usuários da API */
+  /* Função responsável por pegar todos os usuários da API (api.getUsers) */
   useEffect(() => {
     async function fetchUsers() {
       const { token } = getUserInfo();

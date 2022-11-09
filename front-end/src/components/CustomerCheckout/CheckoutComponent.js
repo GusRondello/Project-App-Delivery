@@ -18,17 +18,20 @@ function CheckoutComponent() {
 
   const navigate = useNavigate();
   const totalPrice = getTotalPrice();
-  // console.log('totalPrice', totalPrice);
+
+  /* useEffect responsável por toda vez que atualizar no context os sellers ou os itens
+     do carrinho, atualiza/adicionar ao estado local */
   useEffect(() => {
     setItems(cartItems);
     setSellersArray(sellers);
     setSelectedSeller(sellers[0]?.id);
   }, [cartItems, sellers]);
 
+  /* Função responsável por montar a nova order e enviar para a API (api.sendOrder) */
   const handleCheckout = async () => {
     const { id: userId, token } = getUserInfo();
     const totalPriceNumber = Number(totalPrice.replace(',', '.'));
-    const order = {
+    const newOrder = {
       userId,
       sellerId: selectedSeller,
       totalPrice: totalPriceNumber,
@@ -40,14 +43,16 @@ function CheckoutComponent() {
       }),
     };
 
-    const salle = await api.sendOrder(token, order);
-    if (salle.error === true) {
-      setErrorMessage(salle.message);
+    const order = await api.sendOrder(token, newOrder);
+    if (order.error === true) {
+      setErrorMessage(order.message);
       return navigate('/login');
     }
-    const { id: saleId } = salle;
+    const { id: orderId } = order;
 
-    return navigate(`/customer/orders/${saleId}`, { state: { salle } });
+    /* Envia pelo state do navigate a venda selecionada, apesar de não estar usando.
+       Apenas para mostrar que é possível enviar dados pelo state do navigate */
+    return navigate(`/customer/orders/${orderId}`, { state: { order } });
   };
 
   return (
@@ -62,8 +67,6 @@ function CheckoutComponent() {
       </div>
       <h2>Detalhes e Endereço para Entrega</h2>
       <div>
-        {/* Input select para selecionar o vendedor tendo como título: P. Vendedora Resposável:
-        tem como options o array sellers */}
         <label htmlFor="seller">
           P. Vendedora Responsável:
           <select
@@ -71,7 +74,7 @@ function CheckoutComponent() {
             name="seller"
             id="seller"
             value={ selectedSeller }
-            onChange={ (e) => setSelectedSeller(e.target.value) }
+            onChange={ (event) => setSelectedSeller(event.target.value) }
           >
             {sellersArray.map((seller) => (
               <option

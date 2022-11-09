@@ -1,4 +1,3 @@
-// Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
@@ -17,18 +16,14 @@ const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
 
 function OrderDetailComponent() {
   const [orderStatus, setOrderStatus] = useState('');
-  // const [sellersArray, setSellersArray] = useState([]);
   const [order, setOrder] = useState([]);
   const { sellers } = useContext(CustomerContext);
   const { isStatusUpdated, setIsStatusUpdated } = useContext(DeliveryContext);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setSellersArray(sellers);
-  // }, [sellers]);
-
-  // useEffect responsável por receber os detales da order da api
+  /* useEffect para receber da API (api.getCustomerOrder) a order relacionada ao id da URL.
+     É chamado novamente caso o status da order seja atualizado */
   useEffect(() => {
     async function fetchOrder() {
       const { token } = getUserInfo();
@@ -37,6 +32,7 @@ function OrderDetailComponent() {
       const data = await api.getCustomerOrder(token, salleId);
       const { saleDate } = data;
 
+      /* Converte a data para o formato dd/mm/yyyy e com o timezone brasileiro */
       const date = new Date(saleDate)
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
@@ -47,6 +43,7 @@ function OrderDetailComponent() {
     fetchOrder();
   }, [isStatusUpdated]);
 
+  /* Função responsável por pegar o id da order na URL e atualizar o status na API (api.updateOrderStatus) */
   const handleChangeStatus = async () => {
     const { token } = getUserInfo();
     const salleId = window.location.pathname.split('/')[3];
@@ -76,7 +73,7 @@ function OrderDetailComponent() {
           <span>
             P. Vend:
             {' '}
-            {/* compara o id do vendedor em order com o id do vendedor em sellers */}
+            {/* Compara o id do vendedor em order com o id do vendedor em sellers e exibe o nome */}
             <p data-testid={ `${DATATESTID_38}` }>
               {sellers.find((seller) => seller.id === order.sellerId)?.name}
             </p>

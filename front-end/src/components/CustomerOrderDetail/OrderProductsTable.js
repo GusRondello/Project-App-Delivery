@@ -3,12 +3,7 @@ import OrderItemCard from './OrderItemCard';
 import CustomerContext from '../../context/CustomerContext';
 
 function OrderProductsTable() {
-  // const [items, setItems] = useState([]);
   const { cartItems } = useContext(CustomerContext);
-
-  // useEffect(() => {
-  //   setItems(cartItems);
-  // }, [cartItems]);
 
   return (
     <div>

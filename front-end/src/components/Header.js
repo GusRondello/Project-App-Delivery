@@ -41,13 +41,9 @@ function Header() {
       )}
       {role === 'administrator' && (
         <div>
-          <button
-            type="button"
-            data-testid="customer_products__element-navbar-link-orders"
-            onClick={ () => navigate('/admin/manage') }
-          >
+          <p data-testid="customer_products__element-navbar-link-orders">
             Gerenciar Usuários
-          </button>
+          </p>
         </div>
       )}
       <div>

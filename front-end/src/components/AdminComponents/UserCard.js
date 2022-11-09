@@ -13,7 +13,7 @@ const DATATESTID_73 = 'admin_manage__element-user-table-remove-';
 function UserCard({ user, index }) {
   const { setHasAdminChangedUsers } = useContext(DeliveryContext);
 
-  /* função responsável por deletar o usuário através da API */
+  /* Função responsável por deletar o usuário através da API (api.excludeUser) */
   const handleRemoveUser = (id) => {
     console.log(id);
     const { token } = getUserInfo();
