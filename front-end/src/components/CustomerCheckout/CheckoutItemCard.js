@@ -14,6 +14,8 @@ function OrderItemCard({ product, index }) {
   const { productsArray, setProductsArray,
     setIsCartUpdated } = useContext(CustomerContext);
 
+  /* função responsável por deletar o produto do carrinho e enviar o novo array de produtos para o context.
+     Também isCartUpdated como true */
   const handleRemoveItem = () => {
     const newProductsQtd = productsArray.map((item) => {
       if (item.id === product.id) {
@@ -35,7 +37,6 @@ function OrderItemCard({ product, index }) {
       </td>
       <td data-testid={ `${DATATESTID_26}${index}` }>{(product.subtotal)}</td>
       <td data-testid={ `${DATATESTID_27}${index}` }>
-        {/* Botão para remover o item, ao ser clicado percorre productsArray e atualiza a quantidade */}
         <button
           type="button"
           onClick={ () => handleRemoveItem() }

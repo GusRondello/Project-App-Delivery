@@ -1,4 +1,3 @@
-// Componente que renderiza o card o usuário vindo do map do UsersTable
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import api from '../../services';
@@ -14,6 +13,7 @@ const DATATESTID_73 = 'admin_manage__element-user-table-remove-';
 function UserCard({ user, index }) {
   const { setHasAdminChangedUsers } = useContext(DeliveryContext);
 
+  /* função responsável por deletar o usuário através da API */
   const handleRemoveUser = (id) => {
     console.log(id);
     const { token } = getUserInfo();
