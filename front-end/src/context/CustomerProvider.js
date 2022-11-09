@@ -16,6 +16,7 @@ function CustomerProvider({ children }) {
 
   const navigate = useNavigate();
 
+  /* Função responsável por pegar da API (api.getSellers) os vendedores */
   useEffect(() => {
     async function fetchSellers() {
       const { token } = getUserInfo();
@@ -26,6 +27,8 @@ function CustomerProvider({ children }) {
     fetchSellers();
   }, []);
 
+  /* Função responsável por comparar os produtos recebidos da API com os produtos do carrinho
+     e manter a quantidade de itens do mesmo caso já existir o produto lá */
   const combineWithLocalStorageQtd = (productsWithQtd) => {
     const products = getCartItems();
 
@@ -46,11 +49,13 @@ function CustomerProvider({ children }) {
     }
   };
 
+  /* Função responsável por pegar da API (api.getProducts) os produtos */
   useEffect(() => {
     async function fetchProducts() {
       const { token } = getUserInfo();
       const { error, products } = await api.getProducts(token);
 
+      /* Caso não haja erro, desloga o usuário e envia para a tela de login */
       if (error === true) {
         localStorage.removeItem('user');
         return navigate('/login');
@@ -70,6 +75,7 @@ function CustomerProvider({ children }) {
     fetchProducts();
   }, []);
 
+  /* Função responsável por atualizar o carrinho toda vez que a quantidade de um item for alterada */
   useEffect(() => {
     if (isCartUpdated) {
       const cart = productsArray.map((product) => {
@@ -77,7 +83,6 @@ function CustomerProvider({ children }) {
         return rest;
       }).filter((product) => product.quantity > 0);
 
-      console.log('productsArray', productsArray);
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
         const subtotal = (price * quantity).toFixed(2).replace('.', ',');
