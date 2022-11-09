@@ -11,11 +11,11 @@ function LoginForm() {
     email: '',
     password: '',
   });
-  // const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
 
-  // useEffect que chama a função getUserInfo e caso existir user redireciona para a rota /customer/products
+  /* useEffect que chama a função getUserInfo que recebe os dados do localStorage
+     e caso existir um user redireciona para a rota /customer/products */
   useEffect(() => {
     const userInfo = getUserInfo();
     if (userInfo) {
@@ -23,6 +23,7 @@ function LoginForm() {
     }
   }, []);
 
+  /* Função que valida os dados digitados e habilita ou desabilita o botão de login */
   const validateLogin = () => {
     const re = /\S+@\S+\.\S+/;
     const emailValidation = re.test(formLogin.email);
@@ -35,11 +36,12 @@ function LoginForm() {
     }
   };
 
+  /* useEffect que chama a função validateLogin toda vez que o estado formLogin é alterado */
   useEffect(() => {
     validateLogin();
   }, [formLogin]);
 
-  // handle generico
+  /* Função que atualiza o estado formLogin com os dados digitados no input */
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormLogin((prevState) => ({
@@ -48,9 +50,10 @@ function LoginForm() {
     }));
   };
 
+  /* Função que envia os dados do login para a API (api.singIn) e em caso de sucesso
+     salva os dados do usuário logado no localStorage */
   const singIn = async (email, password) => {
     const response = await api.singIn(email, password);
-    console.log(response);
     if (response.error) {
       setErrorMessage(response.message);
       return navigate('/login');
