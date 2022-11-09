@@ -38,6 +38,8 @@ function OrderDetailComponent() {
 
       setOrder({ ...data, saleDate: date });
       setOrderStatus(data.status);
+      /* isStatusUpdated é uma variável que é alterada para false quando a API é chamada,
+       preparando o contexto para receber a pŕoxima atualização do status. */
       setIsStatusUpdated(false);
     }
     fetchOrder();

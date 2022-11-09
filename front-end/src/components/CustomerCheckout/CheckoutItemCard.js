@@ -24,6 +24,8 @@ function OrderItemCard({ product, index }) {
       return item;
     });
     setProductsArray(newProductsQtd);
+    /* isCartUpdated é uma variável que é alterada para true quando o carrinho é atualizado,
+       avisando para a aplicação atualizar os componentes que dependem do carrinho. */
     setIsCartUpdated(true);
   };
 

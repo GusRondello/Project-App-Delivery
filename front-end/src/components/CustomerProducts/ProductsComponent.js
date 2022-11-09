@@ -1,4 +1,3 @@
-// Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
@@ -12,7 +11,7 @@ function Products() {
   const totalPrice = getTotalPrice();
 
   return (
-    <div className="teste122121">
+    <div>
       <div>
         {productsArray?.map((product) => (
           <div key={ product.id }>
@@ -25,7 +24,6 @@ function Products() {
       <button
         type="button"
         data-testid="customer_products__button-cart"
-        // desabilita caso não houver itens no carrinho
         disabled={ cartItems.length === 0 }
         onClick={ () => navigate('/customer/checkout') }
       >

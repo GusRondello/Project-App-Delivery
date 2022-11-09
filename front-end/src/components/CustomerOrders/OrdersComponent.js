@@ -1,8 +1,5 @@
 import React, { useEffect, useState/* , useContext */ } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import CustomerContext from '../context/CustomerContext';
-// import getTotalPrice from '../helpers/getTotalPrice';
-// import DetailItemCard from './DetailItemCard';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderCard from './OrderCard';
@@ -12,14 +9,16 @@ function OrdersComponent() {
 
   const navigate = useNavigate();
 
+  /* Função responsável por pegar da API (api.getUsers) todas as compras do usuários */
   useEffect(() => {
     async function fetchSalle() {
       const { token } = getUserInfo();
       const data = await api.getAllCustomerOrders(token);
-      console.log('data', data);
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
+
+        /* Converte a data para o formato dd/mm/yyyy e com o timezone brasileiro */
         const date = new Date(saleDate)
           .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 

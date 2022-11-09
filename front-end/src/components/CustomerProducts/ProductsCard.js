@@ -13,11 +13,12 @@ function ProductsCard({ product }) {
   const { productsArray, setProductsArray,
     setIsCartUpdated } = useContext(CustomerContext);
 
+  /* Função responsável por adicionar ou diminuir o produto ao carrinho
+     e enviar o array com a quantidade de produtos atualizada para o context. */
   const handleQuantity = (operation) => {
     const newProductsQtd = productsArray.map((item) => {
       if (item.id === product.id) {
         const newQuantity = operation === 'add' ? item.quantity + 1 : item.quantity - 1;
-
         if (newQuantity < 0) return { ...item, quantity: 0 };
 
         return { ...item, quantity: newQuantity };
@@ -26,6 +27,8 @@ function ProductsCard({ product }) {
       return item;
     });
     setProductsArray(newProductsQtd);
+    /* isCartUpdated é uma variável que é alterada para true quando o carrinho é atualizado,
+       avisando para a aplicação atualizar os componentes que dependem do carrinho. */
     setIsCartUpdated(true);
   };
 
@@ -58,14 +61,15 @@ function ProductsCard({ product }) {
           type="number"
           data-testid={ `${DATATESTID_20}${product.id}` }
           value={ product.quantity }
-          onChange={ (e) => {
+          /* No onChange, percorre todos os itens, encontra o elemento correspondente e altera a quantidade */
+          onChange={ (event) => {
             const newProductsQtd = productsArray.map((item) => {
               if (item.id === product.id) {
-                return { ...item, quantity: Number(e.target.value) };
+                return { ...item, quantity: Number(event.target.value) };
               }
               return item;
             });
-            console.log(newProductsQtd);
+
             setProductsArray(newProductsQtd);
             setIsCartUpdated(true);
           } }
