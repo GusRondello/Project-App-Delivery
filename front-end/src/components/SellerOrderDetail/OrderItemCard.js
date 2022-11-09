@@ -7,8 +7,8 @@ const DATATESTID_60 = 'seller_order_details__element-order-table-quantity-';
 const DATATESTID_61 = 'seller_order_details__element-order-table-unit-price-';
 const DATATESTID_62 = 'seller_order_details__element-order-table-sub-total-';
 
+/* Responsável por renderizar os elementos do map do componente OrderProductsTable */
 function OrderItemCard({ product, index }) {
-  // console.log('product', product);
   return (
     <tr key={ index }>
       <td data-testid={ `${DATATESTID_58}${index}` }>{index + 1}</td>

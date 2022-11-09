@@ -7,6 +7,7 @@ const DATATESTID_50 = 'seller_orders__element-order-date-';
 const DATATESTID_51 = 'seller_orders__element-card-price-';
 const DATATESTID_52 = 'seller_orders__element-card-address-';
 
+/* Responsável por renderizar os elementos do map do componente OrdersComponent */
 function OrderCard({ order }) {
   return (
     <div>

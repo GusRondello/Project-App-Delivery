@@ -8,6 +8,7 @@ const DATATESTID_43 = `${CUSTOMER}element-order-table-quantity-`;
 const DATATESTID_44 = `${CUSTOMER}element-order-table-unit-price-`;
 const DATATESTID_45 = `${CUSTOMER}element-order-table-sub-total-`;
 
+/* Responsável por renderizar os elementos do map do componente OrderProductsTable */
 function OrderItemCard({ product, index }) {
   return (
     <tr key={ index }>

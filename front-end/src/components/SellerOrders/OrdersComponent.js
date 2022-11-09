@@ -9,12 +9,15 @@ function OrdersComponent() {
 
   const navigate = useNavigate();
 
+  /* Função responsável por pegar da API (api.getAllSellerOrders) todas as ordens do vendedor */
   useEffect(() => {
     async function fetchSalle() {
       const { token } = GetUserInfo();
       const data = await api.getAllSellerOrders(token);
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
+
+        /* Converte a data para o formato dd/mm/yyyy e com o timezone brasileiro */
         const date = new Date(saleDate)
           .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 

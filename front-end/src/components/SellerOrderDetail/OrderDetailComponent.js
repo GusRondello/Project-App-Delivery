@@ -1,7 +1,5 @@
-// Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import DetailItemCard from './DetailItemCard';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
@@ -21,16 +19,17 @@ function OrderDetailComponent() {
 
   const navigate = useNavigate();
 
-  // useEffect responsável por receber os detales da order da api
+  /* useEffect para receber da API (api.getSellerOrder) a order relacionada ao id da URL.
+      É chamado novamente caso o status da order seja atualizado */
   useEffect(() => {
     async function fetchOrder() {
       const { token } = getUserInfo();
       const salleId = window.location.pathname.split('/')[3];
 
       const data = await api.getSellerOrder(token, salleId);
-      console.log('data', data);
       const { saleDate, products } = data;
 
+      /* Converte a data para o formato dd/mm/yyyy e com o timezone brasileiro */
       const date = new Date(saleDate)
         .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
 
@@ -42,13 +41,16 @@ function OrderDetailComponent() {
 
       setOrder({ ...data, products: productsWithSubTotal, saleDate: date });
       setOrderStatus(data.status);
+      /* isStatusUpdated é uma variável que é alterada para false quando a API é chamada,
+         preparando o contexto para receber a pŕoxima atualização do status. */
       setIsStatusUpdated(false);
     }
     fetchOrder();
   }, [isStatusUpdated]);
 
+  /* Função responsável por atualizar o status da order para "Preparando" ou "Em Trânsito"
+     na API (api.sendOrderStatusUpdate) */
   const handleChangeStatus = async (status) => {
-    console.log('status', status);
     const { token } = getUserInfo();
     const salleId = window.location.pathname.split('/')[3];
     const oderStatusUpdated = {
@@ -56,6 +58,8 @@ function OrderDetailComponent() {
     };
 
     const response = await api.sendOrderStatusUpdate(token, oderStatusUpdated, salleId);
+    /* isStatusUpdated é uma variável que é alterada para false quando a API é chamada,
+       preparando o contexto para receber a pŕoxima atualização do status. */
     setIsStatusUpdated(true);
 
     if (response.error === true) {

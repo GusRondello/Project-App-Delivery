@@ -10,6 +10,7 @@ const DATATESTID_25 = `${CUSTOMER}element-order-table-unit-price-`;
 const DATATESTID_26 = `${CUSTOMER}element-order-table-sub-total-`;
 const DATATESTID_27 = `${CUSTOMER}element-order-table-remove-`;
 
+/* Responsável por renderizar os elementos do map do componente CheckoutTable */
 function OrderItemCard({ product, index }) {
   const { productsArray, setProductsArray,
     setIsCartUpdated } = useContext(CustomerContext);

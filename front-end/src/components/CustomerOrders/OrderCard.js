@@ -6,6 +6,7 @@ const DATATESTID_34 = 'customer_orders__element-delivery-status-';
 const DATATESTID_35 = 'customer_orders__element-order-date-';
 const DATATESTID_36 = 'customer_orders__element-card-price-';
 
+/* Responsável por renderizar os elementos do map do componente OrdersComponent */
 function OrderCard({ order }) {
   return (
     <div>

@@ -10,6 +10,7 @@ const DATATESTID_71 = 'admin_manage__element-user-table-email-';
 const DATATESTID_72 = 'admin_manage__element-user-table-role-';
 const DATATESTID_73 = 'admin_manage__element-user-table-remove-';
 
+/* Responsável por renderizar os elementos do map do componente UserTable */
 function UserCard({ user, index }) {
   const { setHasAdminChangedUsers } = useContext(DeliveryContext);
 

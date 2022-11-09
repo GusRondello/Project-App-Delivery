@@ -9,6 +9,7 @@ const DATATESTID_18 = 'customer_products__button-card-add-item-';
 const DATATESTID_19 = 'customer_products__button-card-rm-item-';
 const DATATESTID_20 = 'customer_products__input-card-quantity-';
 
+/* Responsável por renderizar os elementos do map do componente ProductsComponent */
 function ProductsCard({ product }) {
   const { productsArray, setProductsArray,
     setIsCartUpdated } = useContext(CustomerContext);
