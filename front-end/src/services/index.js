@@ -1,11 +1,11 @@
 import singIn from './commonApi';
-import registerAsAdmin from './adminApi';
+import * as adminApi from './adminApi';
 import * as costumerApi from './costumerApi';
 import * as sellerApi from './sellerApi';
 
 export default {
   singIn,
-  registerAsAdmin,
+  ...adminApi,
   ...costumerApi,
   ...sellerApi,
 };

@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const md5 = require('md5');
+const { Op } = require('sequelize');
 
 const { User } = require('../database/models');
 const { tokenHelper } = require('../helpers');
@@ -50,9 +51,35 @@ const getSellers = async () => {
   return sellers;
 };
 
+const getAllUsers = async () => {
+  const users = await User.findAll({
+    where: { 
+      role: {
+        [Op.ne]: 'administrator',
+      },
+    },
+  });
+
+  return users;
+};
+
+const destroy = async (id) => {
+  const userIsAdmin = await User.findOne({
+    where: { id, role: 'administrator' },
+  });
+
+  if (userIsAdmin) throw boom.conflict('User is an administrator');
+
+  const rowsAffected = await User.destroy({ where: { id } });
+
+  if (rowsAffected === 0) throw boom.notFound('User not found');
+};
+
 module.exports = {
   login,
   create,
   checkUserExistsBy,
   getSellers,
+  getAllUsers,
+  destroy,
 };

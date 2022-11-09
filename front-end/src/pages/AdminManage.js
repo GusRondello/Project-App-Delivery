@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Header from '../components/Header';
-import SelectField from '../components/SelectField';
-import TextField from '../components/TextField';
+import SelectField from '../components/AdminComponents/SelectField';
+import TextField from '../components/AdminComponents/TextField';
 import getUserInfo from '../helpers/getUserInfo';
 import { validateEmail, validateMinLength } from '../helpers/validators';
 import api from '../services';
+import UsersTable from '../components/AdminComponents/UsersTable';
+import DeliveryContext from '../context/DeliveryContext ';
 
 const MIN_NAME_LENGTH = 12;
 const MIN_PASSWORD_LENGTH = 6;
 
 function AdminManage() {
+  const { setHasAdminChangedUsers } = useContext(DeliveryContext);
   const [form, setForm] = useState({
     serverError: '',
     valid: false,
@@ -55,6 +58,7 @@ function AdminManage() {
       { name, email, password, role },
       token,
     );
+    setHasAdminChangedUsers(true);
 
     if (response.error) {
       setForm((state) => ({ ...state, serverError: response.message }));
@@ -63,7 +67,7 @@ function AdminManage() {
     }
   }
 
-  console.log(form);
+  // console.log(form);
 
   return (
     <div>
@@ -125,6 +129,7 @@ function AdminManage() {
           </button>
         </fieldset>
       </form>
+      <UsersTable />
     </div>
   );
 }
