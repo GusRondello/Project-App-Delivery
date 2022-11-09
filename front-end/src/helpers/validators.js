@@ -1,3 +1,4 @@
+/* Funções resposáveis por validar os dados na tela de administrador */
 export function validateMinLength(length) {
   return (value) => value.length >= length;
 }
