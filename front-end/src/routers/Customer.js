@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Register from '../pages/Register';
-import Products from '../pages/CustomerProducts';
+import Register from '../pages/Register/Register';
+import Products from '../pages/CustomerProducts/CustomerProducts';
 import Checkout from '../pages/CustomerCheckout';
 import Orders from '../pages/CustomerOrders';
 import OrderDetail from '../pages/CustomerOrderDetail';

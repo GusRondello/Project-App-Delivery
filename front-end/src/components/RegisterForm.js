@@ -62,14 +62,14 @@ function RegisterForm() {
   return (
     <div>
       <div>
-        <h3>
+        <h1>
           Cadastro
-        </h3>
+        </h1>
       </div>
-      <div>
-        <form>
+      <form id="registerForm">
+        <div id="inputs">
           <label htmlFor="name">
-            Nome
+            <p id="inputTitle">Nome</p>
             <input
               data-testid="common_register__input-name"
               id="name"
@@ -82,7 +82,7 @@ function RegisterForm() {
             />
           </label>
           <label htmlFor="email">
-            Email
+            <p id="inputTitle">Email</p>
             <input
               data-testid="common_register__input-email"
               id="email"
@@ -95,7 +95,7 @@ function RegisterForm() {
             />
           </label>
           <label htmlFor="passwordLabel">
-            Senha
+            <p id="inputTitle">Senha</p>
             <input
               data-testid="common_register__input-password"
               id="passwordLabel"
@@ -106,22 +106,24 @@ function RegisterForm() {
               onChange={ handleChange }
             />
           </label>
-          <button
-            data-testid="common_register__button-register"
-            type="submit"
-            disabled={ isDisabled }
-            onClick={ (event) => register(
-              event,
-              formSignUp.name,
-              formSignUp.email,
-              formSignUp.password,
-            ) }
-          >
-            Cadastrar
-          </button>
-        </form>
-        {
-          errorMessage
+        </div>
+        <button
+          id="registerButton"
+          data-testid="common_register__button-register"
+          type="submit"
+          disabled={ isDisabled }
+          onClick={ (event) => register(
+            event,
+            formSignUp.name,
+            formSignUp.email,
+            formSignUp.password,
+          ) }
+        >
+          Cadastrar
+        </button>
+      </form>
+      {
+        errorMessage
           && (
             <p
               data-testid="common_register__element-invalid_register"
@@ -129,8 +131,7 @@ function RegisterForm() {
               { errorMessage }
             </p>
           )
-        }
-      </div>
+      }
     </div>
   );
 }

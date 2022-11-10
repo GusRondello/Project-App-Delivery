@@ -74,45 +74,53 @@ function LoginForm() {
   return (
     <div id="loginDiv">
       <form id="loginForm">
-        <p>Login</p>
-        <div>
-          <input
-            data-testid="common_login__input-email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            name="email"
-            value={ formLogin.email }
-            onChange={ handleChange }
-          />
+        <div id="inputs">
+          <label htmlFor="email">
+            <p id="inputTitle">Login</p>
+            <input
+              id="email"
+              data-testid="common_login__input-email"
+              type="email"
+              placeholder="Digite seu e-mail"
+              name="email"
+              value={ formLogin.email }
+              onChange={ handleChange }
+            />
+          </label>
         </div>
-        <div>
-          Senha
-          <input
-            data-testid="common_login__input-password"
-            type="password"
-            placeholder="Digite sua senha"
-            name="password"
-            value={ formLogin.password }
-            onChange={ handleChange }
-          />
+        <div id="inputs">
+          <label htmlFor="password">
+            <p id="inputTitle">Senha</p>
+            <input
+              id="password"
+              data-testid="common_login__input-password"
+              type="password"
+              placeholder="Digite sua senha"
+              name="password"
+              value={ formLogin.password }
+              onChange={ handleChange }
+            />
+          </label>
         </div>
         <div>
           <button
+            id="loginButton"
             data-testid="common_login__button-login"
             type="button"
             disabled={ isDisabled }
             onClick={ () => singIn(formLogin.email, formLogin.password) }
           >
-            Login
+            LOGIN
           </button>
         </div>
         <div>
           <button
+            id="registerButton"
             data-testid="common_login__button-register"
             type="submit"
             onClick={ () => navigate('/register', { replace: true }) }
           >
-            Não tem uma conta?
+            Ainda não tenho conta
           </button>
         </div>
       </form>

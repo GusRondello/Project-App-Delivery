@@ -9,7 +9,7 @@ export const DivExterna = styled.div`
   align-items: center;
 `;
 
-export const LoginS = styled.div`  
+export const RegisterS = styled.div`  
   /* border: 1px solid red; */
   height: 100vh;
   width: 100vw;
@@ -18,7 +18,11 @@ export const LoginS = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  #loginForm {
+  h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  #registerForm {
     border: 1px solid var(--buttonBorder);
     height: 300px;
     width: 250px;
@@ -29,12 +33,14 @@ export const LoginS = styled.div`
     border-radius: 4px;
     box-shadow: 0 5px 3px rgb(145 103 172 / 12%), 0 3px 2px rgb(145 103 172 / 24%);
     #inputs {
+      padding: 5px;
       label {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         align-items: flex-start;
         gap: 5px; 
+        margin-bottom: 10px;
         #inputTitle {
           font-size: 18px;
           margin-left: 10px;
@@ -50,24 +56,8 @@ export const LoginS = styled.div`
       }
     }
 
-    #loginButton {
-      background-color: var(--buttonBackground);
-      color: var(--buttonText);
-      border: 1px solid var(--buttonBorder);
-      width: 200px;
-      height: 30px;
-      line-height: 2.5em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      box-shadow: 0 1px 3px rgb(145 103 172 / 12%), 0 1px 2px rgb(145 103 172 / 24%);
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
     #registerButton {
-      background-color: var(--main);
+      background-color: var(--buttonBackground);
       color: var(--buttonText);
       border: 1px solid var(--buttonBorder);
       width: 200px;
