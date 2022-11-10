@@ -8,8 +8,8 @@ async function register(name, email, password) {
       email,
       password,
     });
-
     const { role } = jwt(result.data.token);
+    console.log(role);
 
     return { token: result.data.token, role, name, email };
   } catch (error) {
@@ -149,11 +149,7 @@ async function updateOrderStatus(token, requisition, id) {
       },
     };
     const result = await api
-      .patch(`/customer/orders/${id}`, { ...requisition }, axiosToken)
-      .catch((err) => {
-        console.error(err);
-        return err;
-      });
+      .patch(`/customer/orders/${id}`, { ...requisition }, axiosToken);
 
     return result.data;
   } catch (error) {

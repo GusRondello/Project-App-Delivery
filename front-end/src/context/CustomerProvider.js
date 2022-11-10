@@ -19,6 +19,7 @@ function CustomerProvider({ children }) {
   useEffect(() => {
     async function fetchSellers() {
       const { token } = getUserInfo();
+
       const data = await api.getSellers(token);
 
       setSellers(data);
@@ -64,7 +65,6 @@ function CustomerProvider({ children }) {
 
         return { ...product, price: priceString };
       });
-
       combineWithLocalStorageQtd(productsWithQtdAndPrice);
     }
     fetchProducts();
@@ -77,7 +77,7 @@ function CustomerProvider({ children }) {
         return rest;
       }).filter((product) => product.quantity > 0);
 
-      console.log('productsArray', productsArray);
+      console.log('productsArray Provider', productsArray);
       const cartWithSubtotal = cart.map((product) => {
         const { price, quantity } = product;
         const subtotal = (price * quantity).toFixed(2).replace('.', ',');

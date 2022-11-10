@@ -15,6 +15,7 @@ function OrderItemCard({ product, index }) {
     setIsCartUpdated } = useContext(CustomerContext);
 
   const handleRemoveItem = () => {
+    console.log(productsArray);
     const newProductsQtd = productsArray.map((item) => {
       if (item.id === product.id) {
         return { ...item, quantity: 0 };
