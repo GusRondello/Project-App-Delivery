@@ -13,7 +13,7 @@ function UsersTable() {
     async function fetchUsers() {
       const { token } = getUserInfo();
       const data = await api.getUsers(token);
-      // console.log('data', data);
+
       setUsers(data);
       setHasAdminChangedUsers(false);
     }

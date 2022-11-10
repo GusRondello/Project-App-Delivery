@@ -52,9 +52,9 @@ const destroy = async (req, res, _next) => {
 
   if (Number.isNaN(parseInt)) throw boom.badRequest('ID params should be a number');
 
-  const result = await userService.destroy(id);
+  await userService.destroy(id);
 
-  return res.status(204).json(result);
+  return res.sendStatus(204);
 };
 
 module.exports = {

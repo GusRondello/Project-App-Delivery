@@ -1,4 +1,5 @@
 const SKOL = 'Skol Lata 250ml';
+const HEINEKEN = 'Heineken 600ml';
 
 const products = [
   {
@@ -9,7 +10,7 @@ const products = [
   },
   {
     id: 2,
-    name: 'Heineken 600ml',
+    name: HEINEKEN,
     price: '7.5',
     urlImage: 'http://localhost:3001/images/heineken_600ml.jpg',
   },
@@ -27,7 +28,7 @@ const productsSeller = [
   },
   {
     id: 2,
-    name: 'Heineken 600ml',
+    name: HEINEKEN,
     price: '7.5',
     product: {
       quantity: 2,
@@ -43,6 +44,13 @@ const productInCart = [
     price: '2.2',
     quantity: 3,
     subtotal: '6,60',
+  },
+  {
+    id: 2,
+    name: HEINEKEN,
+    price: '7.5',
+    quantity: 2,
+    subtotal: '15,00',
   },
 ];
 
