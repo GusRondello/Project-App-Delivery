@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import CustomerContext from '../../context/CustomerContext';
+import { ProductsCardS } from './Style';
 
 const DATATESTID_15 = 'customer_products__element-card-title-';
 const DATATESTID_16 = 'customer_products__element-card-price-';
@@ -34,7 +35,7 @@ function ProductsCard({ product }) {
   };
 
   return (
-    <div>
+    <ProductsCardS>
       <p data-testid={ `${DATATESTID_15}${product.id}` }>
         {product.name}
       </p>
@@ -84,7 +85,7 @@ function ProductsCard({ product }) {
           +
         </button>
       </div>
-    </div>
+    </ProductsCardS>
   );
 }
 

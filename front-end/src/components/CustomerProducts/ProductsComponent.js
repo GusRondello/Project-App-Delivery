@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
 import ProductsCard from './ProductsCard';
 import getTotalPrice from '../../helpers/getTotalPrice';
+import { ProductsDivS } from './Style';
 
 function Products() {
   const { productsArray, cartItems } = useContext(CustomerContext);
@@ -12,13 +13,13 @@ function Products() {
 
   return (
     <div>
-      <div>
+      <ProductsDivS>
         {productsArray?.map((product) => (
           <div key={ product.id }>
             <ProductsCard product={ product } />
           </div>
         ))}
-      </div>
+      </ProductsDivS>
       {/* Botão de carrinho que exibe o valor total após o texto Ver Carrinho: e que ao ser clicado direciona
       para a tela /customer/checkout  */}
       <button
