@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Login from '../pages/Login';
+import Login from '../pages/Login/Login';
 
 /* Rotas comuns a todos os usuários */
 function Common() {

@@ -72,51 +72,52 @@ function LoginForm() {
   };
 
   return (
-    <div>
-      <div>
-        <form>
-          <div>
-            <input
-              data-testid="common_login__input-email"
-              type="email"
-              placeholder="Digite seu e-mail"
-              name="email"
-              value={ formLogin.email }
-              onChange={ handleChange }
-            />
-          </div>
-          <div>
-            <input
-              data-testid="common_login__input-password"
-              type="password"
-              placeholder="Digite sua senha"
-              name="password"
-              value={ formLogin.password }
-              onChange={ handleChange }
-            />
-          </div>
-          <div>
-            <button
-              data-testid="common_login__button-login"
-              type="button"
-              disabled={ isDisabled }
-              onClick={ () => singIn(formLogin.email, formLogin.password) }
-            >
-              Login
-            </button>
-          </div>
-          <div>
-            <button
-              data-testid="common_login__button-register"
-              type="submit"
-              onClick={ () => navigate('/register', { replace: true }) }
-            >
-              Não tem uma conta?
-            </button>
-          </div>
-        </form>
-        {
-          errorMessage
+    <div id="loginDiv">
+      <form id="loginForm">
+        <p>Login</p>
+        <div>
+          <input
+            data-testid="common_login__input-email"
+            type="email"
+            placeholder="Digite seu e-mail"
+            name="email"
+            value={ formLogin.email }
+            onChange={ handleChange }
+          />
+        </div>
+        <div>
+          Senha
+          <input
+            data-testid="common_login__input-password"
+            type="password"
+            placeholder="Digite sua senha"
+            name="password"
+            value={ formLogin.password }
+            onChange={ handleChange }
+          />
+        </div>
+        <div>
+          <button
+            data-testid="common_login__button-login"
+            type="button"
+            disabled={ isDisabled }
+            onClick={ () => singIn(formLogin.email, formLogin.password) }
+          >
+            Login
+          </button>
+        </div>
+        <div>
+          <button
+            data-testid="common_login__button-register"
+            type="submit"
+            onClick={ () => navigate('/register', { replace: true }) }
+          >
+            Não tem uma conta?
+          </button>
+        </div>
+      </form>
+      {
+        errorMessage
           && (
             <p
               data-testid="common_login__element-invalid-email"
@@ -124,8 +125,7 @@ function LoginForm() {
               { errorMessage }
             </p>
           )
-        }
-      </div>
+      }
     </div>
   );
 }

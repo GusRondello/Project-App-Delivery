@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import getUserInfo from '../helpers/getUserInfo';
+import ThemeComponent from './ThemeComponent';
 
 /* Header é um componente que renderiza o header da aplicação, que é o mesmo para todos os usuários.
    Ele renderiza o nome do usuário e o botão de logout, além de renderizar os botões de navegação
@@ -54,6 +55,9 @@ function Header() {
         <p data-testid="customer_products__element-navbar-user-full-name">
           {name}
         </p>
+      </div>
+      <div>
+        <ThemeComponent />
       </div>
       <div>
         <button
