@@ -45,9 +45,9 @@ const updateOrderStatus = async ({ id, status }) => {
 
   if (!statusValues.includes(status)) throw boom.badRequest('Invalid status');
 
-  const sale = await Sale.update({ status }, { where: { id } });
+  const [sale] = await Sale.update({ status }, { where: { id } });
 
-  if (!sale) throw boom.notFound('Order not found');
+  if (sale === 0) throw boom.notFound('Order not found');
 
   const updatedSale = await Sale.findByPk(id);
 
