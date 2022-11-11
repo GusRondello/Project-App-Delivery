@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import OrderDetailComponent from '../components/SellerOrderDetail/OrderDetailComponent';
 
 function SellerOrderDetail() {

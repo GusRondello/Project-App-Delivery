@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import SelectField from '../components/AdminComponents/SelectField';
 import TextField from '../components/AdminComponents/TextField';
 import getUserInfo from '../helpers/getUserInfo';

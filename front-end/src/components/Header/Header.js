@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import getUserInfo from '../helpers/getUserInfo';
-import ThemeComponent from './ThemeComponent';
+import getUserInfo from '../../helpers/getUserInfo';
+import ThemeComponent from '../ThemeComponent';
+import HeaderS from './Style';
 
 /* Header é um componente que renderiza o header da aplicação, que é o mesmo para todos os usuários.
    Ele renderiza o nome do usuário e o botão de logout, além de renderizar os botões de navegação
@@ -13,10 +14,11 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <HeaderS>
       {role === 'customer' && (
-        <div>
+        <div id="customerBtns">
           <button
+            id="btn1"
             type="button"
             data-testid="customer_products__element-navbar-link-products"
             onClick={ () => navigate('/customer/products') }
@@ -24,6 +26,7 @@ function Header() {
             Produtos
           </button>
           <button
+            id="btn2"
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
             onClick={ () => navigate('/customer/orders') }
@@ -36,6 +39,7 @@ function Header() {
       && (
         <div>
           <button
+            id="btn1"
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
             onClick={ () => navigate('/seller/orders') }
@@ -45,22 +49,20 @@ function Header() {
         </div>
       )}
       {role === 'administrator' && (
-        <div>
+        <div id="btn1">
           <p data-testid="customer_products__element-navbar-link-orders">
             Gerenciar Usuários
           </p>
         </div>
       )}
-      <div>
+      <div id="name">
         <p data-testid="customer_products__element-navbar-user-full-name">
           {name}
         </p>
       </div>
-      <div>
-        <ThemeComponent />
-      </div>
-      <div>
+      <div id="logouAndThemeDiv">
         <button
+          id="leaveBtn"
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
@@ -70,8 +72,11 @@ function Header() {
         >
           Sair
         </button>
+        <div>
+          <ThemeComponent />
+        </div>
       </div>
-    </div>
+    </HeaderS>
   );
 }
 

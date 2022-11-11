@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const ProductsDivS = styled.div`
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   width: 100%;
+  height: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -11,12 +12,19 @@ export const ProductsDivS = styled.div`
 `;
 
 export const ProductsCardS = styled.div`
-  border: 2px solid green;
+  border: 1px solid var(--main);
+  background-color: var(--main);
   height: 250px;
   width: 200px;
   /* display: flex;
   flex-direction: column; */
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 3px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  cursor: pointer;
   #productPrice {
     font-weight: bold;
     position: absolute;
@@ -24,8 +32,10 @@ export const ProductsCardS = styled.div`
   }
   #productImage {
     height: 180px;
-    width: 196px;
+    width: 198px;
     margin-bottom: 4px;
+    // border-radius apenas na parte de cima
+    border-radius: 3px 3px 0 0;
     img {
       width: 100%;
       height: 100%;
@@ -53,16 +63,17 @@ export const ProductsCardS = styled.div`
     button {
       width: 30px;
       height: 30px;
-      border: 1px solid black;
+      border: 1px solid var(--buttonBorder);
+      background-color: var(--buttonBackground);
+      cursor: pointer;
       border-radius: 10%;
-      background-color: white;
       font-size: 20px;
       font-weight: bold;
     }
     input {
       width: 40px;
       height: 30px;
-      border: 1px solid black;
+      border: 1px solid var(--buttonBorder);
       border-radius: 10%;
       background-color: white;
       text-align: center;

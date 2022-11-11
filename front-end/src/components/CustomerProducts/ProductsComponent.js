@@ -23,12 +23,15 @@ function Products() {
       {/* Botão de carrinho que exibe o valor total após o texto Ver Carrinho: e que ao ser clicado direciona
       para a tela /customer/checkout  */}
       <button
+        id="cartButton"
         type="button"
         data-testid="customer_products__button-cart"
         disabled={ cartItems.length === 0 }
         onClick={ () => navigate('/customer/checkout') }
       >
         <span data-testid="customer_products__checkout-bottom-value">
+          Ver Carrinho:
+          {' '}
           {` R$ ${totalPrice}`}
         </span>
       </button>

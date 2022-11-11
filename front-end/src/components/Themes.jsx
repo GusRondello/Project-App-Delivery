@@ -1,6 +1,6 @@
 export const lightTheme = {
   background: '#f8f5f2',
-  main: '#fcf5ee',
+  main: '#B1C2BE',
   headline: '#232323',
   paragraph: '#222525',
   // botões
