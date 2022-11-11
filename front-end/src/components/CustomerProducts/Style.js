@@ -24,7 +24,6 @@ export const ProductsCardS = styled.div`
   border-radius: 3px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  cursor: pointer;
   #productPrice {
     font-weight: bold;
     position: absolute;

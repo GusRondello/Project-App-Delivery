@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../components/Header/Header';
-import CheckoutComponent from '../components/CustomerCheckout/CheckoutComponent';
-import CustomerProvider from '../context/CustomerProvider';
+import Header from '../../components/Header/Header';
+import CheckoutComponent from '../../components/CustomerCheckout/CheckoutComponent';
+import CustomerProvider from '../../context/CustomerProvider';
 
 function Checkout() {
   return (

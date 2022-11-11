@@ -1,21 +1,21 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
-import ProductsComponent from '../../components/CustomerProducts/ProductsComponent';
+import OrdersComponent from '../../components/CustomerOrders/OrdersComponent';
 import CustomerProvider from '../../context/CustomerProvider';
-import { DivExterna, ProductsS } from './Style';
+import { DivExterna, CustomerOrdersS } from './Style';
 
-function Produtos() {
+function Orders() {
   const location = window.location.pathname;
   return (
     <DivExterna>
-      <ProductsS>
+      <CustomerOrdersS>
         <Header location={ location } />
         <CustomerProvider>
-          <ProductsComponent />
+          <OrdersComponent />
         </CustomerProvider>
-      </ProductsS>
+      </CustomerOrdersS>
     </DivExterna>
   );
 }
 
-export default Produtos;
+export default Orders;

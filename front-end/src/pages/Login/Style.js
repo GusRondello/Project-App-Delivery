@@ -18,6 +18,9 @@ export const LoginS = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  #logo {
+    height: 300px;
+  }
   #loginForm {
     border: 1px solid var(--buttonBorder);
     height: 300px;

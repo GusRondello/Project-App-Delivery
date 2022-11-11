@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TfiShoppingCart, TfiShoppingCartFull } from 'react-icons/tfi';
 import CustomerContext from '../../context/CustomerContext';
 import ProductsCard from './ProductsCard';
 import getTotalPrice from '../../helpers/getTotalPrice';
@@ -22,19 +23,24 @@ function Products() {
       </ProductsDivS>
       {/* Botão de carrinho que exibe o valor total após o texto Ver Carrinho: e que ao ser clicado direciona
       para a tela /customer/checkout  */}
-      <button
-        id="cartButton"
-        type="button"
-        data-testid="customer_products__button-cart"
-        disabled={ cartItems.length === 0 }
-        onClick={ () => navigate('/customer/checkout') }
-      >
-        <span data-testid="customer_products__checkout-bottom-value">
-          Ver Carrinho:
-          {' '}
-          {` R$ ${totalPrice}`}
-        </span>
-      </button>
+      <abbr title="Ver Carrinho">
+        <button
+          id="cartButton"
+          type="button"
+          data-testid="customer_products__button-cart"
+          disabled={ cartItems.length === 0 }
+          onClick={ () => navigate('/customer/checkout') }
+        >
+          <span data-testid="customer_products__checkout-bottom-value">
+            {/* se o carrinho estiver vazio renderiza o ícone TfiShoppingCart e o R$ totalPrice e se o carrinho não estiver vazio renderiza o ícone TfiShoppingCartFull e o R$ totalPrice */}
+            {cartItems.length === 0
+              ? <TfiShoppingCart />
+              : <TfiShoppingCartFull />}
+            R$
+            {totalPrice}
+          </span>
+        </button>
+      </abbr>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import propTypes from 'prop-types';
 import getUserInfo from '../../helpers/getUserInfo';
 import ThemeComponent from '../ThemeComponent';
 import HeaderS from './Style';
@@ -7,14 +8,15 @@ import HeaderS from './Style';
 /* Header é um componente que renderiza o header da aplicação, que é o mesmo para todos os usuários.
    Ele renderiza o nome do usuário e o botão de logout, além de renderizar os botões de navegação
    relacionados ao usuário logado. */
-function Header() {
+function Header({ location }) {
   /* Recebe do localStorage o nome e o role do usuário logado */
   const { name, role } = getUserInfo();
 
   const navigate = useNavigate();
+  console.log('location', location);
 
   return (
-    <HeaderS>
+    <HeaderS location={ location }>
       {role === 'customer' && (
         <div id="customerBtns">
           <button
@@ -79,5 +81,9 @@ function Header() {
     </HeaderS>
   );
 }
+
+Header.propTypes = {
+  location: propTypes.string.isRequired,
+};
 
 export default Header;

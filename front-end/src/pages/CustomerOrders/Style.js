@@ -9,7 +9,7 @@ export const DivExterna = styled.div`
   align-items: center;
 `;
 
-export const ProductsS = styled.div`  
+export const CustomerOrdersS = styled.div`  
   border: 1px solid red;
   height: auto;
   width: 100%;
