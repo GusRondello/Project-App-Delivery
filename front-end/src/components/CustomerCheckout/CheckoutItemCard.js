@@ -32,15 +32,22 @@ function OrderItemCard({ product, index }) {
 
   return (
     <tr key={ index }>
-      <td data-testid={ `${DATATESTID_22}${index}` }>{index + 1}</td>
-      <td data-testid={ `${DATATESTID_23}${index}` }>{product.name}</td>
-      <td data-testid={ `${DATATESTID_24}${index}` }>{product.quantity}</td>
-      <td data-testid={ `${DATATESTID_25}${index}` }>
+      <td id="tableElIndex" data-testid={ `${DATATESTID_22}${index}` }>{index + 1}</td>
+      <td id="tableElNameBody" data-testid={ `${DATATESTID_23}${index}` }>
+        {product.name}
+      </td>
+      <td id="tableElQtd" data-testid={ `${DATATESTID_24}${index}` }>
+        {product.quantity}
+      </td>
+      <td id="tableElPrice" data-testid={ `${DATATESTID_25}${index}` }>
         {product.price.replace('.', ',')}
       </td>
-      <td data-testid={ `${DATATESTID_26}${index}` }>{(product.subtotal)}</td>
-      <td data-testid={ `${DATATESTID_27}${index}` }>
+      <td id="tableElSubTotal" data-testid={ `${DATATESTID_26}${index}` }>
+        {(product.subtotal)}
+      </td>
+      <td id="tableElRmItem" data-testid={ `${DATATESTID_27}${index}` }>
         <button
+          id="btnRmItem"
           type="button"
           onClick={ () => handleRemoveItem() }
         >

@@ -13,25 +13,72 @@ export const CheckoutTableS = styled.div`
     border: 1px solid var(--main);
     padding: 8px;
     #totalPrice {
-      /* border: 1px solid var(--main); */
       display: flex;
       justify-content: flex-end;
       padding: 10px;
     }
     #table {
-      border: 1px solid red;
-      border-collapse: collapse;
-      tbody {
-        tr {
-          margin: 2px 2px 2px 2px;
-          /* outline: 1px solid #7F9C96; */
-          :nth-child(even) { background-color: #FFF3F0; }
-          :nth-child(odd) { background-color: #93032E; }
-        }
-      }
-      td {
+      width: 100%;
+      padding: 8px;
+      border-collapse: separate; 
+      border-spacing: 0 10px; 
+      margin-top: -10px; /* correct offset on first border spacing if desired */
+  
+      td, th {
+        padding: 8px;
         align-items: center;
         text-align: center;
+      }
+      th {
+        font-size: 10px;
+      }
+      td {
+        border: solid 1px #000;
+        padding: 0;
+        height: 30px;
+      }
+      td:first-child {
+        border-left-style: solid;
+        border-top-left-radius: 10px; 
+        border-bottom-left-radius: 10px;
+      }
+      td:last-child {
+        border-right-style: solid;
+        border-bottom-right-radius: 10px; 
+        border-top-right-radius: 10px; 
+      }
+
+      #tableElIndex {
+        background-color: var(--tertiary);
+      }
+      #tableElNameBody {
+        background-color: var(--main);
+        width: 300px;
+      }
+      #tableElQtd {
+        background-color: var(--buttonBackground);
+      }
+      #tableElPrice {
+        background-color: var(--extra);
+        width: 83px;
+      }
+      #tableElSubTotal {
+        background-color: var(--secundary);
+        width: 83px;
+      }
+      #tableElRmItem {
+        background-color: var(--tertiary);
+        width: 100px;
+        #btnRmItem {
+          background-color: transparent;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          width: 100%;
+          height: 100%;
+          border-bottom-right-radius: 10px; 
+          border-top-right-radius: 10px; 
+        }
       }
     }
   }

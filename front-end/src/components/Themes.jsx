@@ -15,7 +15,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   background: '#0f0e17',
-  main: '#121213',
+  main: '#B1C2BE',
   headline: '#fffffe',
   paragraph: '#a7a9be',
   // botões
