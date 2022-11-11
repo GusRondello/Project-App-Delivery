@@ -7,7 +7,7 @@ function CheckoutProductsTable() {
 
   return (
     <div>
-      <table>
+      <table id="table">
         <thead>
           <tr>
             <th>Item</th>

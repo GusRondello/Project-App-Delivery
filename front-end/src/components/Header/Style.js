@@ -27,7 +27,7 @@ const HeaderS = styled.div`
     || location === '/customer/checkout'
     || location === '/seller/orders'
     || location === '/admin/manage')
-    ? 'var(--secundary)' : 'var(--tertiary)')};
+    ? 'var(--secundary)' : 'var(--buttonBackground)')};
     height: 100%;
     width: 100%;
   }
@@ -35,7 +35,7 @@ const HeaderS = styled.div`
     grid-area: btn2;
     border: 1px solid var(--buttonBorder);
     background-color: ${({ location }) => ((location === '/customer/orders')
-    ? 'var(--secundary)' : 'var(--tertiary)')};
+    ? 'var(--secundary)' : 'var(--buttonBackground)')};
     height: 100%;
     width: 100%;
   }

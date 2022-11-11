@@ -5,6 +5,7 @@ import getTotalPrice from '../../helpers/getTotalPrice';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import CheckoutTable from './CheckoutTable';
+import { CheckoutTableS } from './Style';
 
 function CheckoutComponent() {
   const [items, setItems] = useState([]);
@@ -56,11 +57,11 @@ function CheckoutComponent() {
   };
 
   return (
-    <div>
-      <h2>Finalizar Pedido</h2>
-      <div>
+    <CheckoutTableS>
+      <h1>Finalizar Pedido</h1>
+      <div id="checkoutTable">
         <CheckoutTable />
-        <p data-testid="customer_checkout__element-order-total-price">
+        <p id="totalPrice" data-testid="customer_checkout__element-order-total-price">
           Total:
           {` R$ ${totalPrice}`}
         </p>
@@ -120,7 +121,7 @@ function CheckoutComponent() {
       >
         FINALIZAR PEDIDO
       </button>
-    </div>
+    </CheckoutTableS>
   );
 }
 
