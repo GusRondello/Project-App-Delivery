@@ -1,5 +1,5 @@
 import React from 'react';
-import {  NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import propTypes from 'prop-types';
 import getUserInfo from '../../helpers/getUserInfo';
 import ThemeComponent from '../ThemeComponent';
@@ -22,14 +22,14 @@ function Header({ location }) {
           <NavLink
             className="header-button"
             data-testid="customer_products__element-navbar-link-products"
-            to={'/customer/products' }
+            to="/customer/products"
           >
             Produtos
           </NavLink>
           <NavLink
             className="header-button"
             data-testid="customer_products__element-navbar-link-orders"
-            to={ ('/customer/orders') }
+            to="/customer/orders"
           >
             Meus Pedidos
           </NavLink>
@@ -37,16 +37,16 @@ function Header({ location }) {
       )}
       {role === 'seller'
       && (
-          <NavLink
-            className="header-button"
-            data-testid="customer_products__element-navbar-link-orders"
-            to={('/seller/orders') }
-          >
-            Pedidos
-          </NavLink>
+        <NavLink
+          className="header-button"
+          data-testid="customer_products__element-navbar-link-orders"
+          to="/seller/orders"
+        >
+          Pedidos
+        </NavLink>
       )}
       {role === 'administrator' && (
-        <div >
+        <div>
           <p data-testid="customer_products__element-navbar-link-orders">
             Gerenciar Usuários
           </p>
@@ -57,22 +57,19 @@ function Header({ location }) {
           {name}
         </p>
       </div>
-        <NavLink
-          className="header-button"
-          data-testid="customer_products__element-navbar-link-logout"
-          onClick={ () => {
-            localStorage.removeItem('user');
-          } }
-            to={
-('/login')
-
-            }
-        >
-          Sair
-        </NavLink>
-          <ThemeComponent
-          className="header-button"
-           />
+      <NavLink
+        className="header-button"
+        data-testid="customer_products__element-navbar-link-logout"
+        onClick={ () => {
+          localStorage.removeItem('user');
+        } }
+        to="/login"
+      >
+        Sair
+      </NavLink>
+      <ThemeComponent
+        className="header-button"
+      />
     </HeaderS>
   );
 }

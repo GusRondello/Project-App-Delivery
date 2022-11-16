@@ -27,11 +27,11 @@ function ThemeComponent({ className }) {
   }, []);
 
   return (
-    <div id="modeBtn" className={className}>
+    <div id="modeBtn" className={ className }>
       <abbr title="Mode">
         {theme === 'light'
-          ? <MdDarkMode id="modeIcon" onClick={themeToggler} />
-          : <MdLightMode id="modeIcon" onClick={themeToggler} />}
+          ? <MdDarkMode id="modeIcon" onClick={ themeToggler } />
+          : <MdLightMode id="modeIcon" onClick={ themeToggler } />}
       </abbr>
     </div>
   );

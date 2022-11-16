@@ -11,6 +11,10 @@ export const lightTheme = {
   secundary: '#f6e58d',
   tertiary: '#f9ca24',
   extra: '#9D8DF1',
+
+  inputBorder: '#333333',
+  inputBackground: '#ffffff',
+  inputTextColor: '#333333',
 };
 
 export const darkTheme = {
@@ -27,4 +31,8 @@ export const darkTheme = {
   secundary: '#f25f4c',
   tertiary: '#e53170',
   extra: '#1E2EDE',
+
+  inputBorder: '#CCCCCC',
+  inputBackground: '#000000',
+  inputTextColor: '#CCCCCC',
 };
