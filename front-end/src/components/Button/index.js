@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Button = styled.button`
   border-radius: 4px;
-  background-color: var(--secundary);
-  border: 1px solid var(--secundary);
+  background-color: var(--secondary);
+  border: 1px solid var(--secondary);
   padding: 12px 18px;
   text-decoration: none;
   font-weight: bold;
@@ -23,6 +23,16 @@ const Button = styled.button`
   }
 `;
 
-export const LinkButton = Button.withComponent(Link);
+Button.defaultProps = {
+  type: 'button',
+};
+
+const LinkButton = Button.withComponent(Link);
+LinkButton.defaultProps = { type: undefined };
+
+const NavLinkButton = Button.withComponent(NavLink);
+NavLinkButton.defaultProps = { type: undefined };
+
+export { LinkButton, NavLinkButton };
 
 export default Button;

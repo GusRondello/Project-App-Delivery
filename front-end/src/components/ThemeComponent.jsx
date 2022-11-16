@@ -1,8 +1,10 @@
 import React, { useEffect, useContext } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import DeliveryContext from '../context/DeliveryContext ';
+import DeliveryContext from '../context/DeliveryContext';
+import Button from './Button';
+import FlexColumn from './FlexColumn';
 
-function ThemeComponent({ className }) {
+function ThemeComponent() {
   const { theme, setTheme } = useContext(DeliveryContext);
 
   const setMode = (mode) => {
@@ -27,13 +29,15 @@ function ThemeComponent({ className }) {
   }, []);
 
   return (
-    <div id="modeBtn" className={ className }>
-      <abbr title="Mode">
-        {theme === 'light'
-          ? <MdDarkMode id="modeIcon" onClick={ themeToggler } />
-          : <MdLightMode id="modeIcon" onClick={ themeToggler } />}
-      </abbr>
-    </div>
+    <Button onClick={ themeToggler }>
+      <FlexColumn as="abbr" title="Mode">
+        {theme === 'light' ? (
+          <MdDarkMode id="modeIcon" />
+        ) : (
+          <MdLightMode id="modeIcon" />
+        )}
+      </FlexColumn>
+    </Button>
   );
 }
 

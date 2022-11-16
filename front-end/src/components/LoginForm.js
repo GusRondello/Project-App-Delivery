@@ -4,7 +4,7 @@ import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
 import api from '../services';
 import Button, { LinkButton } from './Button';
-import TextField from './TextField';
+import TextField from './FormComponents/TextField';
 import FlexColumn from './FlexColumn';
 
 function LoginForm() {
@@ -106,6 +106,7 @@ function LoginForm() {
         />
         <Button
           full
+          type="submit"
           data-testid="common_login__button-login"
           disabled={ isDisabled }
         >

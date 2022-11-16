@@ -8,7 +8,7 @@ export const lightTheme = {
   buttonText: 'black',
   buttonBackground: '#22a6b3',
   // outras
-  secundary: '#f6e58d',
+  secondary: '#f6e58d',
   tertiary: '#f9ca24',
   extra: '#9D8DF1',
 
@@ -28,7 +28,7 @@ export const darkTheme = {
   buttonBackground: '#ff8906',
   buttonBackgroundHover: '#0aa3a3',
   // outras
-  secundary: '#f25f4c',
+  secondary: '#f25f4c',
   tertiary: '#e53170',
   extra: '#1E2EDE',
 

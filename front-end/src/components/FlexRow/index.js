@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-const FlexColumn = styled.div`
+const FlexRow = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   box-sizing: border-box;
-  row-gap: ${(p) => p.gap};
+  column-gap: ${(p) => p.gap};
   align-items: ${(p) => p.align};
   justify-content: ${(p) => p.justify};
 `;
 
-FlexColumn.defaultProps = {
+FlexRow.defaultProps = {
   gap: '0px',
-  align: 'flex-start',
-  justify: 'unset',
+  align: 'center',
+  justify: 'flex-start',
 };
 
-export default FlexColumn;
+export default FlexRow;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import FieldBase from '../FieldBase';
+import propTypes from 'prop-types';
+import FieldBase from './FieldBase';
 
 const StyledInput = styled.input`
   font-family: inherit;
@@ -41,3 +42,18 @@ export default function TextField({
     </FieldBase>
   );
 }
+
+TextField.defaultProps = {
+  type: 'text',
+  placeholder: '',
+};
+
+TextField.propTypes = {
+  type: propTypes.string,
+  placeholder: propTypes.string,
+  name: propTypes.string.isRequired,
+  'data-testid': propTypes.string.isRequired,
+  label: propTypes.string.isRequired,
+  value: propTypes.string.isRequired,
+  onChange: propTypes.func.isRequired,
+};

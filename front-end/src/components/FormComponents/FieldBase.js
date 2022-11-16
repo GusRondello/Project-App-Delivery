@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 import FlexColumn from '../FlexColumn';
 
 const StyledLabel = styled.label`
@@ -15,3 +16,9 @@ export default function FieldBase({ name, label, children }) {
     </FlexColumn>
   );
 }
+
+FieldBase.propTypes = {
+  name: propTypes.string.isRequired,
+  label: propTypes.string.isRequired,
+  children: propTypes.element.isRequired,
+};

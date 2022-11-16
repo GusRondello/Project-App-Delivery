@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
-import DeliveryContext from '../../context/DeliveryContext ';
+import DeliveryContext from '../../context/DeliveryContext';
+import Button from '../Button';
 
 const DATATESTID_69 = 'admin_manage__element-user-table-item-number-';
 const DATATESTID_70 = 'admin_manage__element-user-table-name-';
@@ -11,7 +12,7 @@ const DATATESTID_72 = 'admin_manage__element-user-table-role-';
 const DATATESTID_73 = 'admin_manage__element-user-table-remove-';
 
 /* Responsável por renderizar os elementos do map do componente UserTable */
-function UserCard({ user, index }) {
+function UserRow({ user, index }) {
   const { setHasAdminChangedUsers } = useContext(DeliveryContext);
 
   /* Função responsável por deletar o usuário através da API (api.excludeUser) */
@@ -27,19 +28,18 @@ function UserCard({ user, index }) {
       <td data-testid={ `${DATATESTID_70}${index}` }>{user.name}</td>
       <td data-testid={ `${DATATESTID_71}${index}` }>{user.email}</td>
       <td data-testid={ `${DATATESTID_72}${index}` }>{user.role}</td>
-      <td data-testid={ `${DATATESTID_73}${index}` }>
-        <button
-          type="button"
-          onClick={ () => handleRemoveUser(user.id) }
-        >
-          Excluir
-        </button>
+      <td
+        data-testid={ `${DATATESTID_73}${index}` }
+        className="align-right"
+        style={ { width: 0 } }
+      >
+        <Button onClick={ () => handleRemoveUser(user.id) }>Excluir</Button>
       </td>
     </tr>
   );
 }
 
-UserCard.propTypes = {
+UserRow.propTypes = {
   user: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
@@ -49,4 +49,4 @@ UserCard.propTypes = {
   index: propTypes.number.isRequired,
 };
 
-export default UserCard;
+export default UserRow;

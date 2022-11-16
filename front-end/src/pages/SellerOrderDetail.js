@@ -1,13 +1,12 @@
 import React from 'react';
-import Header from '../components/Header/Header';
+import PrivateLayout from '../components/PrivateLayout';
 import OrderDetailComponent from '../components/SellerOrderDetail/OrderDetailComponent';
 
 function SellerOrderDetail() {
   return (
-    <div>
-      <Header />
+    <PrivateLayout>
       <OrderDetailComponent />
-    </div>
+    </PrivateLayout>
   );
 }
 

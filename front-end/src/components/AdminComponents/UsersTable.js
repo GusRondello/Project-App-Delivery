@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import UserCard from './UserCard';
+import UserRow from './UserRow';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
-import DeliveryContext from '../../context/DeliveryContext ';
+import DeliveryContext from '../../context/DeliveryContext';
+import PageTitle from '../Typography/PageTitle';
+import Table from '../Table';
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
@@ -22,27 +24,23 @@ function UsersTable() {
 
   return (
     <div>
-      <h2>Lista de usuários</h2>
-      <table>
+      <PageTitle>Lista de usuários</PageTitle>
+      <Table>
         <thead>
           <tr>
             <th>Item</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Tipo</th>
-            <th>Excluir</th>
+            <th className="align-right">Excluir</th>
           </tr>
         </thead>
         <tbody>
           {users?.map((user, index) => (
-            <UserCard
-              key={ user.id }
-              user={ user }
-              index={ index }
-            />
+            <UserRow key={ user.id } user={ user } index={ index } />
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

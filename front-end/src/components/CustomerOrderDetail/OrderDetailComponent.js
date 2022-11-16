@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
-import DeliveryContext from '../../context/DeliveryContext ';
+import DeliveryContext from '../../context/DeliveryContext';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
@@ -34,7 +34,8 @@ function OrderDetailComponent() {
 
       /* Converte a data para o formato dd/mm/yyyy e com o timezone brasileiro */
       const date = new Date(saleDate)
-        .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
+        .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+        .split(' ')[0];
 
       setOrder({ ...data, saleDate: date });
       setOrderStatus(data.status);
@@ -53,7 +54,11 @@ function OrderDetailComponent() {
       status: 'Entregue',
     };
 
-    const response = await api.updateOrderStatus(token, oderStatusUpdated, salleId);
+    const response = await api.updateOrderStatus(
+      token,
+      oderStatusUpdated,
+      salleId,
+    );
     setIsStatusUpdated(true);
 
     if (response.error === true) {
@@ -69,7 +74,6 @@ function OrderDetailComponent() {
         <div>
           <span data-testid={ `${DATATESTID_37}` }>
             PEDIDO
-            {' '}
             {order.id}
           </span>
           <span>
@@ -81,7 +85,9 @@ function OrderDetailComponent() {
             </p>
           </span>
           <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
-          <span data-testid={ `${DATATESTID_40}${order.id}` }>{order.status}</span>
+          <span data-testid={ `${DATATESTID_40}${order.id}` }>
+            {order.status}
+          </span>
           <button
             type="button"
             data-testid={ `${DATATESTID_47}` }

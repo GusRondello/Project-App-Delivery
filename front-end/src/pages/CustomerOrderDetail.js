@@ -1,16 +1,15 @@
 import React from 'react';
-import Header from '../components/Header/Header';
 import OrderDetailComponent from '../components/CustomerOrderDetail/OrderDetailComponent';
 import CustomerProvider from '../context/CustomerProvider';
+import PrivateLayout from '../components/PrivateLayout';
 
 function OrderDetail() {
   return (
-    <div>
-      <Header />
-      <CustomerProvider>
+    <CustomerProvider>
+      <PrivateLayout>
         <OrderDetailComponent />
-      </CustomerProvider>
-    </div>
+      </PrivateLayout>
+    </CustomerProvider>
   );
 }
 

@@ -1,49 +1,56 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import propTypes from 'prop-types';
+import styled from 'styled-components';
 import getUserInfo from '../../helpers/getUserInfo';
 import ThemeComponent from '../ThemeComponent';
-import HeaderS from './Style';
+import { NavLinkButton } from '../Button';
+
+const Wrapper = styled.div`
+  width: 100%;
+  padding: 8px 16px;
+  display: flex;
+  column-gap: 16px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tertiary);
+
+  #name {
+    margin-left: auto;
+  }
+`;
 
 /* Header é um componente que renderiza o header da aplicação, que é o mesmo para todos os usuários.
    Ele renderiza o nome do usuário e o botão de logout, além de renderizar os botões de navegação
    relacionados ao usuário logado. */
-function Header({ location }) {
+
+export default function Header() {
   /* Recebe do localStorage o nome e o role do usuário logado */
   const { name, role } = getUserInfo();
 
-  const navigate = useNavigate();
-  console.log('location', location);
-
   return (
-    <HeaderS location={ location }>
+    <Wrapper>
       {role === 'customer' && (
         <>
-          <NavLink
-            className="header-button"
+          <NavLinkButton
             data-testid="customer_products__element-navbar-link-products"
             to="/customer/products"
           >
             Produtos
-          </NavLink>
-          <NavLink
-            className="header-button"
+          </NavLinkButton>
+          <NavLinkButton
             data-testid="customer_products__element-navbar-link-orders"
             to="/customer/orders"
           >
             Meus Pedidos
-          </NavLink>
+          </NavLinkButton>
         </>
       )}
-      {role === 'seller'
-      && (
-        <NavLink
-          className="header-button"
+      {role === 'seller' && (
+        <NavLinkButton
           data-testid="customer_products__element-navbar-link-orders"
           to="/seller/orders"
         >
           Pedidos
-        </NavLink>
+        </NavLinkButton>
       )}
       {role === 'administrator' && (
         <div>
@@ -57,25 +64,14 @@ function Header({ location }) {
           {name}
         </p>
       </div>
-      <NavLink
-        className="header-button"
+      <ThemeComponent />
+      <NavLinkButton
         data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => {
-          localStorage.removeItem('user');
-        } }
+        onClick={ () => localStorage.removeItem('user') }
         to="/login"
       >
         Sair
-      </NavLink>
-      <ThemeComponent
-        className="header-button"
-      />
-    </HeaderS>
+      </NavLinkButton>
+    </Wrapper>
   );
 }
-
-Header.propTypes = {
-  location: propTypes.string.isRequired,
-};
-
-export default Header;
