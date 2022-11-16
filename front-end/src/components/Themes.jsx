@@ -1,15 +1,15 @@
 export const lightTheme = {
   background: '#f8f5f2',
-  main: '#B1C2BE',
+  main: '#22a6b3',
   headline: '#232323',
   paragraph: '#222525',
   // botões
-  buttonBorder: '#222525',
-  buttonText: '#232323',
-  buttonBackground: '#078080',
+  buttonBorder: '#22a6b3',
+  buttonText: 'black',
+  buttonBackground: '#22a6b3',
   // outras
-  secundary: '#f45d48',
-  tertiary: '#DB7C26',
+  secundary: '#f6e58d',
+  tertiary: '#f9ca24',
   extra: '#9D8DF1',
 };
 
@@ -22,6 +22,7 @@ export const darkTheme = {
   buttonBorder: '#a7a9be',
   buttonText: '#fffffe',
   buttonBackground: '#ff8906',
+  buttonBackgroundHover: '#0aa3a3',
   // outras
   secundary: '#f25f4c',
   tertiary: '#e53170',

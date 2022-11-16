@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
 export const ProductsDivS = styled.div`
-  /* border: 1px solid blue; */
   width: 100%;
   height: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
   padding: 16px;
   gap: 16px;
 `;
@@ -15,7 +14,6 @@ export const ProductsCardS = styled.div`
   border: 1px solid var(--main);
   background-color: var(--main);
   height: 250px;
-  width: 200px;
   /* display: flex;
   flex-direction: column; */
   align-items: center;
@@ -24,28 +22,37 @@ export const ProductsCardS = styled.div`
   border-radius: 3px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+
   #productPrice {
     font-weight: bold;
     position: absolute;
-    margin: 3px;
+    margin: 4px;
+    text-align: center;
+    color: #c0392b;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    padding: 8px;
   }
   #productImage {
     height: 180px;
-    width: 198px;
+    width: 100%;
     margin-bottom: 4px;
+    background: white;
     // border-radius apenas na parte de cima
     border-radius: 3px 3px 0 0;
     img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
     }
   }
   #productName {
-    margin-bottom: 4px;
-    font-size: 14px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: bold;
   }
   #quantityDiv {
-    /* border: 1px solid red; */
     display: flex;
     justify-content: space-between;
     width: 100px;

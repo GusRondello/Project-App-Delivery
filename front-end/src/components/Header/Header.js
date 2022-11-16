@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {  NavLink, useNavigate } from 'react-router-dom';
 import propTypes from 'prop-types';
 import getUserInfo from '../../helpers/getUserInfo';
 import ThemeComponent from '../ThemeComponent';
@@ -18,40 +18,35 @@ function Header({ location }) {
   return (
     <HeaderS location={ location }>
       {role === 'customer' && (
-        <div id="customerBtns">
-          <button
-            id="btn1"
-            type="button"
+        <>
+          <NavLink
+            className="header-button"
             data-testid="customer_products__element-navbar-link-products"
-            onClick={ () => navigate('/customer/products') }
+            to={'/customer/products' }
           >
             Produtos
-          </button>
-          <button
-            id="btn2"
-            type="button"
+          </NavLink>
+          <NavLink
+            className="header-button"
             data-testid="customer_products__element-navbar-link-orders"
-            onClick={ () => navigate('/customer/orders') }
+            to={ ('/customer/orders') }
           >
             Meus Pedidos
-          </button>
-        </div>
+          </NavLink>
+        </>
       )}
       {role === 'seller'
       && (
-        <div>
-          <button
-            id="btn1"
-            type="button"
+          <NavLink
+            className="header-button"
             data-testid="customer_products__element-navbar-link-orders"
-            onClick={ () => navigate('/seller/orders') }
+            to={('/seller/orders') }
           >
             Pedidos
-          </button>
-        </div>
+          </NavLink>
       )}
       {role === 'administrator' && (
-        <div id="btn1">
+        <div >
           <p data-testid="customer_products__element-navbar-link-orders">
             Gerenciar Usuários
           </p>
@@ -62,22 +57,22 @@ function Header({ location }) {
           {name}
         </p>
       </div>
-      <div id="logouAndThemeDiv">
-        <button
-          id="leaveBtn"
-          type="button"
+        <NavLink
+          className="header-button"
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
             localStorage.removeItem('user');
-            navigate('/login');
           } }
+            to={
+('/login')
+
+            }
         >
           Sair
-        </button>
-        <div>
-          <ThemeComponent />
-        </div>
-      </div>
+        </NavLink>
+          <ThemeComponent
+          className="header-button"
+           />
     </HeaderS>
   );
 }

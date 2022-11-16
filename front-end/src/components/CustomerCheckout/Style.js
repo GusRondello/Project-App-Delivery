@@ -19,7 +19,7 @@ export const CheckoutTableS = styled.div`
       padding: 10px;
     }
     #table {
-      border: 1px solid red;
+      // border: 1px solid red;
       border-collapse: collapse;
       tbody {
         tr {

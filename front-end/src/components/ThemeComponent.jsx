@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import DeliveryContext from '../context/DeliveryContext ';
 
-function ThemeComponent() {
+function ThemeComponent({ className }) {
   const { theme, setTheme } = useContext(DeliveryContext);
 
   const setMode = (mode) => {
@@ -27,11 +27,11 @@ function ThemeComponent() {
   }, []);
 
   return (
-    <div id="modeBtn">
+    <div id="modeBtn" className={className}>
       <abbr title="Mode">
         {theme === 'light'
-          ? <MdDarkMode id="modeIcon" onClick={ themeToggler } />
-          : <MdLightMode id="modeIcon" onClick={ themeToggler } />}
+          ? <MdDarkMode id="modeIcon" onClick={themeToggler} />
+          : <MdLightMode id="modeIcon" onClick={themeToggler} />}
       </abbr>
     </div>
   );
