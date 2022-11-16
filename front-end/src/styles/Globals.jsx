@@ -32,7 +32,7 @@ export default createGlobalStyle`
     --buttonBorder: ${({ theme }) => theme.buttonBorder};
     --buttonText: ${({ theme }) => theme.buttonText};
     --buttonBackground: ${({ theme }) => theme.buttonBackground};
-    --secundary: ${({ theme }) => theme.secundary};
+    --secondary: ${({ theme }) => theme.secondary};
     --tertiary: ${({ theme }) => theme.tertiary};
     --extra: ${({ theme }) => theme.extra};
   }

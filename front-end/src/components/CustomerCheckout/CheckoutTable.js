@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import CustomerContext from '../../context/CustomerContext';
-import CheckoutItemCard from './CheckoutItemCard';
+import Table from '../Table';
+import CheckoutItemRow from './CheckoutItemRow';
 
 function CheckoutProductsTable() {
   const { cartItems } = useContext(CustomerContext);
 
   return (
-    <table id="table">
+    <Table>
       <thead>
         <tr>
           <th>Item</th>
@@ -14,20 +15,16 @@ function CheckoutProductsTable() {
           <th>Quantidade</th>
           <th>Valor Unitário</th>
           <th>Sub Total</th>
-          <th>Remover Item</th>
+          <th className="align-right">Remover Item</th>
         </tr>
       </thead>
       <tbody>
         {/* Percorre o array de items e renderiza cada item em uma linha da tabela */}
         {cartItems?.map((product, index) => (
-          <CheckoutItemCard
-            key={ product.id }
-            product={ product }
-            index={ index }
-          />
+          <CheckoutItemRow key={ product.id } product={ product } index={ index } />
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
 

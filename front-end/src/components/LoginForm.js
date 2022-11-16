@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
 import api from '../services';
+import Button, { LinkButton } from './Button';
+import TextField from './FormComponents/TextField';
+import FlexColumn from './FlexColumn';
 
 function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -44,6 +47,7 @@ function LoginForm() {
   /* Função que atualiza o estado formLogin com os dados digitados no input */
   const handleChange = ({ target }) => {
     const { name, value } = target;
+    console.log(name, value);
     setFormLogin((prevState) => ({
       ...prevState,
       [name]: value,
@@ -65,76 +69,63 @@ function LoginForm() {
     if (role === 'seller') {
       return navigate('/seller/orders');
     }
+
     if (role === 'administrator') {
       return navigate('/admin/manage');
     }
+
     return navigate('/customer/products');
   };
 
   return (
-    <div id="loginDiv">
-      <form id="loginForm">
-        <div id="inputs">
-          <label htmlFor="email">
-            <p id="inputTitle">Login</p>
-            <input
-              id="email"
-              data-testid="common_login__input-email"
-              type="email"
-              placeholder="Digite seu e-mail"
-              name="email"
-              value={ formLogin.email }
-              onChange={ handleChange }
-            />
-          </label>
-        </div>
-        <div id="inputs">
-          <label htmlFor="password">
-            <p id="inputTitle">Senha</p>
-            <input
-              id="password"
-              data-testid="common_login__input-password"
-              type="password"
-              placeholder="Digite sua senha"
-              name="password"
-              value={ formLogin.password }
-              onChange={ handleChange }
-            />
-          </label>
-        </div>
-        <div>
-          <button
-            id="loginButton"
-            data-testid="common_login__button-login"
-            type="button"
-            disabled={ isDisabled }
-            onClick={ () => singIn(formLogin.email, formLogin.password) }
-          >
-            LOGIN
-          </button>
-        </div>
-        <div>
-          <button
-            id="registerButton"
-            data-testid="common_login__button-register"
-            type="submit"
-            onClick={ () => navigate('/register', { replace: true }) }
-          >
-            Ainda não tenho conta
-          </button>
-        </div>
-      </form>
-      {
-        errorMessage
-          && (
-            <p
-              data-testid="common_login__element-invalid-email"
-            >
-              { errorMessage }
-            </p>
-          )
-      }
-    </div>
+    <form
+      id="loginForm"
+      onSubmit={ (e) => {
+        e.preventDefault();
+        singIn(formLogin.email, formLogin.password);
+      } }
+    >
+      <FlexColumn gap="16px">
+        <TextField
+          label="Login"
+          data-testid="common_login__input-email"
+          type="email"
+          placeholder="Digite seu e-mail"
+          name="email"
+          value={ formLogin.email }
+          onChange={ handleChange }
+        />
+        <TextField
+          label="Senha"
+          data-testid="common_login__input-password"
+          type="password"
+          placeholder="Digite sua senha"
+          name="password"
+          value={ formLogin.password }
+          onChange={ handleChange }
+        />
+        <Button
+          full
+          type="submit"
+          data-testid="common_login__button-login"
+          disabled={ isDisabled }
+        >
+          Login
+        </Button>
+        <LinkButton
+          full
+          data-testid="common_login__button-register"
+          to="/register"
+        >
+          Ainda não tenho conta
+        </LinkButton>
+        {errorMessage && (
+          <p data-testid="common_login__element-invalid-email">
+            {errorMessage}
+          </p>
+        )}
+      </FlexColumn>
+    </form>
   );
 }
 

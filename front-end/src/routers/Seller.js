@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import SellerOrders from '../pages/SellerOrders/SellerOrders';
+import SellerOrders from '../pages/SellerOrders';
 import OrderDetail from '../pages/SellerOrderDetail';
 
 /* Rotas do vendedor */

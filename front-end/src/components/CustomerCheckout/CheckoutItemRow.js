@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import CustomerContext from '../../context/CustomerContext';
+import Button from '../Button';
 
 const CUSTOMER = 'customer_checkout__';
 const DATATESTID_22 = `${CUSTOMER}element-order-table-item-number-`;
@@ -11,9 +12,9 @@ const DATATESTID_26 = `${CUSTOMER}element-order-table-sub-total-`;
 const DATATESTID_27 = `${CUSTOMER}element-order-table-remove-`;
 
 /* Responsável por renderizar os elementos do map do componente CheckoutTable */
-function OrderItemCard({ product, index }) {
-  const { productsArray, setProductsArray,
-    setIsCartUpdated } = useContext(CustomerContext);
+export default function CheckoutItemRow({ product, index }) {
+  const customerData = useContext(CustomerContext);
+  const { productsArray, setProductsArray, setIsCartUpdated } = customerData;
 
   /* Função responsável por deletar o produto do carrinho e enviar o novo array de produtos para o context.
      Também isCartUpdated como true */
@@ -42,23 +43,17 @@ function OrderItemCard({ product, index }) {
       <td id="tableElPrice" data-testid={ `${DATATESTID_25}${index}` }>
         {product.price.replace('.', ',')}
       </td>
-      <td id="tableElSubTotal" data-testid={ `${DATATESTID_26}${index}` }>
-        {(product.subtotal)}
-      </td>
-      <td id="tableElRmItem" data-testid={ `${DATATESTID_27}${index}` }>
-        <button
-          id="btnRmItem"
-          type="button"
-          onClick={ () => handleRemoveItem() }
-        >
+      <td data-testid={ `${DATATESTID_26}${index}` }>{product.subtotal}</td>
+      <td data-testid={ `${DATATESTID_27}${index}` } className="align-right">
+        <Button type="button" onClick={ () => handleRemoveItem() }>
           Remover
-        </button>
+        </Button>
       </td>
     </tr>
   );
 }
 
-OrderItemCard.propTypes = {
+CheckoutItemRow.propTypes = {
   product: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
@@ -68,5 +63,3 @@ OrderItemCard.propTypes = {
   }).isRequired,
   index: propTypes.number.isRequired,
 };
-
-export default OrderItemCard;
