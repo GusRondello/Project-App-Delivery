@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import CustomerContext from '../../context/CustomerContext';
 import DeliveryContext from '../../context/DeliveryContext';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import OrderProductsTable from './OrderProductsTable';
+import PageTitle from '../Typography/PageTitle';
+import Button from '../Button';
+import FlexRow from '../FlexRow';
+import FlexColumn from '../FlexColumn';
 
 const CUSTOMER = 'customer_order_details__';
 const DATATESTID_37 = `${CUSTOMER}element-order-details-label-order-id`;
@@ -13,6 +18,14 @@ const DATATESTID_39 = `${CUSTOMER}element-order-details-label-order-date`;
 const DATATESTID_40 = `${CUSTOMER}element-order-details-label-delivery-status`;
 const DATATESTID_46 = `${CUSTOMER}element-order-total-price`;
 const DATATESTID_47 = `${CUSTOMER}button-delivery-check`;
+
+const Status = styled.span`
+  font-size: 14px;
+  display: inline-block;
+  padding: 6px 8px;
+  background: ${(p) => p.theme.secondary};
+  border-radius: 4px;
+`;
 
 function OrderDetailComponent() {
   const [orderStatus, setOrderStatus] = useState('');
@@ -67,46 +80,46 @@ function OrderDetailComponent() {
     }
   };
 
+  if (!order || order.length === 0) {
+    return null;
+  }
+
   return (
     <div>
-      <h2>Detalhe do Pedido</h2>
-      {order && order.length !== 0 && (
-        <div>
-          <span data-testid={ `${DATATESTID_37}` }>
-            PEDIDO
-            {order.id}
+      <FlexRow as={ PageTitle } align="center" gap="8px">
+        Detalhe do Pedido #
+        <span data-testid={ DATATESTID_37 }>{order.id}</span>
+        <Status data-testid={ `${DATATESTID_40}${order.id}` }>
+          {order.status}
+        </Status>
+      </FlexRow>
+      <FlexColumn gap="12px">
+        <p>
+          <strong>P. Vend: </strong>
+          {/* Compara o id do vendedor em order com o id do vendedor em sellers e exibe o nome */}
+          <span data-testid={ DATATESTID_38 }>
+            {sellers.find((seller) => seller.id === order.sellerId)?.name}
           </span>
-          <span>
-            P. Vend:
-            {' '}
-            {/* Compara o id do vendedor em order com o id do vendedor em sellers e exibe o nome */}
-            <p data-testid={ `${DATATESTID_38}` }>
-              {sellers.find((seller) => seller.id === order.sellerId)?.name}
-            </p>
-          </span>
+        </p>
+        <p>
+          <strong>Data: </strong>
           <span data-testid={ `${DATATESTID_39}` }>{order.saleDate}</span>
-          <span data-testid={ `${DATATESTID_40}${order.id}` }>
-            {order.status}
-          </span>
-          <button
-            type="button"
-            data-testid={ `${DATATESTID_47}` }
-            disabled={ orderStatus !== 'Em Trânsito' }
-            onClick={ () => handleChangeStatus() }
-          >
-            MARCAR COMO ENTREGUE
-          </button>
-        </div>
-      )}
-      <div>
+        </p>
+        <Button
+          data-testid={ DATATESTID_47 }
+          disabled={ orderStatus !== 'Em Trânsito' }
+          onClick={ () => handleChangeStatus() }
+        >
+          Marcar Como Entregue
+        </Button>
         <OrderProductsTable />
-      </div>
-      <span>
-        Total: R$
-        <span data-testid={ `${DATATESTID_46}` }>
-          {order.totalPrice?.replace('.', ',')}
-        </span>
-      </span>
+        <FlexRow justify="flex-end">
+          Total: R$
+          <span data-testid={ DATATESTID_46 }>
+            {order.totalPrice?.replace('.', ',')}
+          </span>
+        </FlexRow>
+      </FlexColumn>
     </div>
   );
 }
