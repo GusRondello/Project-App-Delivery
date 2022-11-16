@@ -2,8 +2,10 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CustomerContext from '../../context/CustomerContext';
 import getTotalPrice from '../../helpers/getTotalPrice';
+import saveTotalPrice from '../../helpers/saveTotalPrice';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
+import saveCart from '../../helpers/saveCartItems';
 import CheckoutTable from './CheckoutTable';
 import PageTitle from '../Typography/PageTitle';
 import TextField from '../FormComponents/TextField';
@@ -59,6 +61,8 @@ function CheckoutComponent() {
     }
 
     const { id: orderId } = order;
+    saveCart([]);
+    saveTotalPrice(0);
 
     /* Envia pelo state do navigate a venda selecionada, apesar de não estar usando.
        Apenas para mostrar que é possível enviar dados pelo state do navigate */
