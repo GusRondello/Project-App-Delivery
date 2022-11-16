@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import DeliveryContext from '../context/DeliveryContext';
 import Button from './Button';
-import FlexColumn from './FlexColumn';
+import FlexRow from './FlexRow';
 
 function ThemeComponent() {
   const { theme, setTheme } = useContext(DeliveryContext);
@@ -30,13 +30,13 @@ function ThemeComponent() {
 
   return (
     <Button onClick={ themeToggler }>
-      <FlexColumn as="abbr" title="Mode">
+      <FlexRow as="abbr" title="Mode" align="center">
         {theme === 'light' ? (
           <MdDarkMode id="modeIcon" />
         ) : (
           <MdLightMode id="modeIcon" />
         )}
-      </FlexColumn>
+      </FlexRow>
     </Button>
   );
 }

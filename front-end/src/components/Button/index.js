@@ -12,6 +12,9 @@ const Button = styled.button`
   cursor: pointer;
   text-transform: uppercase;
   width: ${(p) => (p.full ? '100%' : 'unset')};
+  display: inline-flex;
+  column-gap: 4px;
+  align-items: center;
 
   &.active {
     background-color: var(--buttonBackground);

@@ -5,7 +5,13 @@ import getTotalPrice from '../../helpers/getTotalPrice';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
 import CheckoutTable from './CheckoutTable';
-import { CheckoutTableS } from './Style';
+import PageTitle from '../Typography/PageTitle';
+import TextField from '../FormComponents/TextField';
+import SelectField from '../FormComponents/SelectField';
+import FieldSet from '../FormComponents/FieldSet';
+import FlexColumn from '../FlexColumn';
+import Button from '../Button';
+import FlexRow from '../FlexRow';
 
 function CheckoutComponent() {
   const [items, setItems] = useState([]);
@@ -15,6 +21,7 @@ function CheckoutComponent() {
     street: '',
     number: '',
   });
+
   const [selectedSeller, setSelectedSeller] = useState(sellers[0]?.id || '');
 
   const navigate = useNavigate();
@@ -25,7 +32,7 @@ function CheckoutComponent() {
   useEffect(() => {
     setItems(cartItems);
     setSellersArray(sellers);
-    setSelectedSeller(sellers[0]?.id);
+    setSelectedSeller(sellers[0]?.id.toString());
   }, [cartItems, sellers]);
 
   /* Função responsável por montar a nova order e enviar para a API (api.sendOrder) */
@@ -45,10 +52,12 @@ function CheckoutComponent() {
     };
 
     const order = await api.sendOrder(token, newOrder);
+
     if (order.error === true) {
       setErrorMessage(order.message);
       return navigate('/login');
     }
+
     const { id: orderId } = order;
 
     /* Envia pelo state do navigate a venda selecionada, apesar de não estar usando.
@@ -57,71 +66,62 @@ function CheckoutComponent() {
   };
 
   return (
-    <CheckoutTableS>
-      <h1>Finalizar Pedido</h1>
-      <div id="checkoutTable">
+    <FlexColumn gap="18px">
+      <PageTitle>Finalizar Pedido</PageTitle>
+      <FlexColumn gap="8px">
         <CheckoutTable />
-        <p id="totalPrice" data-testid="customer_checkout__element-order-total-price">
-          Total:
-          {` R$ ${totalPrice}`}
-        </p>
-      </div>
-      <h2>Detalhes e Endereço para Entrega</h2>
-      <div>
-        <label htmlFor="seller">
-          P. Vendedora Responsável:
-          <select
+        <FlexRow justify="flex-end">
+          <p data-testid="customer_checkout__element-order-total-price">
+            Total: R$
+            {' '}
+            {totalPrice}
+          </p>
+        </FlexRow>
+      </FlexColumn>
+      <PageTitle>Detalhes e Endereço para Entrega</PageTitle>
+      <FieldSet
+        button={
+          <Button
+            data-testid="customer_checkout__button-submit-order"
+            onClick={ handleCheckout }
+          >
+            Finalizar Pedido
+          </Button>
+        }
+      >
+        {selectedSeller && (
+          <SelectField
+            label="P. Vendedora Responsável"
             data-testid="customer_checkout__select-seller"
             name="seller"
             id="seller"
             value={ selectedSeller }
             onChange={ (event) => setSelectedSeller(event.target.value) }
-          >
-            {sellersArray.map((seller) => (
-              <option
-                key={ seller.id }
-                value={ seller.id }
-              >
-                {seller.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <form>
-          <label htmlFor="street">
-            Endereço:
-            <input
-              data-testid="customer_checkout__input-address"
-              type="text"
-              name="street"
-              id="street"
-              placeholder="Travessa Terceira da Castanheira, Bairro Muruci"
-              value={ address.street }
-              onChange={ (e) => setAddress({ ...address, street: e.target.value }) }
-            />
-          </label>
-          <label htmlFor="number">
-            Número:
-            <input
-              data-testid="customer_checkout__input-address-number"
-              type="text"
-              name="number"
-              id="number"
-              placeholder="198"
-              value={ address.number }
-              onChange={ (e) => setAddress({ ...address, number: e.target.value }) }
-            />
-          </label>
-        </form>
-      </div>
-      <button
-        data-testid="customer_checkout__button-submit-order"
-        type="button"
-        onClick={ () => handleCheckout() }
-      >
-        FINALIZAR PEDIDO
-      </button>
-    </CheckoutTableS>
+            options={ sellersArray.map((seller) => ({
+              label: seller.name,
+              value: seller.id.toString(),
+            })) }
+          />
+        )}
+        <TextField
+          label="Endereço"
+          data-testid="customer_checkout__input-address"
+          name="street"
+          placeholder="Travessa Terceira da Castanheira, Bairro Muruci"
+          value={ address.street }
+          onChange={ (e) => setAddress({ ...address, street: e.target.value }) }
+        />
+        <TextField
+          label="Número"
+          data-testid="customer_checkout__input-address-number"
+          type="text"
+          name="number"
+          placeholder="198"
+          value={ address.number }
+          onChange={ (e) => setAddress({ ...address, number: e.target.value }) }
+        />
+      </FieldSet>
+    </FlexColumn>
   );
 }
 

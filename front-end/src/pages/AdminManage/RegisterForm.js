@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
 import SelectField from '../../components/FormComponents/SelectField';
 import TextField from '../../components/FormComponents/TextField';
 import getUserInfo from '../../helpers/getUserInfo';
@@ -7,18 +6,11 @@ import { validateEmail, validateMinLength } from '../../helpers/validators';
 import api from '../../services';
 import DeliveryContext from '../../context/DeliveryContext';
 import Button from '../../components/Button';
-import FlexRow from '../../components/FlexRow';
-import FlexColumn from '../../components/FlexColumn';
+import FieldSet from '../../components/FormComponents/FieldSet';
 import PageTitle from '../../components/Typography/PageTitle';
 
 const MIN_NAME_LENGTH = 12;
 const MIN_PASSWORD_LENGTH = 6;
-
-const FieldSet = styled(FlexColumn.withComponent('fieldset'))`
-  padding: 8px 12px;
-  border: 1px solid ${(p) => p.theme.paragraph};
-  border-radius: 4px;
-`;
 
 export default function RegisterForm() {
   const { setHasAdminChangedUsers } = useContext(DeliveryContext);
@@ -84,7 +76,17 @@ export default function RegisterForm() {
           {form.serverError}
         </p>
       )}
-      <FieldSet gap="16px">
+      <FieldSet
+        button={
+          <Button
+            type="submit"
+            disabled={ !form.valid }
+            data-testid="admin_manage__button-register"
+          >
+            Cadastrar
+          </Button>
+        }
+      >
         <TextField
           name="name"
           label="Nome"
@@ -125,15 +127,6 @@ export default function RegisterForm() {
           value={ form.values.role }
           onChange={ handleFormChange('role') }
         />
-        <FlexRow justify="flex-end">
-          <Button
-            type="submit"
-            disabled={ !form.valid }
-            data-testid="admin_manage__button-register"
-          >
-            Cadastrar
-          </Button>
-        </FlexRow>
       </FieldSet>
     </form>
   );
