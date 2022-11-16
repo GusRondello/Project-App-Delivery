@@ -23,8 +23,13 @@ const Button = styled.button`
     border: 1px solid var(--buttonBackground);
   }
 
-  &:hover {
+  &:hover:not(:disabled) {
     filter: brightness(0.9);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: saturate(0);
   }
 `;
 
