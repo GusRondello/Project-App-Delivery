@@ -3,7 +3,7 @@ const customerSales = [
     id: 1,
     userId: 3,
     sellerId: 2,
-    totalPrice: '190.56',
+    totalPrice: '29.50',
     deliveryAddress: 'Rua da Pamonha',
     deliveryNumber: '27',
     status: 'Pendente',
@@ -11,8 +11,23 @@ const customerSales = [
   },
 ];
 
+const customerSaleStatusPreparingUpdated = {
+  ...customerSales[0],
+  status: 'Preparando',
+};
+
+const customerSaleStatusInTransitUpdated = {
+  ...customerSales[0],
+  status: 'Em Trânsito',
+};
+
+const customerSaleStatusDeliveredUpdated = {
+  ...customerSales[0],
+  status: 'Entregue',
+};
+
 const saleCreated = {
-  id: 1,
+  id: 2,
   userId: '3',
   sellerId: '2',
   totalPrice: '190.56',
@@ -44,8 +59,29 @@ const customerSale = {
   ],
 };
 
+const customerSalePreparing = {
+  ...customerSale,
+  status: 'Preparando',
+};
+
+const customerSaleInTransit = {
+  ...customerSale,
+  status: 'Em Trânsito',
+};
+
+const customerSaleDelivered = {
+  ...customerSale,
+  status: 'Entregue',
+};
+
 export default {
   customerSales,
   saleCreated,
   customerSale,
+  customerSaleStatusPreparingUpdated,
+  customerSaleStatusInTransitUpdated,
+  customerSaleStatusDeliveredUpdated,
+  customerSalePreparing,
+  customerSaleInTransit,
+  customerSaleDelivered,
 };

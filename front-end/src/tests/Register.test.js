@@ -121,9 +121,9 @@ describe('Register Page', () => {
 
   describe('Test sign up succeed', () => {
     beforeEach(() => {
-      const { userInfos } = userMock;
+      const { costumerCreatedInfos } = userMock;
       const { products } = productsMock;
-      api.register.mockResolvedValue({ ...userInfos });
+      api.register.mockResolvedValue({ ...costumerCreatedInfos });
       api.getProducts.mockResolvedValue({ products });
     });
   
@@ -140,7 +140,7 @@ describe('Register Page', () => {
       userEvent.click(signUpButton);
   
       await waitFor(
-        () => expect(screen.getByText(userMock.userInfos.name)).toBeInTheDocument(),
+        () => expect(screen.getByText(userMock.costumerCreatedInfos.name)).toBeInTheDocument(),
         { timeout: 1000 }
       );
     });

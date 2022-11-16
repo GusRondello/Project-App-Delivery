@@ -1,5 +1,5 @@
 import React from "react";
-import { screen, waitFor } from "@testing-library/react";
+import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from "./helpers/renderWithRouter";
 import App from '../App'
@@ -14,18 +14,18 @@ describe('Customer Checkout Page', () => {
     const { sellers } = sellersMock;
     const { saleCreated, customerSale } = salesMock;
 
-    api.getProducts.mockResolvedValue({ products: [products[0]] });
+    api.getProducts.mockResolvedValue({ products });
     api.getSellers.mockResolvedValue(sellers);
     api.sendOrder.mockResolvedValue(saleCreated);
     api.getCustomerOrder.mockResolvedValue(customerSale);
 
     localStorage.setItem('user', JSON.stringify(userMock.userInfos));
-    localStorage.setItem('appDeliveryTotalPrice', JSON.stringify('0,00'));
+    localStorage.setItem('appDeliveryTotalPrice', JSON.stringify('21,60'));
     localStorage.setItem('appDeliveryCartItems', JSON.stringify(productInCart));
   });
 
   afterEach(() => jest.restoreAllMocks());
-  afterAll(() => localStorage.clear());
+  // afterAll(() => localStorage.clear());
 
   describe('Test Customer Checkout renderization', () => {
     it('should render customer products page', () => {
@@ -132,12 +132,15 @@ describe('Customer Checkout Page', () => {
       renderWithRouter(<App />, ['/customer/checkout']);
 
       const { name } = productsMock.productInCart[0];
-      const removeProductButton = screen.getAllByRole('button', { name: /remover/i});
-      const productItemTitle = screen.getByRole('cell', { name });
+      const removeProductButton = await screen.findAllByRole('button', { name: /remover/i});
+      const productItemTitle = await screen.findByRole('cell', { name });
 
       userEvent.click(removeProductButton[0]);
-  
-      expect(productItemTitle).not.toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(productItemTitle).not.toBeInTheDocument();
+        expect(removeProductButton[0]).not.toBeInTheDocument();
+      });
     });
   });
 
@@ -151,7 +154,7 @@ describe('Customer Checkout Page', () => {
       userEvent.selectOptions(
         screen.getByRole('combobox'),
         sellerOption,
-      )
+      );
   
       expect(sellerOption.selected).toBe(true);
     });

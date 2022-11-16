@@ -20,6 +20,7 @@ function CustomerProvider({ children }) {
   useEffect(() => {
     async function fetchSellers() {
       const { token } = getUserInfo();
+
       const data = await api.getSellers(token);
 
       setSellers(data);
@@ -69,7 +70,6 @@ function CustomerProvider({ children }) {
 
         return { ...product, price: priceString };
       });
-
       combineWithLocalStorageQtd(productsWithQtdAndPrice);
     }
     fetchProducts();

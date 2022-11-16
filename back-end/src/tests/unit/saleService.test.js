@@ -12,12 +12,14 @@ const { saleMock, salesUserMock, createSaleDataMock, saleUpdated } = require('..
 describe('Sale service', () => {
   let findAllStub;
   let findByPkStub;
+  let findOneStub;
   let createStub;
   let updateStub;
 
   before(() => {
     findAllStub = sinon.stub(Sale, 'findAll');
     findByPkStub = sinon.stub(Sale, 'findByPk');
+    findOneStub = sinon.stub(Sale, 'findOne');
     createStub = sinon.stub(Sale, 'create');
     updateStub = sinon.stub(Sale, 'update');
 
@@ -84,17 +86,17 @@ describe('Sale service', () => {
 
   describe('getOrderById', () => {
     describe('Success', () => {
-      before(() => findByPkStub.resolves(saleMock));
+      before(() => findOneStub.resolves(saleMock));
 
       it('should return an user sale object', async () => {
         await expect(saleService.getOrderById(2))
           .to.eventually.to.be.an('object')
-          .and.to.be.eql(salesUserMock[1]);
+          .and.to.be.eql(saleMock);
       });
     });
 
     describe('Failure', () => {
-      before(() => findByPkStub.resolves(null));
+      before(() => findOneStub.resolves(null));
 
       it('should return an user sale object', async () => {
         await expect(saleService.getOrderById(90))
