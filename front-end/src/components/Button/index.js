@@ -29,14 +29,21 @@ const Button = styled.button`
 `;
 
 Button.defaultProps = {
+  role: 'button',
   type: 'button',
 };
 
 const LinkButton = Button.withComponent(Link);
-LinkButton.defaultProps = { type: undefined };
+LinkButton.defaultProps = {
+  role: 'button',
+  type: undefined,
+};
 
 const NavLinkButton = Button.withComponent(NavLink);
-NavLinkButton.defaultProps = { type: undefined };
+NavLinkButton.defaultProps = {
+  role: 'button',
+  type: undefined,
+};
 
 export { LinkButton, NavLinkButton };
 

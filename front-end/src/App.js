@@ -10,6 +10,7 @@ import { lightTheme, darkTheme } from './components/Themes';
 
 function App() {
   const { theme } = useContext(DeliveryContext);
+
   return (
     <ThemeProvider theme={ theme === 'light' ? lightTheme : darkTheme }>
       <div>
