@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
-import OrderCard from './OrderCard';
+import OrderCard from '../OrderCard';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -43,7 +43,12 @@ export default function OrdersComponent() {
       {
         // Faz um map de orders chamando o componente OrderCard
         orders?.map((order) => (
-          <OrderCard key={ order.id } order={ order } />
+          <OrderCard
+            key={ order.id }
+            order={ order }
+            routePreffix="/customer/orders"
+            testIdPreffix="customer_orders"
+          />
         ))
       }
     </Wrapper>

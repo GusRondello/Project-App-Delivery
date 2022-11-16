@@ -15,6 +15,8 @@ const Button = styled.button`
   display: inline-flex;
   column-gap: 4px;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 
   &.active {
     background-color: var(--buttonBackground);
