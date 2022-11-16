@@ -1,22 +1,41 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import FlexColumn from '../FlexColumn';
 
 const DATATESTID_33 = 'customer_orders__element-order-id-';
 const DATATESTID_34 = 'customer_orders__element-delivery-status-';
 const DATATESTID_35 = 'customer_orders__element-order-date-';
 const DATATESTID_36 = 'customer_orders__element-card-price-';
 
+const WrapperLink = styled(FlexColumn.withComponent(Link))`
+  background: ${(p) => p.theme.main};
+  border-radius: 4px;
+  padding: 8px;
+  text-decoration: none;
+  color: #f4f4f4;
+
+  &:hover {
+    color: #ffffff;
+    filter: brightness(0.95);
+  }
+`;
+
 /* Responsável por renderizar os elementos do map do componente OrdersComponent */
 function OrderCard({ order }) {
   return (
-    <div>
-      <p data-testid={ `${DATATESTID_33}${order.id}` }>{order.id}</p>
-      <p data-testid={ `${DATATESTID_34}${order.id}` }>{order.status}</p>
-      <p data-testid={ `${DATATESTID_35}${order.id}` }>{order.saleDate}</p>
-      <p data-testid={ `${DATATESTID_36}${order.id}` }>
+    <WrapperLink to={ `/customer/orders/${order.id}` }>
+      <strong>
+        Pedido #
+        <span data-testid={ `${DATATESTID_33}${order.id}` }>{order.id}</span>
+      </strong>
+      <div data-testid={ `${DATATESTID_34}${order.id}` }>{order.status}</div>
+      <div data-testid={ `${DATATESTID_35}${order.id}` }>{order.saleDate}</div>
+      <div data-testid={ `${DATATESTID_36}${order.id}` }>
         {order.totalPrice.replace('.', ',')}
-      </p>
-    </div>
+      </div>
+    </WrapperLink>
   );
 }
 
