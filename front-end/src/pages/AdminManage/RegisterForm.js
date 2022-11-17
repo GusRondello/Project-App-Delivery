@@ -61,6 +61,17 @@ export default function RegisterForm() {
     );
     setHasAdminChangedUsers(true);
 
+    setForm({
+      serverError: '',
+      valid: false,
+      values: {
+        name: '',
+        email: '',
+        password: '',
+        role: 'customer',
+      },
+    });
+
     if (response.error) {
       setForm((state) => ({ ...state, serverError: response.message }));
     } else {
@@ -120,7 +131,7 @@ export default function RegisterForm() {
           label="Tipo"
           data-testid="admin_manage__select-role"
           options={ [
-            { value: 'administrator', label: 'Administrador' },
+            // { value: 'administrator', label: 'Administrador' },
             { value: 'seller', label: 'Vendedor' },
             { value: 'customer', label: 'Cliente' },
           ] }
