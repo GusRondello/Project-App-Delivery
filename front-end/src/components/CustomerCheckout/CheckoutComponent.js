@@ -56,7 +56,6 @@ function CheckoutComponent() {
     const order = await api.sendOrder(token, newOrder);
 
     if (order.error === true) {
-      setErrorMessage(order.message);
       return navigate('/login');
     }
 

@@ -76,7 +76,6 @@ function OrderDetailComponent() {
     setIsStatusUpdated(true);
 
     if (response.error === true) {
-      setErrorMessage(response.message);
       return navigate('/login');
     }
   };
