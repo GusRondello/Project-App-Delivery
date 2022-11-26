@@ -1,9 +1,21 @@
-// Cria um componente que recebe os produtos do banco de dados e os renderiza na tela
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { TfiShoppingCart, TfiShoppingCartFull } from 'react-icons/tfi';
 import CustomerContext from '../../context/CustomerContext';
 import ProductsCard from './ProductsCard';
 import getTotalPrice from '../../helpers/getTotalPrice';
+import { ProductsDivS } from './Style';
+import Button from '../Button';
+
+const CartButton = styled(Button)`
+  background-color: var(--tertiary);
+  color: var(--buttonText);
+  border-color: 1px solid var(--buttonBorder);
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+`;
 
 function Products() {
   const { productsArray, cartItems } = useContext(CustomerContext);
@@ -12,27 +24,35 @@ function Products() {
   const totalPrice = getTotalPrice();
 
   return (
-    <div className="teste122121">
-      <div>
+    <div>
+      <ProductsDivS>
         {productsArray?.map((product) => (
           <div key={ product.id }>
             <ProductsCard product={ product } />
           </div>
         ))}
-      </div>
+      </ProductsDivS>
       {/* Botão de carrinho que exibe o valor total após o texto Ver Carrinho: e que ao ser clicado direciona
       para a tela /customer/checkout  */}
-      <button
-        type="button"
-        data-testid="customer_products__button-cart"
-        // desabilita caso não houver itens no carrinho
-        disabled={ cartItems.length === 0 }
-        onClick={ () => navigate('/customer/checkout') }
-      >
-        <span data-testid="customer_products__checkout-bottom-value">
-          {` R$ ${totalPrice}`}
-        </span>
-      </button>
+      <abbr title="Ver Carrinho">
+        <CartButton
+          data-testid="customer_products__button-cart"
+          disabled={ cartItems.length === 0 }
+          onClick={ () => navigate('/customer/checkout') }
+        >
+          {cartItems.length === 0 ? (
+            <TfiShoppingCart />
+          ) : (
+            <TfiShoppingCartFull />
+          )}
+          <span data-testid="customer_products__checkout-bottom-value">
+            {/* se o carrinho estiver vazio renderiza o ícone TfiShoppingCart e o R$ totalPrice e se o carrinho não estiver vazio renderiza o ícone TfiShoppingCartFull e o R$ totalPrice */}
+            R$
+            {' '}
+            {totalPrice}
+          </span>
+        </CartButton>
+      </abbr>
     </div>
   );
 }

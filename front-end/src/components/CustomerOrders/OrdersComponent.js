@@ -1,27 +1,34 @@
-import React, { useEffect, useState/* , useContext */ } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import CustomerContext from '../context/CustomerContext';
-// import getTotalPrice from '../helpers/getTotalPrice';
-// import DetailItemCard from './DetailItemCard';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import api from '../../services';
 import getUserInfo from '../../helpers/getUserInfo';
-import OrderCard from './OrderCard';
+import OrderCard from '../OrderCard';
 
-function OrdersComponent() {
+const Wrapper = styled.div`
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  padding: 16px;
+  gap: 16px;
+`;
+
+export default function OrdersComponent() {
   const [orders, setOrders] = useState([]);
 
-  const navigate = useNavigate();
-
+  /* Função responsável por pegar da API (api.getUsers) todas as compras do usuários */
   useEffect(() => {
     async function fetchSalle() {
       const { token } = getUserInfo();
       const data = await api.getAllCustomerOrders(token);
-      console.log('data', data);
 
       const ordersDateFormatted = data.map((order) => {
         const { saleDate } = order;
+
+        /* Converte a data para o formato dd/mm/yyyy e com o timezone brasileiro */
         const date = new Date(saleDate)
-          .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split(' ')[0];
+          .toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+          .split(' ')[0];
 
         return { ...order, saleDate: date };
       });
@@ -32,21 +39,18 @@ function OrdersComponent() {
   }, []);
 
   return (
-    <div>
+    <Wrapper>
       {
         // Faz um map de orders chamando o componente OrderCard
         orders?.map((order) => (
-          <button
+          <OrderCard
             key={ order.id }
-            type="button"
-            onClick={ () => navigate(`/customer/orders/${order.id}`) }
-          >
-            <OrderCard order={ order } />
-          </button>
+            order={ order }
+            routePreffix="/customer/orders"
+            testIdPreffix="customer_orders"
+          />
         ))
       }
-    </div>
+    </Wrapper>
   );
 }
-
-export default OrdersComponent;

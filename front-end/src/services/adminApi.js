@@ -3,6 +3,8 @@ import api from './baseUrl';
 /*
     ** Admin functions
 */
+
+/* função axios que envia o usuário a ser cadastrado para o backend */
 async function registerAsAdmin(user, token) {
   try {
     const { name, email, password, role } = user;
@@ -28,7 +30,7 @@ async function registerAsAdmin(user, token) {
   }
 }
 
-// função axios que recebe todos os usuários cadastrados no banco de dados
+/* função axios que recebe todos os usuários cadastrados no banco de dados */
 async function getUsers(token) {
   try {
     const axiosToken = {
@@ -50,7 +52,7 @@ async function getUsers(token) {
   }
 }
 
-// função axios que envia o usuário a ser exluído para o backend
+/* função axios que envia o usuário a ser exluído para o backend */
 async function excludeUser(token, id) {
   try {
     const axiosToken = {

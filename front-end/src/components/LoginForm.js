@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import saveUserInfo from '../helpers/saveUserInfo';
 import getUserInfo from '../helpers/getUserInfo';
 import api from '../services';
+import Button, { LinkButton } from './Button';
+import TextField from './FormComponents/TextField';
+import FlexColumn from './FlexColumn';
 
 function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -11,11 +14,11 @@ function LoginForm() {
     email: '',
     password: '',
   });
-  // const { setCustomerName } = React.useContext(DeliveryContext);
 
   const navigate = useNavigate();
 
-  // useEffect que chama a função getUserInfo e caso existir user redireciona para a rota /customer/products
+  /* useEffect que chama a função getUserInfo que recebe os dados do localStorage
+     e caso existir um user redireciona para a rota /customer/products */
   useEffect(() => {
     const userInfo = getUserInfo();
     if (userInfo) {
@@ -23,6 +26,7 @@ function LoginForm() {
     }
   }, []);
 
+  /* Função que valida os dados digitados e habilita ou desabilita o botão de login */
   const validateLogin = () => {
     const re = /\S+@\S+\.\S+/;
     const emailValidation = re.test(formLogin.email);
@@ -35,22 +39,25 @@ function LoginForm() {
     }
   };
 
+  /* useEffect que chama a função validateLogin toda vez que o estado formLogin é alterado */
   useEffect(() => {
     validateLogin();
   }, [formLogin]);
 
-  // handle generico
+  /* Função que atualiza o estado formLogin com os dados digitados no input */
   const handleChange = ({ target }) => {
     const { name, value } = target;
+    console.log(name, value);
     setFormLogin((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
+  /* Função que envia os dados do login para a API (api.singIn) e em caso de sucesso
+     salva os dados do usuário logado no localStorage */
   const singIn = async (email, password) => {
     const response = await api.singIn(email, password);
-    console.log(response);
     if (response.error) {
       setErrorMessage(response.message);
       return navigate('/login');
@@ -62,68 +69,63 @@ function LoginForm() {
     if (role === 'seller') {
       return navigate('/seller/orders');
     }
+
     if (role === 'administrator') {
       return navigate('/admin/manage');
     }
+
     return navigate('/customer/products');
   };
 
   return (
-    <div>
-      <div>
-        <form>
-          <div>
-            <input
-              data-testid="common_login__input-email"
-              type="email"
-              placeholder="Digite seu e-mail"
-              name="email"
-              value={ formLogin.email }
-              onChange={ handleChange }
-            />
-          </div>
-          <div>
-            <input
-              data-testid="common_login__input-password"
-              type="password"
-              placeholder="Digite sua senha"
-              name="password"
-              value={ formLogin.password }
-              onChange={ handleChange }
-            />
-          </div>
-          <div>
-            <button
-              data-testid="common_login__button-login"
-              type="button"
-              disabled={ isDisabled }
-              onClick={ () => singIn(formLogin.email, formLogin.password) }
-            >
-              Login
-            </button>
-          </div>
-          <div>
-            <button
-              data-testid="common_login__button-register"
-              type="submit"
-              onClick={ () => navigate('/register', { replace: true }) }
-            >
-              Não tem uma conta?
-            </button>
-          </div>
-        </form>
-        {
-          errorMessage
-          && (
-            <p
-              data-testid="common_login__element-invalid-email"
-            >
-              { errorMessage }
-            </p>
-          )
-        }
-      </div>
-    </div>
+    <form
+      id="loginForm"
+      onSubmit={ (e) => {
+        e.preventDefault();
+        singIn(formLogin.email, formLogin.password);
+      } }
+    >
+      <FlexColumn gap="16px">
+        <TextField
+          label="Login"
+          data-testid="common_login__input-email"
+          type="email"
+          placeholder="Digite seu e-mail"
+          name="email"
+          value={ formLogin.email }
+          onChange={ handleChange }
+        />
+        <TextField
+          label="Senha"
+          data-testid="common_login__input-password"
+          type="password"
+          placeholder="Digite sua senha"
+          name="password"
+          value={ formLogin.password }
+          onChange={ handleChange }
+        />
+        <Button
+          full
+          type="submit"
+          data-testid="common_login__button-login"
+          disabled={ isDisabled }
+        >
+          Login
+        </Button>
+        <LinkButton
+          full
+          data-testid="common_login__button-register"
+          to="/register"
+        >
+          Ainda não tenho conta
+        </LinkButton>
+        {errorMessage && (
+          <p data-testid="common_login__element-invalid-email">
+            {errorMessage}
+          </p>
+        )}
+      </FlexColumn>
+    </form>
   );
 }
 

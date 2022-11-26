@@ -1,6 +1,11 @@
 import jwt from 'jwt-decode';
 import api from './baseUrl';
 
+/*
+    ** Costumer functions
+*/
+
+/* função axios que envia o usuário a ser cadastrado para o backend */
 async function register(name, email, password) {
   try {
     const result = await api.post('/register', {
@@ -23,7 +28,7 @@ async function register(name, email, password) {
   }
 }
 
-// função axios que retorna os produtos do banco de dados
+/* função axios que retorna os produtos do banco de dados */
 async function getProducts(token) {
   try {
     const axiosToken = {
@@ -45,11 +50,7 @@ async function getProducts(token) {
   }
 }
 
-/*
-    ** Customer functions
-*/
-// função axios que retorna os produtos do banco de dados
-
+/* função axios que recebe as informações da order referente ao id para o cliente */
 async function getCustomerOrder(token, id) {
   try {
     const axiosToken = {
@@ -71,6 +72,7 @@ async function getCustomerOrder(token, id) {
   }
 }
 
+/* função axios que retorna do banco de dados todas as orders referentes ao cliente */
 async function getAllCustomerOrders(token) {
   try {
     const axiosToken = {
@@ -92,7 +94,7 @@ async function getAllCustomerOrders(token) {
   }
 }
 
-// função axios que recebe todos os vendedores cadastrados no banco de dados
+/* função axios que recebe todos os vendedores cadastrados no banco de dados */
 async function getSellers(token) {
   try {
     const axiosToken = {
@@ -114,7 +116,7 @@ async function getSellers(token) {
   }
 }
 
-// função axios que envia o pedido para o banco de dados e recebe o id do pedido
+/* função axios que envia a order para o banco de dados e recebe como resposta o id */
 async function sendOrder(token, requisition) {
   try {
     const axiosToken = {
@@ -140,7 +142,7 @@ async function sendOrder(token, requisition) {
   }
 }
 
-// função axios que envia o pedido para o banco de dados e recebe o id do pedido
+/* função axios que atualiza a mudança de status da order pelo cliente no banco de dados */
 async function updateOrderStatus(token, requisition, id) {
   try {
     const axiosToken = {

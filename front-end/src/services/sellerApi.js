@@ -3,7 +3,8 @@ import api from './baseUrl';
 /*
     ** Seller functions
 */
-// função axios que recebe as informações do pedido para o vendedor
+
+/* função axios que recebe as informações da order referente ao id para o vendedor */
 async function getSellerOrder(token, id) {
   try {
     const axiosToken = {
@@ -25,7 +26,7 @@ async function getSellerOrder(token, id) {
   }
 }
 
-// função axios que recebe todos os pedidos para o vendedor
+/* função axios que recebe todas as order referentes ao vendedor */
 async function getAllSellerOrders(token) {
   try {
     const axiosToken = {
@@ -47,6 +48,7 @@ async function getAllSellerOrders(token) {
   }
 }
 
+/* função axios que atualiza a mudança de status da order pelo vendedor no banco de dados */
 async function sendOrderStatusUpdate(token, requisition, id) {
   try {
     const axiosToken = {

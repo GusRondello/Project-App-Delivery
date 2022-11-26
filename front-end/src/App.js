@@ -1,23 +1,26 @@
-import React from 'react';
-// import './App.css';
-// import rockGlass from './images/rockGlass.svg';
+import React, { useContext } from 'react';
+import { ThemeProvider } from 'styled-components';
 import Common from './routers/Common';
 import Customer from './routers/Customer';
 import Seller from './routers/Seller';
 import Admin from './routers/Admin';
-import DeliveryProvider from './context/DeliveryProvider';
-// import CustomerProvider from './context/CustomerProvider';
+import GlobalStyle from './styles/Globals';
+import DeliveryContext from './context/DeliveryContext';
+import { lightTheme, darkTheme } from './components/Themes';
 
 function App() {
+  const { theme } = useContext(DeliveryContext);
+
   return (
-    <div className="App">
-      <DeliveryProvider>
+    <ThemeProvider theme={ theme === 'light' ? lightTheme : darkTheme }>
+      <div>
+        <GlobalStyle />
         <Common />
         <Customer />
         <Seller />
         <Admin />
-      </DeliveryProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
